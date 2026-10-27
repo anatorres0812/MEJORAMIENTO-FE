@@ -1,0 +1,167 @@
+<div class="pagina">
+  <div class="pagina-encabezado">
+    <div>
+      <h1 class="pagina-titulo">Académico</h1>
+      <p class="pagina-subtitulo">Gestiona los grados, secciones y cursos del colegio.</p>
+    </div>
+
+    <nav class="tabs-nivel">
+      @for (nivel of niveles; track nivel) {
+        <button class="tab-nivel" [class.activo]="nivel === nivelActivo()" (click)="cambiarNivel(nivel)">
+          {{ nivel }}
+        </button>
+      }
+    </nav>
+  </div>
+
+  @if (mensajeExito()) {
+    <div class="banner-exito">✅ {{ mensajeExito() }}</div>
+  }
+
+  <nav class="subtabs">
+    <button class="subtab" [class.activo]="tabActiva() === 'grados'" (click)="cambiarTab('grados')">Grados</button>
+    <button class="subtab" [class.activo]="tabActiva() === 'secciones'" (click)="cambiarTab('secciones')">Secciones</button>
+    <button class="subtab" [class.activo]="tabActiva() === 'cursos'" (click)="cambiarTab('cursos')">Cursos</button>
+  </nav>
+
+  <!-- ═══════════════ GRADOS ═══════════════ -->
+  @if (tabActiva() === 'grados') {
+    <div class="seccion-tab">
+      <div class="seccion-tab-header">
+        <h2>Grados — {{ nivelActivo() }}</h2>
+        <button class="btn-agregar" (click)="abrirFormGrado()">+ Agregar grado</button>
+      </div>
+
+      @if (mostrarFormGrado()) {
+        <div class="tarjeta-formulario">
+          <h3 class="formulario-titulo">{{ editandoGradoId() ? 'Editar grado' : 'Nuevo grado' }}</h3>
+          <div class="formulario-grid">
+            <div class="campo">
+              <label>Nombre</label>
+              <input type="text" [ngModel]="nombreGrado()" (ngModelChange)="nombreGrado.set($event)" placeholder="Ej. 6.º Primaria" />
+            </div>
+          </div>
+          @if (errorGrado()) { <p class="mensaje-error-form">{{ errorGrado() }}</p> }
+          <div class="formulario-acciones">
+            <button class="btn-guardar" (click)="guardarGrado()">{{ editandoGradoId() ? 'Guardar cambios' : 'Guardar grado' }}</button>
+            <button class="btn-cancelar" (click)="cancelarFormGrado()">Cancelar</button>
+          </div>
+        </div>
+      }
+
+      @if (grados().length === 0) {
+        <p class="mensaje-vacio">No hay grados registrados en este nivel.</p>
+      } @else {
+        <table class="tabla">
+          <thead><tr><th>Grado</th><th>Acción</th></tr></thead>
+          <tbody>
+            @for (g of grados(); track g.id) {
+              <tr>
+                <td>{{ g.nombre }}</td>
+                <td><button class="btn-accion btn-editar" (click)="abrirEdicionGrado(g.id)">Editar</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+
+  <!-- ═══════════════ SECCIONES ═══════════════ -->
+  @if (tabActiva() === 'secciones') {
+    <div class="seccion-tab">
+      <div class="seccion-tab-header">
+        <h2>Secciones — {{ nivelActivo() }}</h2>
+        <button class="btn-agregar" (click)="abrirFormSeccion()">+ Agregar sección</button>
+      </div>
+
+      @if (mostrarFormSeccion()) {
+        <div class="tarjeta-formulario">
+          <h3 class="formulario-titulo">{{ editandoSeccionId() ? 'Editar sección' : 'Nueva sección' }}</h3>
+          <div class="formulario-grid">
+            <div class="campo">
+              <label>Nombre</label>
+              <input type="text" [ngModel]="nombreSeccion()" (ngModelChange)="nombreSeccion.set($event)" placeholder="Ej. Sección D" />
+            </div>
+            @if (!editandoSeccionId()) {
+              <div class="campo">
+                <label>Grado</label>
+                <select [ngModel]="gradoParaSeccion()" (ngModelChange)="gradoParaSeccion.set($event)">
+                  <option value="">Selecciona...</option>
+                  @for (g of grados(); track g.id) {
+                    <option [value]="g.id">{{ g.nombre }}</option>
+                  }
+                </select>
+              </div>
+            }
+          </div>
+          @if (errorSeccion()) { <p class="mensaje-error-form">{{ errorSeccion() }}</p> }
+          <div class="formulario-acciones">
+            <button class="btn-guardar" (click)="guardarSeccion()">{{ editandoSeccionId() ? 'Guardar cambios' : 'Guardar sección' }}</button>
+            <button class="btn-cancelar" (click)="cancelarFormSeccion()">Cancelar</button>
+          </div>
+        </div>
+      }
+
+      @if (secciones().length === 0) {
+        <p class="mensaje-vacio">No hay secciones registradas en este nivel.</p>
+      } @else {
+        <table class="tabla">
+          <thead><tr><th>Sección</th><th>Grado</th><th>Acción</th></tr></thead>
+          <tbody>
+            @for (s of secciones(); track s.id) {
+              <tr>
+                <td>{{ s.nombre }}</td>
+                <td>{{ s.gradoNombre }}</td>
+                <td><button class="btn-accion btn-editar" (click)="abrirEdicionSeccion(s.id)">Editar</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+
+  <!-- ═══════════════ CURSOS ═══════════════ -->
+  @if (tabActiva() === 'cursos') {
+    <div class="seccion-tab">
+      <div class="seccion-tab-header">
+        <h2>Cursos — {{ nivelActivo() }}</h2>
+        <button class="btn-agregar" (click)="abrirFormCurso()">+ Agregar curso</button>
+      </div>
+
+      @if (mostrarFormCurso()) {
+        <div class="tarjeta-formulario">
+          <h3 class="formulario-titulo">{{ editandoCursoId() ? 'Editar curso' : 'Nuevo curso' }}</h3>
+          <div class="formulario-grid">
+            <div class="campo">
+              <label>Nombre</label>
+              <input type="text" [ngModel]="nombreCurso()" (ngModelChange)="nombreCurso.set($event)" placeholder="Ej. Robótica" />
+            </div>
+          </div>
+          @if (errorCurso()) { <p class="mensaje-error-form">{{ errorCurso() }}</p> }
+          <div class="formulario-acciones">
+            <button class="btn-guardar" (click)="guardarCurso()">{{ editandoCursoId() ? 'Guardar cambios' : 'Guardar curso' }}</button>
+            <button class="btn-cancelar" (click)="cancelarFormCurso()">Cancelar</button>
+          </div>
+        </div>
+      }
+
+      @if (cursos().length === 0) {
+        <p class="mensaje-vacio">No hay cursos registrados en este nivel.</p>
+      } @else {
+        <table class="tabla">
+          <thead><tr><th>Curso</th><th>Acción</th></tr></thead>
+          <tbody>
+            @for (c of cursos(); track c.id) {
+              <tr>
+                <td>{{ c.nombre }}</td>
+                <td><button class="btn-accion btn-editar" (click)="abrirEdicionCurso(c.id)">Editar</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+</div>

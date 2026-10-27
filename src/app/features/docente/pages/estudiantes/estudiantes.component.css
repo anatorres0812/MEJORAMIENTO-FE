@@ -1,0 +1,542 @@
+/* ===== Encabezado de página ===== */
+.pagina-titulo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin-bottom: 4px;
+}
+
+.pagina-subtitulo {
+  font-size: 14px;
+  color: var(--color-texto-suave);
+}
+
+.pagina-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.btn-agregar {
+  background: var(--color-primario);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.btn-agregar:hover {
+  background: var(--color-primario-oscuro);
+}
+
+/* ===== Banner de éxito ===== */
+.banner-exito {
+  background: var(--color-secundario-claro);
+  color: var(--color-secundario);
+  padding: 12px 16px;
+  border-radius: var(--radio-borde);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  animation: aparecer 0.2s ease;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Formulario de nuevo estudiante ===== */
+.tarjeta-formulario {
+  background: var(--color-superficie);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-card);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.formulario-titulo {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--color-texto);
+}
+
+.formulario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.formulario-grid .campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formulario-grid label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.formulario-grid input,
+.formulario-grid select {
+  padding: 9px 10px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-texto);
+  background: var(--color-superficie);
+}
+
+.formulario-grid input:focus,
+.formulario-grid select:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+
+.mensaje-error-form {
+  background: var(--color-peligro-claro);
+  color: var(--color-peligro);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.formulario-acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* ===== Filtros (Grado / Sección / Curso) ===== */
+.filtros {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--color-superficie);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-card);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.campo-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 160px;
+}
+
+.campo-filtro label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.campo-filtro select {
+  padding: 9px 10px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-texto);
+  background: var(--color-superficie);
+}
+
+.campo-filtro select:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+
+.campo-filtro select:disabled {
+  background: var(--color-fondo);
+  color: var(--color-texto-suave);
+  cursor: not-allowed;
+}
+
+/* ===== Mensaje vacío ===== */
+.mensaje-vacio {
+  background: var(--color-superficie);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-card);
+  padding: 24px;
+  text-align: center;
+  color: var(--color-texto-suave);
+  font-size: 14px;
+}
+
+/* ===== Tabla ===== */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-superficie);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-card);
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.tabla thead {
+  background: var(--color-fondo);
+}
+
+.tabla th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-texto-suave);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.tabla td {
+  padding: 12px 16px;
+  color: var(--color-texto);
+  border-bottom: 1px solid var(--color-borde);
+  vertical-align: middle;
+}
+
+.tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla tbody tr:hover {
+  background: var(--color-fondo);
+}
+
+.sin-nota {
+  color: var(--color-texto-suave);
+  font-style: italic;
+}
+
+/* ===== Botones de acción en la tabla ===== */
+.btn-accion {
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+}
+
+.btn-registrar {
+  background: var(--color-primario);
+}
+
+.btn-registrar:hover {
+  background: var(--color-primario-oscuro);
+}
+
+.btn-editar {
+  background: var(--color-secundario);
+}
+
+.btn-editar:hover {
+  opacity: 0.9;
+}
+
+/* ===== Fila de edición inline ===== */
+.fila-edicion {
+  background: var(--color-primario-claro);
+}
+
+.nombre-edicion {
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.input-inline {
+  padding: 7px 8px;
+  border: 1px solid var(--color-borde);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  background: var(--color-superficie);
+}
+
+.input-inline:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+
+.input-nota {
+  width: 70px;
+}
+
+.error-inline {
+  color: var(--color-peligro);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.acciones-inline {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-guardar {
+  background: var(--color-acento);
+  color: white;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-guardar:hover {
+  opacity: 0.9;
+}
+
+.btn-cancelar {
+  background: none;
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto-suave);
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover {
+  background: var(--color-fondo);
+}
+
+/* ===== Columna "Estudiante": nombre + badge + acciones ===== */
+.celda-estudiante {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nombre-con-editar {
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.fila-acciones-estudiante {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-estudiante {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--color-secundario-claro);
+  color: var(--color-secundario);
+}
+
+.badge-estudiante.inactivo {
+  background: var(--color-peligro-claro);
+  color: var(--color-peligro);
+}
+
+.btn-editar-datos {
+  border: none;
+  background: var(--color-fondo);
+  cursor: pointer;
+  font-size: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.btn-editar-datos:hover {
+  background: var(--color-primario-claro);
+  transform: scale(1.05);
+}
+
+.reporte-boton-contenedor {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.btn-ver-reporte {
+  background: var(--color-secundario);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-ver-reporte:hover {
+  opacity: 0.9;
+}
+
+.fila-busqueda-reporte {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.input-busqueda {
+  flex: 1;
+  min-width: 200px;
+  padding: 9px 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--color-superficie);
+  color: var(--color-texto);
+}
+
+.input-busqueda:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+
+.btn-exportar {
+  background: var(--color-superficie);
+  color: var(--color-primario);
+  border: 1px solid var(--color-primario);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-exportar:hover {
+  background: var(--color-primario-claro);
+}
+
+
+/* Evaluación por competencias */
+.panel-competencias {
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid #dbe3ee;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.cabecera-competencias {
+  margin-bottom: 22px;
+}
+
+.cabecera-competencias h2 {
+  margin: 0 0 8px;
+  color: #1e293b;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.cabecera-competencias p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.formulario-competencias {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.campo-competencia {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.campo-competencia label {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.input-competencia {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #1e293b;
+  font: inherit;
+}
+
+.input-competencia:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #2563eb;
+}
+
+.textarea-competencia {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.campo-competencia:has(textarea),
+.acciones-competencias {
+  grid-column: 1 / -1;
+}
+
+.acciones-competencias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.acciones-competencias button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.mensaje-informativo {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .panel-competencias {
+    padding: 16px;
+  }
+
+  .formulario-competencias {
+    grid-template-columns: 1fr;
+  }
+
+  .campo-competencia,
+  .campo-competencia:has(textarea),
+  .acciones-competencias {
+    grid-column: 1;
+  }
+}
+

@@ -1,0 +1,178 @@
+<div class="pagina">
+  @if (mensajeExito()) {
+    <div class="banner-exito">✅ {{ mensajeExito() }}</div>
+  }
+
+  @if (!editando()) {
+    <div class="expediente-encabezado">
+      <h1 class="pagina-titulo">Expediente del Docente</h1>
+      <button class="btn-editar-expediente" (click)="activarEdicion()">✏️ Editar Datos Profesionales</button>
+    </div>
+
+    <div class="tarjeta-identidad">
+      <div class="avatar-circulo">
+        @if (docente()?.fotoUrl; as foto) {
+          <img [src]="foto" alt="Foto de perfil" />
+        } @else {
+          <span>{{ iniciales() }}</span>
+        }
+      </div>
+      <div class="identidad-datos">
+        <h2>Prof. {{ docente()?.nombres }} {{ docente()?.apellidos }}</h2>
+        <div class="identidad-chips">
+          <span class="chip">🎓 {{ docente()?.especialidad }}</span>
+          <span class="chip">🏫 Nivel {{ docente()?.nivel }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tarjetas-stats">
+      <div class="stat-card">
+        <div class="stat-icono icono-azul">📚</div>
+        <div class="stat-texto">
+          <span class="stat-etiqueta">Cursos asignados</span>
+          <span class="stat-valor">{{ cursos().length }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icono icono-verde">🧑‍🎓</div>
+        <div class="stat-texto">
+          <span class="stat-etiqueta">Estudiantes evaluados</span>
+          <span class="stat-valor">{{ totalEstudiantesAtendidos() }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icono icono-ambar">📝</div>
+        <div class="stat-texto">
+          <span class="stat-etiqueta">Notas registradas</span>
+          <span class="stat-valor">{{ totalNotasRegistradas() }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icono icono-morado">📊</div>
+        <div class="stat-texto">
+          <span class="stat-etiqueta">Promedio de sus cursos</span>
+          <span class="stat-valor">{{ promedioGeneralDeSusCursos() }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="expediente-columnas">
+      <div class="panel">
+        <h3 class="panel-titulo">Rendimiento por Curso</h3>
+        @if (rendimientoPorCurso().length === 0) {
+          <p class="mensaje-vacio">No tienes cursos asignados.</p>
+        } @else {
+          <table class="tabla-mini">
+            <thead>
+              <tr><th>Curso</th><th>Estudiantes evaluados</th><th>Promedio</th></tr>
+            </thead>
+            <tbody>
+              @for (c of rendimientoPorCurso(); track c.nombre) {
+                <tr>
+                  <td>{{ c.nombre }}</td>
+                  <td>{{ c.estudiantesEvaluados }}</td>
+                  <td class="celda-nota">{{ c.promedio || '—' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+
+      <div class="columna-lateral">
+        <div class="panel">
+          <h3 class="panel-titulo">Datos de Contacto</h3>
+          <div class="dato-contacto">
+            <span class="dato-icono">📧</span>
+            <div>
+              <span class="dato-etiqueta">Correo</span>
+              <span class="dato-valor">{{ docente()?.correo }}</span>
+            </div>
+          </div>
+          <div class="dato-contacto">
+            <span class="dato-icono">📞</span>
+            <div>
+              <span class="dato-etiqueta">Teléfono</span>
+              <span class="dato-valor">{{ docente()?.telefono || 'No registrado' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel-titulo">Registro de Operaciones</h3>
+          @if (actividadReciente().length === 0) {
+            <p class="mensaje-vacio">Todavía no has registrado actividad.</p>
+          } @else {
+            <ul class="lista-actividad">
+              @for (item of actividadReciente(); track item.fecha + item.texto) {
+                <li class="item-actividad">
+                  <span class="punto-actividad"></span>
+                  <div>
+                    <p class="texto-actividad">{{ item.texto }}</p>
+                    <span class="fecha-actividad">{{ item.fecha }}</span>
+                  </div>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <h1 class="pagina-titulo">Editar Datos Profesionales</h1>
+
+    <div class="tarjeta-avatar">
+      <div class="avatar-circulo">
+        @if (fotoUrl(); as foto) {
+          <img [src]="foto" alt="Foto de perfil" />
+        } @else {
+          <span>{{ iniciales() }}</span>
+        }
+      </div>
+      <label class="btn-cambiar-foto">
+        📷 Cambiar foto
+        <input type="file" accept="image/*" (change)="onFotoSeleccionada($event)" hidden />
+      </label>
+    </div>
+
+    <div class="tarjeta-formulario">
+      <p class="aviso-credenciales">
+        ⚠️ Tu <strong>nombre</strong> y tu <strong>correo</strong> también son tu usuario y contraseña
+        para iniciar sesión. Si los cambias, deberás usar los nuevos valores la próxima vez que ingreses.
+      </p>
+
+      <div class="formulario-grid">
+        <div class="campo">
+          <label>Nombres</label>
+          <input type="text" [ngModel]="nombres()" (ngModelChange)="nombres.set($event)" />
+        </div>
+        <div class="campo">
+          <label>Apellidos</label>
+          <input type="text" [ngModel]="apellidos()" (ngModelChange)="apellidos.set($event)" />
+        </div>
+        <div class="campo">
+          <label>Correo</label>
+          <input type="email" [ngModel]="correo()" (ngModelChange)="correo.set($event)" />
+        </div>
+        <div class="campo">
+          <label>Especialidad</label>
+          <input type="text" [ngModel]="especialidad()" (ngModelChange)="especialidad.set($event)" />
+        </div>
+        <div class="campo">
+          <label>Teléfono</label>
+          <input type="text" [ngModel]="telefono()" (ngModelChange)="telefono.set($event)" placeholder="Ej. 987654321" />
+        </div>
+      </div>
+
+      @if (mensajeError()) {
+        <p class="mensaje-error-form">{{ mensajeError() }}</p>
+      }
+
+      <div class="formulario-acciones">
+        <button class="btn-guardar" (click)="guardar()">Guardar cambios</button>
+        <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+      </div>
+    </div>
+  }
+</div>

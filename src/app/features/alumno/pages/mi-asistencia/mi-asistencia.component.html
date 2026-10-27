@@ -1,0 +1,69 @@
+<div class="pagina">
+  <h1 class="pagina-titulo">Mi asistencia</h1>
+  <p class="pagina-subtitulo">Historial de asistencia registrado por tus docentes.</p>
+
+  @if (totalRegistros() === 0) {
+    <p class="mensaje-vacio">Todavía no hay registros de asistencia.</p>
+  } @else {
+    <div class="tarjetas">
+      <div class="tarjeta">
+        <div class="tarjeta-icono icono-azul">📋</div>
+        <div class="tarjeta-texto">
+          <span class="tarjeta-etiqueta">Registros totales</span>
+          <span class="tarjeta-valor">{{ totalRegistros() }}</span>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <div class="tarjeta-icono icono-azul">✅</div>
+        <div class="tarjeta-texto">
+          <span class="tarjeta-etiqueta">Presentes</span>
+          <span class="tarjeta-valor">{{ totalPresentes() }}</span>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <div class="tarjeta-icono icono-verde">⏰</div>
+        <div class="tarjeta-texto">
+          <span class="tarjeta-etiqueta">Tardanzas</span>
+          <span class="tarjeta-valor">{{ totalTardanzas() }}</span>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <div class="tarjeta-icono icono-rojo">❌</div>
+        <div class="tarjeta-texto">
+          <span class="tarjeta-etiqueta">Faltas</span>
+          <span class="tarjeta-valor">{{ totalFaltas() }}</span>
+        </div>
+      </div>
+      <div class="tarjeta tarjeta-destacada">
+        <div class="tarjeta-icono icono-ambar">📊</div>
+        <div class="tarjeta-texto">
+          <span class="tarjeta-etiqueta">% de asistencia</span>
+          <span class="tarjeta-valor">{{ porcentajeAsistencia() }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Curso</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of historial(); track item.id) {
+          <tr>
+            <td>{{ item.fecha }}</td>
+            <td>{{ item.cursoNombre }}</td>
+            <td>
+              <span class="badge-asistencia" [class]="'badge-' + item.estado">
+                {{ etiquetaEstado(item.estado) }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

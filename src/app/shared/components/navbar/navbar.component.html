@@ -1,0 +1,83 @@
+
+<header class="navbar">
+  <div class="navbar-izquierda">
+    <button
+      class="navbar-toggle"
+      type="button"
+      (click)="toggleSidebar.emit()"
+      aria-label="Abrir menú"
+      title="Abrir menú">
+      <span class="menu-icon" aria-hidden="true">☰</span>
+    </button>
+
+    <a class="navbar-inicio" routerLink="/dashboard" aria-label="Ir al inicio">
+      <span class="navbar-casa" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 10 9-7 9 7"></path>
+          <path d="M5 9v12h14V9"></path>
+          <path d="M9 21v-7h6v7"></path>
+        </svg>
+      </span>
+      <span class="navbar-inicio-texto">Inicio</span>
+    </a>
+  </div>
+
+  <div class="navbar-centro" aria-hidden="true"></div>
+
+  <div class="navbar-derecha">
+    <button
+      class="navbar-tema"
+      type="button"
+      (click)="themeService.toggle($event)"
+      [attr.aria-label]="themeService.tema() === 'light'
+        ? 'Activar modo oscuro' : 'Activar modo claro'"
+      [title]="themeService.tema() === 'light'
+        ? 'Activar modo oscuro' : 'Activar modo claro'">
+
+      @if (themeService.tema() === 'light') {
+        <svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M20.9 13A9 9 0 0 1 11 3.1
+            9 9 0 1 0 20.9 13Z"></path>
+        </svg>
+      } @else {
+        <svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path>
+          <path d="m4.93 4.93 1.42 1.42"></path>
+          <path d="m17.65 17.65 1.42 1.42"></path>
+          <path d="m4.93 19.07 1.42-1.42"></path>
+          <path d="m17.65 6.35 1.42-1.42"></path>
+        </svg>
+      }
+    </button>
+
+    <div class="navbar-separador" aria-hidden="true"></div>
+
+    <div class="navbar-usuario">
+      <div class="navbar-avatar" aria-hidden="true">
+        {{ (nombreUsuario || 'U').trim().charAt(0).toUpperCase() }}
+      </div>
+
+      <div class="navbar-datos">
+        <span class="navbar-nombre" [title]="nombreUsuario || 'Usuario'">
+          {{ nombreUsuario || 'Usuario' }}
+        </span>
+
+        <span class="navbar-rol">
+          <span class="navbar-estado" aria-hidden="true"></span>
+          <span class="navbar-rol-texto">
+            {{ rolLabel || 'Usuario' }}
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</header>

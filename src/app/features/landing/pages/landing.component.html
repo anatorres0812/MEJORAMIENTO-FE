@@ -1,0 +1,590 @@
+
+<header class="site-header" [class.header-scrolled]="scrolled()">
+  <div class="container header-inner">
+    <a class="brand" href="#inicio" (click)="scrollTo('inicio')" aria-label="IEP 20973, inicio">
+      <span class="brand-mark">
+        <span class="brand-mark-top">IEP</span>
+        <span class="brand-mark-number">20973</span>
+      </span>
+      <span class="brand-copy">
+        <strong>Sistema de Gestión y Seguimiento Académico</strong>
+      </span>
+    </a>
+
+    <nav class="desktop-navigation" aria-label="Navegación principal">
+      <a href="#inicio" (click)="scrollTo('inicio')">Inicio</a>
+      <a href="#plataforma" (click)="scrollTo('plataforma')">Plataforma</a>
+      <a href="#institucion" (click)="scrollTo('institucion')">Institución</a>
+      <a href="#niveles" (click)="scrollTo('niveles')">Niveles</a>
+      <a href="#contacto" (click)="scrollTo('contacto')">Contacto</a>
+    </nav>
+
+    <button class="header-login" type="button" (click)="irLogin()">
+      Ingrese a la plataforma <span>↗</span>
+    </button>
+
+    <button
+      class="menu-button"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Mostrar menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  @if (menuOpen()) {
+    <nav class="mobile-navigation" aria-label="Menú móvil">
+      <a href="#inicio" (click)="scrollTo('inicio')">Inicio</a>
+      <a href="#plataforma" (click)="scrollTo('plataforma')">Plataforma</a>
+      <a href="#institucion" (click)="scrollTo('institucion')">Institución</a>
+      <a href="#niveles" (click)="scrollTo('niveles')">Niveles educativos</a>
+      <a href="#contacto" (click)="scrollTo('contacto')">Contacto</a>
+      <button type="button" class="header-login mobile-login" (click)="irLogin()">
+        Acceder al sistema ↗
+      </button>
+    </nav>
+  }
+</header>
+
+<main>
+  <!-- PORTADA PRINCIPAL -->
+  <section class="hero" id="inicio">
+    <div class="hero-background"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-glow hero-glow-one"></div>
+    <div class="hero-glow hero-glow-two"></div>
+
+    <div class="container hero-layout">
+      <div class="hero-content">
+        <div class="hero-kicker">
+          <span class="kicker-line"></span>
+          INSTITUCIÓN EDUCATIVA · IEP 20973
+        </div>
+
+        <h1>
+          Una nueva forma
+          <br />
+          de gestionar
+          <span>la educación.</span>
+        </h1>
+
+        <p class="hero-description">
+          Una plataforma diseñada para organizar la gestión académica,
+          facilitar el acceso a la información y acompañar cada etapa
+          del proceso educativo.
+        </p>
+
+        <div class="hero-buttons">
+          <button class="button button-light" type="button" (click)="irLogin()">
+            Ingresar a la plataforma
+            <span class="button-arrow">↗</span>
+          </button>
+
+          <button class="button button-ghost" type="button" (click)="scrollTo('plataforma')">
+            Explorar funcionalidades
+            <span>↓</span>
+          </button>
+        </div>
+
+        <div class="hero-bottom-note">
+          <span class="note-indicator"></span>
+          <span>TECNOLOGÍA · ORGANIZACIÓN · EDUCACIÓN</span>
+        </div>
+      </div>
+
+      <div class="hero-showcase">
+        <div class="showcase-label">
+          <span class="showcase-label-dot"></span>
+          SISTEMA DE GESTIÓN ACADÉMICA
+        </div>
+
+        <div class="showcase-image">
+          <img
+            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1300&q=90"
+            alt="Entorno educativo con docentes y estudiantes"
+            fetchpriority="high"
+          />
+          <div class="showcase-image-shade"></div>
+
+          <div class="image-index">
+            <span>IEP</span>
+            <span class="image-index-divider"></span>
+            <span>20973</span>
+          </div>
+
+          <div class="image-message">
+            <span class="image-message-line"></span>
+            <div>
+              <small>EL FUTURO SE CONSTRUYE</small>
+              <strong>Desde la educación.</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="floating-info info-top">
+          <span class="info-symbol">01</span>
+          <span>
+            <small>PLATAFORMA</small>
+            <strong>Gestión centralizada</strong>
+          </span>
+          <span class="info-status"></span>
+        </div>
+
+        <div class="floating-info info-bottom">
+          <span class="info-symbol info-symbol-blue">02</span>
+          <span>
+            <small>ORGANIZACIÓN</small>
+            <strong>Información académica</strong>
+          </span>
+          <span class="info-arrow">↗</span>
+        </div>
+
+        <span class="showcase-outline"></span>
+      </div>
+    </div>
+
+    <div class="container hero-footer">
+      <div class="hero-footer-item">
+        <span class="footer-index">01 /</span>
+        <span>GESTIÓN DE ESTUDIANTES</span>
+      </div>
+      <div class="hero-footer-item">
+        <span class="footer-index">02 /</span>
+        <span>SEGUIMIENTO ACADÉMICO</span>
+      </div>
+      <div class="hero-footer-item">
+        <span class="footer-index">03 /</span>
+        <span>INFORMACIÓN ORGANIZADA</span>
+      </div>
+      <button class="scroll-cue" type="button" (click)="scrollTo('plataforma')">
+        DESLIZA PARA EXPLORAR <span>↓</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- PLATAFORMA -->
+  <section class="section platform-section" id="plataforma">
+    <div class="container">
+      <div class="section-topline">
+        <span>01 — FUNCIONALIDADES</span>
+        <span>PLATAFORMA ACADÉMICA</span>
+      </div>
+
+      <div class="section-heading-row">
+        <h2>
+          Todo conectado.
+          <span>Todo organizado.</span>
+        </h2>
+        <p>
+          Herramientas que permiten centralizar la información escolar
+          y facilitar el trabajo cotidiano de la institución.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        @for (servicio of servicios; track servicio.numero) {
+          <article class="service-card">
+            <div class="service-top">
+              <span class="service-number">{{ servicio.numero }}</span>
+              <span class="service-icon">{{ servicio.icono }}</span>
+            </div>
+
+            <span class="service-category">{{ servicio.categoria }}</span>
+            <h3>{{ servicio.titulo }}</h3>
+            <p>{{ servicio.descripcion }}</p>
+
+            <div class="service-bottom">
+              <span>IEP 20973</span>
+              <span class="service-arrow">↗</span>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTITUCIÓN -->
+  <section class="institution-section" id="institucion">
+    <div class="institution-visual">
+      <img
+        src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1300&q=90"
+        alt="Estudiantes participando en actividades educativas"
+        loading="lazy"
+      />
+      <div class="institution-image-overlay"></div>
+      <div class="institution-image-caption">
+        <span>IEP 20973</span>
+        <span class="caption-separator"></span>
+        <span>COMUNIDAD EDUCATIVA</span>
+      </div>
+    </div>
+
+    <div class="institution-content">
+      <div class="section-topline institution-topline">
+        <span>02 — NUESTRA PROPUESTA</span>
+      </div>
+
+      <span class="institution-kicker">EDUCACIÓN Y TECNOLOGÍA</span>
+
+      <h2>
+        Una gestión más clara.
+        <span>Una visión más amplia.</span>
+      </h2>
+
+      <p>
+        La plataforma de gestión académica de la IEP 20973 está orientada
+        a reunir en un mismo entorno las principales herramientas
+        de organización escolar.
+      </p>
+
+      <p>
+        Desde la información de estudiantes y docentes hasta las
+        calificaciones, la asistencia y los reportes, cada módulo
+        busca facilitar el acceso a la información y mejorar
+        la organización de los procesos académicos.
+      </p>
+
+      <div class="institution-points">
+        <div class="institution-point">
+          <span class="point-check">01</span>
+          <div>
+            <strong>Información organizada</strong>
+            <small>Datos académicos centralizados en la plataforma.</small>
+          </div>
+        </div>
+
+        <div class="institution-point">
+          <span class="point-check">02</span>
+          <div>
+            <strong>Procesos más claros</strong>
+            <small>Módulos enfocados en las tareas de gestión escolar.</small>
+          </div>
+        </div>
+
+        <div class="institution-point">
+          <span class="point-check">03</span>
+          <div>
+            <strong>Acceso desde distintos dispositivos</strong>
+            <small>Diseño adaptable a computadoras, tabletas y celulares.</small>
+          </div>
+        </div>
+      </div>
+
+      <button class="button button-dark" type="button" (click)="irLogin()">
+        Entrar a la plataforma <span>↗</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- NIVELES EDUCATIVOS -->
+  <section class="section levels-section" id="niveles">
+    <div class="container">
+      <div class="section-topline">
+        <span>03 — ETAPAS EDUCATIVAS</span>
+        <span>IEP 20973</span>
+      </div>
+
+      <div class="section-heading-row levels-heading">
+        <h2>
+          Cada etapa,
+          <span>un nuevo comienzo.</span>
+        </h2>
+        <p>
+          Una presentación de los niveles educativos que puede adaptarse
+          a la estructura real de la institución.
+        </p>
+      </div>
+
+      <div class="levels-grid">
+        @for (nivel of niveles; track nivel.numero) {
+          <article class="level-card">
+            <div class="level-image">
+              <img
+                [src]="nivel.imagen"
+                [alt]="'Imagen ilustrativa del nivel ' + nivel.titulo"
+                loading="lazy"
+              />
+              <div class="level-image-overlay"></div>
+              <span class="level-number">{{ nivel.numero }}</span>
+            </div>
+
+            <div class="level-card-content">
+              <span class="level-kicker">NIVEL EDUCATIVO</span>
+              <h3>{{ nivel.titulo }}</h3>
+              <p>{{ nivel.descripcion }}</p>
+              <div class="level-card-footer">
+                <span>IEP 20973</span>
+                <span>↗</span>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCESO AL SISTEMA -->
+  <section class="access-section">
+    <div class="access-pattern"></div>
+
+    <div class="container access-content">
+      <span class="access-kicker">IEP 20973 · PLATAFORMA ACADÉMICA</span>
+
+      <h2>
+        La gestión educativa
+        <span>empieza aquí.</span>
+      </h2>
+
+      <p>
+        Ingresa a la plataforma y accede a las funcionalidades disponibles
+        según tu perfil de usuario.
+      </p>
+
+      <button class="button button-light access-button" type="button" (click)="irLogin()">
+        Acceder al sistema <span>↗</span>
+      </button>
+
+      <span class="access-footnote">UN ESPACIO DIGITAL PARA LA GESTIÓN ESCOLAR</span>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="section contact-section" id="contacto">
+    <div class="container contact-layout">
+      <div class="contact-copy">
+        <div class="section-topline">
+          <span>04 — CONTACTO</span>
+        </div>
+
+        <span class="contact-kicker">ESTAMOS PARA ATENDERTE</span>
+
+        <h2>
+          Hablemos de
+          <span>educación.</span>
+        </h2>
+
+        <p>
+          Utiliza el formulario para enviar tus consultas relacionadas
+          con la plataforma de gestión académica de la IEP 20973.
+        </p>
+
+        <div class="contact-detail">
+          <span class="contact-detail-number">01</span>
+          <div>
+            <small>INSTITUCIÓN</small>
+            <strong>IEP 20973</strong>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <span class="contact-detail-number">02</span>
+          <div>
+            <small>CORREO DE CONTACTO</small>
+            <a href="mailto:soporte@gestion20973.edu.pe">
+              soporte&#64;gestion20973.edu.pe
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <span class="contact-detail-number">03</span>
+          <div>
+            <small>CONSULTAS</small>
+            <strong>Escríbenos mediante el formulario</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-panel">
+        <div class="form-top">
+          <div>
+            <span class="form-label">FORMULARIO DE CONTACTO</span>
+            <h3>Envíanos un mensaje.</h3>
+          </div>
+          <span class="form-mark">20973</span>
+        </div>
+
+        <form #contactForm="ngForm" (ngSubmit)="enviarContacto()" novalidate>
+          <div class="form-row">
+            <!-- NOMBRE -->
+            <div class="form-field">
+              <label for="nombre">Nombre completo *</label>
+              <input
+                id="nombre"
+                name="nombre"
+                type="text"
+                [(ngModel)]="contacto.nombre"
+                #nombreCtrl="ngModel"
+                placeholder="Ej. Ana María Torres"
+                autocomplete="name"
+                maxlength="100"
+                pattern="^[A-ZÁÉÍÓÚÜÑ][A-Za-zÁÉÍÓÚáéíóúÁÉÍÓÚÑñÜü' -]*$"
+                required
+              />
+
+              @if (nombreCtrl.invalid && nombreCtrl.touched) {
+                <small class="field-error">
+                  @if (nombreCtrl.errors?.['required']) {
+                    El nombre completo es obligatorio.
+                  } @else if (nombreCtrl.errors?.['pattern']) {
+                    Comienza con mayúscula y utiliza solamente letras,
+                    espacios, apóstrofes o guiones. No se permiten números.
+                  }
+                </small>
+              }
+            </div>
+
+            <!-- CORREO ELECTRÓNICO: .COM O .EDU.PE -->
+            <div class="form-field">
+              <label for="correo">Correo electrónico *</label>
+
+              <input
+                id="correo"
+                name="correo"
+                type="email"
+                [(ngModel)]="contacto.correo"
+                #correoCtrl="ngModel"
+                placeholder="tu correo electronico"
+                autocomplete="email"
+                maxlength="150"
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|edu\.pe)$"
+                required
+              />
+
+              @if (correoCtrl.invalid && correoCtrl.touched) {
+                <small class="field-error">
+                  @if (correoCtrl.errors?.['required']) {
+                    El correo electrónico es obligatorio.
+                  } @else {
+                    Ingresa un correo electronico válido. &#64;.
+                  }
+                </small>
+              }
+            </div>
+          </div>
+
+          <!-- ASUNTO -->
+          <div class="form-field">
+            <label for="asunto">Asunto</label>
+            <input
+              id="asunto"
+              name="asunto"
+              type="text"
+              [(ngModel)]="contacto.asunto"
+              #asuntoCtrl="ngModel"
+              placeholder="Motivo de tu consulta"
+              maxlength="500"
+            />
+            <small class="field-hint">
+              {{ contacto.asunto.length }}/500 caracteres
+            </small>
+          </div>
+
+          <!-- MENSAJE -->
+          <div class="form-field">
+            <label for="mensaje">Mensaje *</label>
+            <textarea
+              id="mensaje"
+              name="mensaje"
+              [(ngModel)]="contacto.mensaje"
+              #mensajeCtrl="ngModel"
+              placeholder="Cuéntanos cómo podemos ayudarte..."
+              rows="5"
+              maxlength="2000"
+              required
+            ></textarea>
+
+            @if (mensajeCtrl.invalid && mensajeCtrl.touched) {
+              <small class="field-error">
+                El mensaje es obligatorio.
+              </small>
+            }
+          </div>
+
+          @if (errorEnvio()) {
+            <div class="form-alert form-alert-error" role="alert">
+              {{ errorEnvio() }}
+            </div>
+          }
+
+          @if (enviado()) {
+            <div class="form-alert form-alert-success" role="status">
+              Mensaje enviado correctamente. Gracias por comunicarte con nosotros.
+            </div>
+          }
+
+          <button
+            class="button button-dark form-submit"
+            type="submit"
+            [disabled]="enviando() || !contactForm.valid"
+          >
+            @if (enviando()) {
+              Enviando...
+            } @else {
+              Enviar mensaje <span>↗</span>
+            }
+          </button>
+
+          <small class="form-privacy">
+            * Campos obligatorios. No incluyas contraseñas ni datos sensibles.
+          </small>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- PIE DE PÁGINA -->
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-identity">
+      <a class="brand footer-brand" href="#inicio" (click)="scrollTo('inicio')">
+        <span class="brand-mark">
+          <span class="brand-mark-top">IEP</span>
+          <span class="brand-mark-number">20973</span>
+        </span>
+        <span class="brand-copy">
+          <strong>IEP 20973</strong>
+          <small>PLATAFORMA ACADÉMICA</small>
+        </span>
+      </a>
+
+      <p>
+        Una propuesta digital orientada a facilitar la organización
+        y la gestión de la información académica.
+      </p>
+    </div>
+
+    <div class="footer-column">
+      <h3>EXPLORAR</h3>
+      <a href="#inicio" (click)="scrollTo('inicio')">Inicio</a>
+      <a href="#plataforma" (click)="scrollTo('plataforma')">Plataforma</a>
+      <a href="#institucion" (click)="scrollTo('institucion')">Institución</a>
+      <a href="#niveles" (click)="scrollTo('niveles')">Niveles educativos</a>
+    </div>
+
+    <div class="footer-column">
+      <h3>PLATAFORMA</h3>
+      <button type="button" (click)="irLogin()">Acceder al sistema ↗</button>
+      <a href="#contacto" (click)="scrollTo('contacto')">Contacto</a>
+    </div>
+
+    <div class="footer-column footer-email">
+      <h3>CONTACTO</h3>
+      <p>IEP 20973</p>
+      <a href="mailto:soporte@gestion20973.edu.pe">
+        soporte&#64;gestion20973.edu.pe
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <span>© {{ currentYear }} IEP 20973. Todos los derechos reservados.</span>
+      <span>SISTEMA DE GESTION Y SEGUIMIENTO ACADEMICO - IEP N. 20973 <i></i> EDUCACIÓN</span>
+    </div>
+  </div>
+</footer>

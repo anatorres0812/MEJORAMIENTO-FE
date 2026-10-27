@@ -1,0 +1,176 @@
+<div class="pagina">
+  @if (mensajeExito()) {
+    <div class="banner-exito">✅ {{ mensajeExito() }}</div>
+  }
+
+  @if (!editando()) {
+    <div class="expediente-encabezado">
+      <h1 class="pagina-titulo">Expediente del Administrador</h1>
+      <button class="btn-editar-expediente" (click)="activarEdicion()">✏️ Editar mi perfil</button>
+    </div>
+
+    <div class="tarjeta-identidad">
+      <div class="avatar-circulo">
+        @if (perfil().fotoUrl; as foto) {
+          <img [src]="foto" alt="Foto de perfil" />
+        } @else {
+          <span>{{ iniciales() }}</span>
+        }
+      </div>
+      <div class="identidad-datos">
+        <h2>{{ nombreCompleto() }}</h2>
+        <div class="identidad-chips">
+          <span class="chip">🛠️ Administrador del sistema</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tarjetas-stats">
+      <div class="stat-card">
+        <div class="stat-icono icono-azul">🧑‍🏫</div>
+        <div class="stat-texto">
+          <span class="stat-etiqueta">Docentes</span>
+          <span class="stat-valor">{{ totalDocentes() }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icono icono-verde">🧑‍🎓</div>
+        <div class="stat-texto">
+          <span class="stat-etiqueta">Estudiantes</span>
+          <span class="stat-valor">{{ totalEstudiantes() }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icono icono-ambar">📝</div>
+        <div class="stat-texto">
+          <span class="stat-etiqueta">Notas registradas</span>
+          <span class="stat-valor">{{ totalNotasRegistradas() }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icono icono-morado">🗂️</div>
+        <div class="stat-texto">
+          <span class="stat-etiqueta">Secciones</span>
+          <span class="stat-valor">{{ totalSecciones() }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="expediente-columnas">
+      <div class="panel">
+        <h3 class="panel-titulo">Resumen por Nivel</h3>
+        <table class="tabla-mini">
+          <thead>
+            <tr><th>Nivel</th><th>Docentes</th><th>Estudiantes</th><th>Secciones</th></tr>
+          </thead>
+          <tbody>
+            @for (r of resumenPorNivel(); track r.nivel) {
+              <tr>
+                <td>{{ r.nivel }}</td>
+                <td>{{ r.docentes }}</td>
+                <td>{{ r.estudiantes }}</td>
+                <td>{{ r.secciones }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="columna-lateral">
+        <div class="panel">
+          <h3 class="panel-titulo">Datos Personales</h3>
+          <div class="dato-contacto">
+            <span class="dato-icono">🪪</span>
+            <div>
+              <span class="dato-etiqueta">DNI</span>
+              <span class="dato-valor">{{ perfil().dni || 'No registrado' }}</span>
+            </div>
+          </div>
+          <div class="dato-contacto">
+            <span class="dato-icono">📧</span>
+            <div>
+              <span class="dato-etiqueta">Correo</span>
+              <span class="dato-valor">{{ perfil().correo || 'No registrado' }}</span>
+            </div>
+          </div>
+          <div class="dato-contacto">
+            <span class="dato-icono">📞</span>
+            <div>
+              <span class="dato-etiqueta">Teléfono</span>
+              <span class="dato-valor">{{ perfil().telefono || 'No registrado' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel-titulo">Actividad Reciente del Sistema</h3>
+          @if (actividadReciente().length === 0) {
+            <p class="mensaje-vacio">Todavía no hay actividad registrada.</p>
+          } @else {
+            <ul class="lista-actividad">
+              @for (item of actividadReciente(); track item.id) {
+                <li class="item-actividad">
+                  <span class="punto-actividad"></span>
+                  <div>
+                    <p class="texto-actividad">{{ item.texto }}</p>
+                    <span class="fecha-actividad">{{ item.nivel }} · {{ item.fecha }}</span>
+                  </div>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <h1 class="pagina-titulo">Editar mi perfil</h1>
+
+    <div class="tarjeta-avatar">
+      <div class="avatar-circulo">
+        @if (fotoUrl(); as foto) {
+          <img [src]="foto" alt="Foto de perfil" />
+        } @else {
+          <span>{{ iniciales() }}</span>
+        }
+      </div>
+      <label class="btn-cambiar-foto">
+        📷 Cambiar foto
+        <input type="file" accept="image/*" (change)="onFotoSeleccionada($event)" hidden />
+      </label>
+    </div>
+
+    <div class="tarjeta-formulario">
+      <div class="formulario-grid">
+        <div class="campo">
+          <label>Nombres</label>
+          <input type="text" [ngModel]="nombres()" (ngModelChange)="nombres.set($event)" />
+        </div>
+        <div class="campo">
+          <label>Apellidos</label>
+          <input type="text" [ngModel]="apellidos()" (ngModelChange)="apellidos.set($event)" />
+        </div>
+        <div class="campo">
+          <label>DNI</label>
+          <input type="text" maxlength="8" [ngModel]="dni()" (ngModelChange)="dni.set($event)" placeholder="8 dígitos" />
+        </div>
+        <div class="campo">
+          <label>Correo</label>
+          <input type="email" [ngModel]="correo()" (ngModelChange)="correo.set($event)" placeholder="correo@colegio.edu.pe" />
+        </div>
+        <div class="campo">
+          <label>Teléfono</label>
+          <input type="text" [ngModel]="telefono()" (ngModelChange)="telefono.set($event)" placeholder="Ej. 987654321" />
+        </div>
+      </div>
+
+      @if (mensajeError()) {
+        <p class="mensaje-error-form">{{ mensajeError() }}</p>
+      }
+
+      <div class="formulario-acciones">
+        <button class="btn-guardar" (click)="guardar()">Guardar cambios</button>
+        <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+      </div>
+    </div>
+  }
+</div>

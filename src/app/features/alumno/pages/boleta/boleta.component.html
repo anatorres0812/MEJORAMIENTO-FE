@@ -1,0 +1,103 @@
+<div class="boleta-wrapper">
+  <div class="boleta-acciones no-print">
+    <button class="btn-volver" (click)="volver()">← Volver</button>
+    <button class="btn-imprimir" (click)="imprimir()">🖨️ Imprimir / Descargar PDF</button>
+  </div>
+
+  <div class="boleta">
+    <div class="boleta-encabezado">
+      <div class="boleta-escudo">RLA</div>
+      <div class="boleta-institucion">
+        <h1>I.E.P. N.° 20973</h1>
+        <p>Registro de Logros de Aprendizaje</p>
+      </div>
+      <div class="boleta-periodo">
+        <span>Año académico</span>
+        <strong>{{ anioAcademico }}</strong>
+      </div>
+    </div>
+
+    <h2 class="boleta-titulo">BOLETA DE NOTAS</h2>
+
+    <div class="boleta-datos">
+      <div>
+        <span>Estudiante</span>
+        <strong>{{ estudiante()?.nombres }} {{ estudiante()?.apellidos }}</strong>
+      </div>
+      <div>
+        <span>DNI</span>
+        <strong>{{ estudiante()?.dni }}</strong>
+      </div>
+      <div>
+        <span>Nivel</span>
+        <strong>{{ estudiante()?.nivel }}</strong>
+      </div>
+      <div>
+        <span>Grado</span>
+        <strong>{{ grado()?.nombre }}</strong>
+      </div>
+      <div>
+        <span>Sección</span>
+        <strong>{{ seccion()?.nombre }}</strong>
+      </div>
+      <div>
+        <span>Apoderado</span>
+        <strong>{{ estudiante()?.apoderado }}</strong>
+      </div>
+    </div>
+
+    @if (notas().length === 0) {
+      <p class="boleta-vacio">Aún no hay notas registradas para este estudiante.</p>
+    } @else {
+      <table class="boleta-tabla">
+        <thead>
+          <tr>
+            <th>Curso</th>
+            <th>Docente</th>
+            <th>Periodo</th>
+            <th>Nota</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (n of notas(); track n.id) {
+            <tr>
+              <td>{{ n.cursoNombre }}</td>
+              <td>{{ n.docenteNombre }}</td>
+              <td>{{ n.periodo }}</td>
+              <td class="celda-nota">{{ n.nota }}</td>
+              <td>
+                <span class="estado-chip" [class.desaprobado]="n.estado === 'Desaprobado'">
+                  {{ n.estado }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="boleta-resumen">
+        <div class="resumen-item">
+          <span>Cursos cursados</span>
+          <strong>{{ notas().length }}</strong>
+        </div>
+        <div class="resumen-item destacado">
+          <span>Promedio general</span>
+          <strong>{{ promedio() }}</strong>
+        </div>
+        <div class="resumen-item">
+          <span>Condición</span>
+          <strong>{{ promedio() >= 11 ? 'Aprobado' : 'Requiere refuerzo' }}</strong>
+        </div>
+      </div>
+    }
+
+    <div class="boleta-firmas">
+      <div class="firma"><span class="linea"></span><p>Director(a)</p></div>
+      <div class="firma"><span class="linea"></span><p>Docente</p></div>
+      <div class="firma"><span class="linea"></span><p>Apoderado</p></div>
+    </div>
+
+    <p class="boleta-nota-pie">Documento generado por el sistema — {{ fechaEmision }}</p>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="reporte-wrapper">
+  <div class="reporte-acciones no-print">
+    <button class="btn-volver" (click)="volver()">← Volver</button>
+    <button class="btn-imprimir" (click)="imprimir()">🖨️ Imprimir / Descargar PDF</button>
+    <button class="btn-imprimir" (click)="exportarXlsx()">⬇️ Exportar a Excel</button>  
+  </div>
+
+  <div class="reporte">
+    <div class="reporte-encabezado">
+      <div class="reporte-escudo">RLA</div>
+      <div class="reporte-institucion">
+        <h1>I.E.P. N.° 20973</h1>
+        <p>Registro de Logros de Aprendizaje</p>
+      </div>
+      <div class="reporte-fecha">
+        <span>Emitido</span>
+        <strong>{{ fechaEmision }}</strong>
+      </div>
+    </div>
+
+    <h2 class="reporte-titulo">REPORTE CONSOLIDADO DE SECCIÓN</h2>
+
+    <div class="reporte-datos">
+      <div><span>Docente</span><strong>{{ docente()?.nombres }} {{ docente()?.apellidos }}</strong></div>
+      <div><span>Curso</span><strong>{{ curso()?.nombre }}</strong></div>
+      <div><span>Nivel</span><strong>{{ docente()?.nivel }}</strong></div>
+      <div><span>Grado</span><strong>{{ grado()?.nombre }}</strong></div>
+      <div><span>Sección</span><strong>{{ seccion()?.nombre }}</strong></div>
+    </div>
+
+    @if (filas().length === 0) {
+      <p class="reporte-vacio">No hay estudiantes registrados en esta sección.</p>
+    } @else {
+      <table class="reporte-tabla">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Estudiante</th>
+            <th>DNI</th>
+            <th>Nota</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (fila of filas(); track fila.estudiante.id; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ fila.estudiante.nombres }} {{ fila.estudiante.apellidos }}</td>
+              <td>{{ fila.estudiante.dni }}</td>
+              @if (fila.nota !== null) {
+                <td class="celda-nota">{{ fila.nota }}</td>
+                <td>
+                  <span class="estado-chip" [class.desaprobado]="fila.estado === 'Desaprobado'">
+                    {{ fila.estado }}
+                  </span>
+                </td>
+              } @else {
+                <td colspan="2" class="sin-nota">Sin nota registrada</td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="reporte-resumen">
+        <div class="resumen-item destacado">
+          <span>Promedio de sección</span>
+          <strong>{{ promedioSeccion() }}</strong>
+        </div>
+        <div class="resumen-item">
+          <span>Aprobados</span>
+          <strong>{{ totalAprobados() }}</strong>
+        </div>
+        <div class="resumen-item">
+          <span>Desaprobados</span>
+          <strong>{{ totalDesaprobados() }}</strong>
+        </div>
+      </div>
+    }
+
+    <div class="reporte-firmas">
+      <div class="firma"><span class="linea"></span><p>Docente</p></div>
+      <div class="firma"><span class="linea"></span><p>Director(a)</p></div>
+    </div>
+
+    <p class="reporte-nota-pie">Documento generado por el sistema — {{ fechaEmision }}</p>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="pagina">
+  <h1 class="pagina-titulo">Mis cursos</h1>
+  <p class="pagina-subtitulo">Cursos que llevas este año académico.</p>
+
+  @if (cursos().length === 0) {
+    <p class="mensaje-vacio">No tienes cursos registrados.</p>
+  } @else {
+    <div class="grid-cursos">
+      @for (curso of cursos(); track curso.id) {
+        <div class="tarjeta-curso">
+          <span class="tarjeta-curso-nombre">{{ curso.cursoNombre }}</span>
+          <span class="tarjeta-curso-docente">Docente: {{ curso.docenteNombre }}</span>
+        </div>
+      }
+    </div>
+  }
+</div>

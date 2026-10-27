@@ -1,0 +1,455 @@
+<div class="login-page">
+
+  <!-- =====================================================
+       PASO 1: SELECCIÓN DE ROL
+       ===================================================== -->
+  @if (paso() === 'rol') {
+    <main class="rol-layout animacion-entrada">
+
+      <!-- MITAD AZUL (rompecabezas) -->
+      <section class="rol-presentacion">
+
+        <header class="marca-institucion">
+          <span class="marca-logo">RLA</span>
+          <span>
+            <span class="marca-superior">PLATAFORMA EDUCATIVA</span>
+            <strong>I.E.P. N.° 20973</strong>
+          </span>
+        </header>
+
+        <div class="presentacion-contenido panel-mensaje">
+          <h2>
+            Aprende,crece y alcanza
+            tus metas.
+          </h2>
+
+          <p>Un espacio para acompañar tu aprendizaje, consultar tus logros y construir un mejor futuro.</p>
+        </div>
+
+        <footer class="marca-footer texto-centrado">
+          © 2026 I.E.P. N.° 20973 · Sistema de Gestión y Seguimiento Académico
+        </footer>
+
+      </section>
+
+      <!-- MITAD BLANCA -->
+      <section class="rol-contenido">
+        <div class="rol-header">
+          <span class="seccion-etiqueta">BIENVENIDO/A</span>
+          <h2>¿Cómo deseas ingresar?</h2>
+          <p>Selecciona tu perfil para continuar con el sistema.</p>
+        </div>
+
+        <div class="rol-opciones">
+
+          <button
+            type="button"
+            class="rol-opcion-card tarjeta-estudiante"
+            (click)="seleccionarRol('alumno')"
+          >
+            <span class="rol-icono icono-estudiante">🎓</span>
+            <span class="rol-texto">
+              <span class="rol-titulo">Estudiante</span>
+              <span class="rol-desc">
+                Consulta tus notas, cursos y asistencia.
+              </span>
+            </span>
+            <span class="rol-flecha">→</span>
+          </button>
+
+          <button
+            type="button"
+            class="rol-opcion-card tarjeta-docente"
+            (click)="seleccionarRol('docente')"
+          >
+            <span class="rol-icono icono-docente">🧑‍🏫</span>
+            <span class="rol-texto">
+              <span class="rol-titulo">Docente</span>
+              <span class="rol-desc">
+                Registra notas, asistencia y gestiona tus cursos.
+              </span>
+            </span>
+            <span class="rol-flecha">→</span>
+          </button>
+
+          <button
+            type="button"
+            class="rol-opcion-card tarjeta-admin"
+            (click)="seleccionarRol('administrador')"
+          >
+            <span class="rol-icono icono-admin">⚙️</span>
+            <span class="rol-texto">
+              <span class="rol-titulo">Administrador</span>
+              <span class="rol-desc">
+                Gestiona docentes, cursos y datos del colegio.
+              </span>
+            </span>
+            <span class="rol-flecha">→</span>
+          </button>
+
+        </div>
+
+        <div class="aviso-seguridad">
+          <span class="candado-icono">🔒</span>
+          <span>Ingresa con tus credenciales autorizadas.</span>
+        </div>
+      </section>
+    </main>
+  }
+
+  <!-- =====================================================
+       PASO 2: ESTUDIANTE O DOCENTE
+       ===================================================== -->
+  @if (paso() === 'nivel-form') {
+    <main class="login-split animacion-entrada">
+
+      <!-- MITAD AZUL (rompecabezas) -->
+      <section class="split-izquierda">
+
+        <button
+          type="button"
+          class="marca-institucion marca-clic"
+          aria-label="Volver a seleccionar el rol"
+          (click)="volver()"
+        >
+          <span class="marca-logo">RLA</span>
+          <span>
+            <span class="marca-superior">PLATAFORMA EDUCATIVA</span>
+            <strong>I.E.P. N.° 20973</strong>
+          </span>
+        </button>
+
+        
+
+        @if (rolSeleccionado() === 'docente') {
+          <div class="panel-mensaje">
+          <h2>
+            Enseña, inspira y deja huella.
+          </h2>
+
+          <p>Organiza tus clases, registra el progreso y acompaña a cada estudiante.</p>
+        </div>
+        } @else {
+          <div class="panel-mensaje">
+          <h2>
+            ¡Cada logro cuenta!
+          </h2>
+
+          <p>Accede a tu espacio académico y continúa avanzando hacia tus metas.</p>
+        </div>
+        }
+
+        <footer class="marca-footer texto-centrado">
+          © 2026 I.E.P. N.° 20973 · Sistema de Gestión y Seguimiento Académico
+        </footer>
+
+      </section>
+
+      <!-- MITAD BLANCA -->
+      <section class="split-derecha">
+
+        <button
+          type="button"
+          class="btn-volver-rol"
+          (click)="volver()"
+        >
+          <span>←</span>
+          Cambiar de rol
+        </button>
+
+        <div class="formulario-contenido">
+
+          <span class="seccion-etiqueta">
+            ACCESO {{ rolSeleccionado() === 'docente' ? 'DOCENTE' : 'ESTUDIANTE' }}
+          </span>
+
+          <h2 class="bienvenida-titulo">
+            ¡Bienvenido de nuevo!
+          </h2>
+
+          <p class="bienvenida-subtitulo">
+            Selecciona tu nivel académico e ingresa tus credenciales.
+          </p>
+
+          <div class="separador-formulario"></div>
+
+          <!-- NIVEL ACADÉMICO -->
+          <div class="campo-grupo">
+            <label class="label-principal">
+              Nivel académico
+            </label>
+
+            <div class="niveles-cards">
+              @for (nivel of niveles; track nivel) {
+                <label
+                  class="nivel-card"
+                  [class.activo]="nivelSeleccionado() === nivel"
+                >
+                  <input
+                    type="radio"
+                    name="nivel"
+                    [value]="nivel"
+                    [checked]="nivelSeleccionado() === nivel"
+                    (change)="nivelSeleccionado.set(nivel)"
+                  />
+
+                  <span class="nivel-card-titulo">
+                    {{ nivel }}
+                  </span>
+
+                  <span class="nivel-check">
+                    {{ nivelSeleccionado() === nivel ? '✓' : '' }}
+                  </span>
+                </label>
+              }
+            </div>
+          </div>
+
+          <!-- USUARIO -->
+          <div class="campo-icono">
+            <label for="login-usuario">
+              {{ etiquetaUsuario() }}
+            </label>
+
+            <div class="input-con-icono">
+              <span class="icono-campo">
+                {{ rolSeleccionado() === 'docente' ? '✉️' : '👤' }}
+              </span>
+
+              <input
+                id="login-usuario"
+                [type]="rolSeleccionado() === 'docente' ? 'email' : 'text'"
+                [placeholder]="placeholderUsuario()"
+                autocomplete="username"
+                [ngModel]="usuarioInput()"
+                (ngModelChange)="usuarioInput.set($event)"
+                (keyup.enter)="ingresarComoAlumnoODocente()"
+                [attr.maxlength]="rolSeleccionado() === 'docente' ? 254 : 100"
+                [class.input-invalido]="usuarioInput().length > 0 && !usuarioValido()"
+                [attr.aria-invalid]="usuarioInput().length > 0 && !usuarioValido()"
+              />
+            </div>
+
+            @if (usuarioInput().length > 0 && !usuarioValido()) {
+              <small class="texto-validacion">
+                @if (rolSeleccionado() === 'docente') {
+                  Usa un correo válido que termine en &#64;colegio.edu.pe.
+                } @else {
+                  Escribe nombres y apellidos usando solo letras y espacios.
+                }
+              </small>
+            }
+          </div>
+
+          <!-- CONTRASEÑA: DNI -->
+          <div class="campo-icono">
+            <label for="login-password">
+              {{ etiquetaPassword() }}
+            </label>
+
+            <div class="input-con-icono">
+              <span class="icono-campo">🔒</span>
+
+              <input
+                id="login-password"
+                [type]="mostrarPassword() ? 'text' : 'password'"
+                [placeholder]="placeholderPassword()"
+                inputmode="numeric"
+                maxlength="8"
+                autocomplete="current-password"
+                [ngModel]="passwordInput()"
+                (ngModelChange)="passwordInput.set($event)"
+                (keyup.enter)="ingresarComoAlumnoODocente()"
+                [class.input-invalido]="passwordInput().length > 0 && !passwordValido()"
+                [attr.aria-invalid]="passwordInput().length > 0 && !passwordValido()"
+              />
+
+              <button
+                type="button"
+                class="icono-ojo"
+                [attr.aria-label]="mostrarPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                (click)="toggleMostrarPassword()"
+              >
+                {{ mostrarPassword() ? '🙈' : '👁️' }}
+              </button>
+            </div>
+
+            @if (passwordInput().length > 0 && !passwordValido()) {
+              <small class="texto-validacion">
+                El DNI debe contener exactamente 8 números.
+              </small>
+            }
+          </div>
+
+          <!-- MENSAJE DE ERROR -->
+          @if (mensajeError()) {
+            <div class="mensaje-error-login" role="alert">
+              <span>⚠️</span>
+              <span>{{ mensajeError() }}</span>
+            </div>
+          }
+
+          <!-- BOTÓN DE INGRESO -->
+          <button
+            type="button"
+            class="btn-ingresar-split"
+            (click)="ingresarComoAlumnoODocente()"
+          >
+            <span>Iniciar sesión</span>
+            <span class="flecha-boton">→</span>
+          </button>
+
+          <p class="nota-privacidad">
+            🔐 Tu acceso está destinado a usuarios autorizados.
+          </p>
+
+        </div>
+      </section>
+    </main>
+  }
+
+  <!-- =====================================================
+       PASO 3: ADMINISTRADOR
+       ===================================================== -->
+  @if (paso() === 'admin-form') {
+    <main class="login-split login-admin animacion-entrada">
+
+      <!-- MITAD AZUL (rompecabezas) -->
+      <section class="split-izquierda">
+
+        <button
+          type="button"
+          class="marca-institucion marca-clic"
+          aria-label="Volver a seleccionar el rol"
+          (click)="volver()"
+        >
+          <span class="marca-logo">RLA</span>
+          <span>
+            <span class="marca-superior">PLATAFORMA EDUCATIVA</span>
+            <strong>I.E.P. N.° 20973</strong>
+          </span>
+        </button>
+
+        
+
+        <div class="panel-mensaje">
+          <h2>
+            Organiza, gestiona y transforma.
+          </h2>
+
+          <p>Administra la información académica de la institución desde un solo lugar.</p>
+        </div>
+
+        <footer class="marca-footer texto-centrado">
+          © 2026 I.E.P. N.° 20973 · Sistema de Gestión y Seguimiento Académico
+        </footer>
+
+      </section>
+
+      <!-- MITAD BLANCA -->
+      <section class="split-derecha admin-derecha">
+
+        <button
+          type="button"
+          class="btn-volver-rol"
+          (click)="volver()"
+        >
+          <span>←</span>
+          Cambiar de rol
+        </button>
+
+        <div class="formulario-contenido">
+
+          <span class="seccion-etiqueta">
+            ACCESO ADMINISTRATIVO
+          </span>
+
+          <h2 class="bienvenida-titulo">
+            Bienvenido, administrador
+          </h2>
+
+          <p class="bienvenida-subtitulo">
+            Ingresa tus credenciales para gestionar el sistema académico.
+          </p>
+
+          <div class="separador-formulario"></div>
+
+          <!-- USUARIO ADMINISTRADOR -->
+          <div class="campo-icono">
+            <label for="admin-usuario">
+              Usuario
+            </label>
+
+            <div class="input-con-icono">
+              <span class="icono-campo">👤</span>
+
+              <input
+                id="admin-usuario"
+                type="text"
+                placeholder="Ingresa tu usuario"
+                autocomplete="username"
+                [ngModel]="adminUsuario()"
+                (ngModelChange)="adminUsuario.set($event)"
+                (keyup.enter)="ingresarComoAdmin()"
+              />
+            </div>
+          </div>
+
+          <!-- CONTRASEÑA ADMINISTRADOR -->
+          <div class="campo-icono">
+            <label for="admin-password">
+              Contraseña
+            </label>
+
+            <div class="input-con-icono">
+              <span class="icono-campo">🔒</span>
+
+              <input
+                id="admin-password"
+                [type]="mostrarPasswordAdmin() ? 'text' : 'password'"
+                placeholder="Ingresa tu contraseña"
+                autocomplete="current-password"
+                [ngModel]="adminPassword()"
+                (ngModelChange)="adminPassword.set($event)"
+                (keyup.enter)="ingresarComoAdmin()"
+              />
+
+              <button
+                type="button"
+                class="icono-ojo"
+                [attr.aria-label]="mostrarPasswordAdmin() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                (click)="toggleMostrarPasswordAdmin()"
+              >
+                {{ mostrarPasswordAdmin() ? '🙈' : '👁️' }}
+              </button>
+            </div>
+          </div>
+
+          <!-- MENSAJE DE ERROR ADMINISTRADOR -->
+          @if (mensajeErrorAdmin()) {
+            <div class="mensaje-error-login" role="alert">
+              <span>⚠️</span>
+              <span>{{ mensajeErrorAdmin() }}</span>
+            </div>
+          }
+
+          <!-- BOTÓN ADMINISTRADOR -->
+          <button
+            type="button"
+            class="btn-ingresar-split"
+            (click)="ingresarComoAdmin()"
+          >
+            <span>Ingresar al sistema</span>
+            <span class="flecha-boton">→</span>
+          </button>
+
+          <p class="nota-privacidad">
+            🔐 Acceso exclusivo para el personal autorizado.
+          </p>
+
+        </div>
+      </section>
+    </main>
+  }
+
+</div>

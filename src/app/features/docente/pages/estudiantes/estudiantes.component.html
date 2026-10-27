@@ -1,0 +1,606 @@
+
+<div class="pagina">
+  <!-- Encabezado -->
+  <div class="pagina-encabezado">
+    <div>
+      <h1 class="pagina-titulo">Estudiantes y notas</h1>
+      <p class="pagina-subtitulo">
+        Nivel: {{ nivelDocente() }}.
+        Selecciona grado, sección y curso para consultar.
+      </p>
+    </div>
+
+    <button
+      class="btn-agregar"
+      type="button"
+      (click)="abrirFormularioEstudiante()"
+    >
+      + Agregar estudiante
+    </button>
+  </div>
+
+  <!-- Mensajes generales -->
+  @if (mensajeExito()) {
+    <div class="banner-exito">✅ {{ mensajeExito() }}</div>
+  }
+
+  @if (mensajeExitoEstudiante()) {
+    <div class="banner-exito">
+      ✅ {{ mensajeExitoEstudiante() }}
+    </div>
+  }
+
+  @if (mensajeError()) {
+    <div class="mensaje-error-form">{{ mensajeError() }}</div>
+  }
+
+  <!-- Formulario para crear o editar estudiantes -->
+  @if (mostrarFormularioEstudiante()) {
+    <div class="tarjeta-formulario">
+      <h2 class="formulario-titulo">
+        {{
+          editandoEstudianteId()
+            ? 'Editar estudiante'
+            : 'Nuevo estudiante'
+        }}
+        — Nivel {{ nivelDocente() }}
+      </h2>
+
+      <div class="formulario-grid">
+
+<div class="campo">
+  <label for="nuevoCodigoEstudiante">Cód. Estudiante</label>
+  <input
+    id="nuevoCodigoEstudiante"
+    name="nuevoCodigoEstudiante"
+    type="text"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    maxlength="20"
+    [ngModel]="nuevoCodigoEstudiante()"
+    (ngModelChange)="actualizarCodigoEstudiante($event)"
+    placeholder="Ej. 1021"
+    required
+  />
+</div>
+
+
+        <div class="campo">
+          <label for="nuevoNombres">Nombres</label>
+          <input
+            id="nuevoNombres"
+            name="nuevoNombres"
+            type="text"
+            [ngModel]="nuevoNombres()"
+            (ngModelChange)="nuevoNombres.set($event)"
+            placeholder="Ej. Juan"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label for="nuevoApellidos">Apellidos</label>
+          <input
+            id="nuevoApellidos"
+            name="nuevoApellidos"
+            type="text"
+            [ngModel]="nuevoApellidos()"
+            (ngModelChange)="nuevoApellidos.set($event)"
+            placeholder="Ej. Pérez"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label for="nuevoDni">DNI</label>
+          <input
+            id="nuevoDni"
+            name="nuevoDni"
+            type="text"
+            inputmode="numeric"
+            maxlength="8"
+            [ngModel]="nuevoDni()"
+            (ngModelChange)="nuevoDni.set($event)"
+            placeholder="8 dígitos"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label for="nuevoApoderado">Apoderado</label>
+          <input
+            id="nuevoApoderado"
+            name="nuevoApoderado"
+            type="text"
+            [ngModel]="nuevoApoderado()"
+            (ngModelChange)="nuevoApoderado.set($event)"
+            placeholder="Ej. Rosa Pérez"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label for="nuevoGrado">Grado</label>
+          <select
+            id="nuevoGrado"
+            name="nuevoGrado"
+            [ngModel]="nuevoGradoId()"
+            (ngModelChange)="onCambioGradoNuevo($event)"
+            required
+          >
+            <option value="">Selecciona...</option>
+            @for (g of grados(); track g.id) {
+              <option [value]="g.id">{{ g.nombre }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="nuevoSeccion">Sección</label>
+          <select
+            id="nuevoSeccion"
+            name="nuevoSeccion"
+            [disabled]="!nuevoGradoId()"
+            [ngModel]="nuevoSeccionId()"
+            (ngModelChange)="nuevoSeccionId.set($event)"
+            required
+          >
+            <option value="">Selecciona...</option>
+            @for (s of seccionesNuevo(); track s.id) {
+              <option [value]="s.id">{{ s.nombre }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      @if (mensajeErrorEstudiante()) {
+        <p class="mensaje-error-form">
+          {{ mensajeErrorEstudiante() }}
+        </p>
+      }
+
+      <div class="formulario-acciones">
+        <button
+          class="btn-guardar"
+          type="button"
+          (click)="guardarEstudiante()"
+        >
+          {{
+            editandoEstudianteId()
+              ? 'Guardar cambios'
+              : 'Guardar estudiante'
+          }}
+        </button>
+
+        <button
+          class="btn-cancelar"
+          type="button"
+          (click)="cancelarFormularioEstudiante()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Filtros -->
+  <div class="filtros">
+    <div class="campo-filtro">
+      <label for="filtroGrado">Grado</label>
+      <select
+        id="filtroGrado"
+        [value]="gradoSeleccionado()"
+        (change)="onCambioGrado($any($event.target).value)"
+      >
+        <option value="">Selecciona...</option>
+        @for (g of grados(); track g.id) {
+          <option [value]="g.id">{{ g.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="campo-filtro">
+      <label for="filtroSeccion">Sección</label>
+      <select
+        id="filtroSeccion"
+        [value]="seccionSeleccionado()"
+        [disabled]="!gradoSeleccionado()"
+        (change)="onCambioSeccion($any($event.target).value)"
+      >
+        <option value="">Selecciona...</option>
+        @for (s of secciones(); track s.id) {
+          <option [value]="s.id">{{ s.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="campo-filtro">
+      <label for="filtroCurso">Curso</label>
+      <select
+        id="filtroCurso"
+        [value]="cursoSeleccionado()"
+        (change)="onCambioCurso($any($event.target).value)"
+      >
+        <option value="">Selecciona...</option>
+        @for (c of cursosDelDocente(); track c.id) {
+          <option [value]="c.id">{{ c.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="campo-filtro">
+      <label for="filtroPeriodo">Bimestre</label>
+      <select
+        id="filtroPeriodo"
+        name="periodoFiltro"
+        [ngModel]="periodoValor()"
+        (ngModelChange)="cambiarPeriodo($event)"
+      >
+        @for (p of periodos; track p) {
+          <option [value]="p">{{ p }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <!-- Lista de estudiantes y notas -->
+  @if (!filtroCompleto()) {
+    <p class="mensaje-vacio">
+      Selecciona grado, sección y curso para ver a los estudiantes.
+    </p>
+  } @else if (estudiantes().length === 0) {
+    <p class="mensaje-vacio">
+      No hay estudiantes registrados para esta sección.
+    </p>
+  } @else {
+    <div class="fila-busqueda-reporte">
+      <input
+        type="text"
+        class="input-busqueda"
+        placeholder="🔍 Buscar por código, nombre o DNI..."
+        [ngModel]="terminoBusqueda()"
+        (ngModelChange)="onBuscar($event)"
+      />
+
+      <button
+        class="btn-exportar"
+        type="button"
+        (click)="exportarEstudiantesCsv()"
+      >
+        ⬇️ CSV
+      </button>
+
+      <button
+        class="btn-exportar"
+        type="button"
+        (click)="exportarEstudiantesXlsx()"
+      >
+        ⬇️ Excel
+      </button>
+
+      <button
+        class="btn-ver-reporte"
+        type="button"
+        (click)="verReporte()"
+      >
+        📊 Ver reporte de la sección
+      </button>
+    </div>
+
+    <div class="tabla-contenedor">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Cód. Estudiante</th>
+            <th>Estudiante</th>
+            <th>DNI</th>
+            <th>Bimestre</th>
+            <th>Calificación</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (est of estudiantesPaginados(); track est.id) {
+            <!-- Fila de consulta -->
+            @if (editandoId() !== est.id) {
+              <tr>
+                <td>{{ est.codigoEstudiante }}</td>
+
+                <td>
+                  <div class="celda-estudiante">
+                    <span class="nombre-con-editar">
+                      {{ est.nombres }} {{ est.apellidos }}
+                    </span>
+
+                    <div class="fila-acciones-estudiante">
+                      <span
+                        class="badge-estudiante"
+                        [class.inactivo]="est.estado === 'Inactivo'"
+                      >
+                        {{ est.estado }}
+                      </span>
+
+                      <button
+                        class="btn-editar-datos"
+                        type="button"
+                        title="Editar datos del estudiante"
+                        (click)="abrirEdicionEstudiante(est.id)"
+                      >
+                        ✏️
+                      </button>
+
+                      <button
+                        class="btn-editar-datos"
+                        type="button"
+                        [title]="
+                          est.estado === 'Activo'
+                            ? 'Desactivar estudiante'
+                            : 'Activar estudiante'
+                        "
+                        (click)="toggleEstado(est.id)"
+                      >
+                        {{ est.estado === 'Activo' ? '🔓' : '🔒' }}
+                      </button>
+                    </div>
+                  </div>
+                </td>
+
+                <td>{{ est.dni }}</td>
+                <td>{{ notaDe(est.id)?.periodo ?? periodoValor() }}</td>
+
+                <td>
+                  @if (notaDe(est.id); as nota) {
+                    <strong>{{ nota.nota }}</strong>
+                  } @else {
+                    <span class="sin-nota">Sin registrar</span>
+                  }
+                </td>
+
+                <td>
+                  @if (notaDe(est.id); as nota) {
+                    <span
+                      class="estado-chip"
+                      [class.logro-destacado]="
+                        calcularEstado(nota.nota) === 'Logro destacado'
+                      "
+                      [class.logro-esperado]="
+                        calcularEstado(nota.nota) === 'Logro esperado'
+                      "
+                      [class.en-proceso]="
+                        calcularEstado(nota.nota) === 'En proceso'
+                      "
+                      [class.en-inicio]="
+                        calcularEstado(nota.nota) === 'En inicio'
+                      "
+                    >
+                      {{ calcularEstado(nota.nota) }}
+                    </span>
+                  } @else {
+                    <span class="sin-nota">Pendiente</span>
+                  }
+                </td>
+
+                <td>
+                  <button
+                    class="btn-accion"
+                    [class.btn-editar]="notaDe(est.id)"
+                    [class.btn-registrar]="!notaDe(est.id)"
+                    type="button"
+                    (click)="abrirFormulario(est.id)"
+                  >
+                    {{ notaDe(est.id) ? 'Editar' : 'Registrar' }}
+                  </button>
+                </td>
+              </tr>
+            }
+
+            <!-- Fila de edición de calificación -->
+            @if (editandoId() === est.id) {
+              <tr class="fila-edicion">
+                <td colspan="3">
+                  <span class="nombre-edicion">
+                    {{ est.codigoEstudiante }} —
+                    {{ est.nombres }} {{ est.apellidos }}
+                  </span>
+                </td>
+
+                <td>
+                  <select
+                    class="input-inline"
+                    [ngModel]="periodoValor()"
+                    (ngModelChange)="cambiarPeriodo($event)"
+                    name="periodoEdicion"
+                  >
+                    @for (p of periodos; track p) {
+                      <option [value]="p">{{ p }}</option>
+                    }
+                  </select>
+                </td>
+
+                <td>
+                  <select
+                    class="input-inline input-nota"
+                    [ngModel]="notaValor()"
+                    (ngModelChange)="notaValor.set($event)"
+                    name="notaValor"
+                  >
+                    <option [ngValue]="null">
+                      Seleccionar calificación
+                    </option>
+                    <option value="AD">AD - Logro destacado</option>
+                    <option value="A">A - Logro esperado</option>
+                    <option value="B">B - En proceso</option>
+                    <option value="C">C - En inicio</option>
+                  </select>
+                </td>
+
+                <td>
+                  @if (mensajeError()) {
+                    <span class="error-inline">
+                      {{ mensajeError() }}
+                    </span>
+                  }
+                </td>
+
+                <td>
+                  <div class="acciones-inline">
+                    <button
+                      class="btn-guardar"
+                      type="button"
+                      (click)="guardar(est.id)"
+                    >
+                      Guardar
+                    </button>
+
+                    <button
+                      class="btn-cancelar"
+                      type="button"
+                      (click)="cancelar()"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <app-paginador
+      [paginaActual]="paginaActual()"
+      [totalPaginas]="totalPaginas()"
+      (cambiarPagina)="cambiarPagina($event)"
+    />
+  }
+
+  <!-- Evaluación por competencias -->
+  <section class="panel-competencias">
+    <div class="cabecera-competencias">
+      <div>
+        <h2>Evaluación por competencias</h2>
+        <p>
+          Registra el nivel de logro y la conclusión descriptiva
+          de cada estudiante.
+        </p>
+      </div>
+    </div>
+
+    @if (!filtroCompleto()) {
+      <p class="mensaje-informativo">
+        Selecciona primero el grado, la sección y el curso.
+      </p>
+    } @else if (estudiantes().length === 0) {
+      <p class="mensaje-informativo">
+        No hay estudiantes disponibles para evaluar.
+      </p>
+    } @else {
+      <div class="formulario-competencias">
+        <div class="campo-competencia">
+          <label for="estudianteEvaluacion">Estudiante</label>
+          <select
+            id="estudianteEvaluacion"
+            class="input-competencia"
+            [ngModel]="estudianteEvaluacionId()"
+            (ngModelChange)="abrirEvaluacion($event)"
+            name="estudianteEvaluacion"
+          >
+            <option [ngValue]="null">Seleccionar estudiante</option>
+            @for (est of estudiantes(); track est.id) {
+              <option [ngValue]="est.id">
+                {{ est.codigoEstudiante }} -
+                {{ est.nombres }} {{ est.apellidos }}
+              </option>
+            }
+          </select>
+        </div>
+
+        @if (estudianteEvaluacionId() !== null) {
+          <div class="campo-competencia">
+            <label for="competenciaSeleccionada">Competencia</label>
+            <select
+              id="competenciaSeleccionada"
+              class="input-competencia"
+              [ngModel]="competenciaSeleccionada()"
+              (ngModelChange)="seleccionarCompetencia($event)"
+              name="competenciaSeleccionada"
+            >
+              <option [ngValue]="null">Seleccionar competencia</option>
+              @for (competencia of competencias(); track competencia.id) {
+                <option [ngValue]="competencia.id">
+                  {{ competencia.codigo }} - {{ competencia.nombre }}
+                </option>
+              }
+            </select>
+          </div>
+
+          @if (competencias().length === 0) {
+            <p class="mensaje-informativo">
+              No hay competencias activas para el nivel educativo del docente.
+            </p>
+          }
+
+          @if (competenciaSeleccionada() !== null) {
+            <div class="campo-competencia">
+              <label for="nivelLogro">Nivel de logro</label>
+              <select
+                id="nivelLogro"
+                class="input-competencia"
+                [ngModel]="nivelLogroValor()"
+                (ngModelChange)="nivelLogroValor.set($event)"
+                name="nivelLogro"
+              >
+                <option value="AD">AD - Logro destacado</option>
+                <option value="A">A - Logro esperado</option>
+                <option value="B">B - En proceso</option>
+                <option value="C">C - En inicio</option>
+              </select>
+            </div>
+
+            <div class="campo-competencia">
+              <label for="conclusionDescriptiva">
+                Conclusión descriptiva
+              </label>
+              <textarea
+                id="conclusionDescriptiva"
+                class="input-competencia textarea-competencia"
+                rows="4"
+                maxlength="2000"
+                placeholder="Describe los avances, logros y aspectos por mejorar del estudiante..."
+                [ngModel]="conclusionDescriptivaValor()"
+                (ngModelChange)="conclusionDescriptivaValor.set($event)"
+                name="conclusionDescriptiva"
+              ></textarea>
+            </div>
+
+            <div class="acciones-competencias">
+              <button
+                class="btn-guardar"
+                type="button"
+                [disabled]="guardandoEvaluacion()"
+                (click)="guardarEvaluacion()"
+              >
+                {{
+                  guardandoEvaluacion()
+                    ? 'Guardando...'
+                    : 'Guardar evaluación'
+                }}
+              </button>
+
+              <button
+                class="btn-cancelar"
+                type="button"
+                (click)="cancelarEvaluacion()"
+              >
+                Cancelar
+              </button>
+            </div>
+          }
+        }
+      </div>
+    }
+  </section>
+</div>

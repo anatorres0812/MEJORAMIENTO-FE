@@ -1,0 +1,75 @@
+<div class="constancia-wrapper">
+  <div class="constancia-acciones no-print">
+    <button class="btn-volver" (click)="volver()">← Volver</button>
+    <button class="btn-imprimir" (click)="imprimir()">🖨️ Imprimir / Descargar PDF</button>
+  </div>
+
+  <div class="constancia">
+    <div class="constancia-encabezado">
+      <div class="constancia-escudo">RLA</div>
+      <div class="constancia-institucion">
+        <h1>I.E.P. N.° 20973</h1>
+        <p>Registro de Logros de Aprendizaje</p>
+      </div>
+      <div class="constancia-codigo">
+        <span>N.° de constancia</span>
+        <strong>{{ codigoConstancia() }}</strong>
+      </div>
+    </div>
+
+    <h2 class="constancia-titulo">CONSTANCIA DE MATRÍCULA</h2>
+
+    <p class="constancia-cuerpo">
+      El(la) Director(a) de la Institución Educativa Particular N.° 20973 "Registro de Logros de Aprendizaje"
+      hace constar que:
+    </p>
+
+    <div class="constancia-datos">
+      <div>
+        <span>Estudiante</span>
+        <strong>{{ estudiante()?.nombres }} {{ estudiante()?.apellidos }}</strong>
+      </div>
+      <div>
+        <span>DNI</span>
+        <strong>{{ estudiante()?.dni }}</strong>
+      </div>
+      <div>
+        <span>Nivel</span>
+        <strong>{{ estudiante()?.nivel }}</strong>
+      </div>
+      <div>
+        <span>Grado</span>
+        <strong>{{ grado()?.nombre }}</strong>
+      </div>
+      <div>
+        <span>Sección</span>
+        <strong>{{ seccion()?.nombre }}</strong>
+      </div>
+      <div>
+        <span>Apoderado</span>
+        <strong>{{ estudiante()?.apoderado }}</strong>
+      </div>
+    </div>
+
+    <p class="constancia-cuerpo">
+      Se encuentra <strong>matriculado(a)</strong> en esta institución educativa durante el
+      año académico <strong>{{ anioAcademico }}</strong>, en la condición de estudiante
+      <strong>{{ estudiante()?.estado }}</strong>.
+    </p>
+
+    <p class="constancia-cuerpo">
+      Se expide la presente constancia a solicitud del interesado, para los fines que estime conveniente.
+    </p>
+
+    <p class="constancia-lugar-fecha">
+      Emitido el {{ fechaEmision }}.
+    </p>
+
+    <div class="constancia-firmas">
+      <div class="firma"><span class="linea"></span><p>Director(a)</p></div>
+      <div class="firma"><span class="linea"></span><p>Secretaría Académica</p></div>
+    </div>
+
+    <p class="constancia-nota-pie">Documento generado por el sistema — {{ fechaEmision }}</p>
+  </div>
+</div>

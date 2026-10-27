@@ -1,0 +1,22 @@
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.badge.aprobado {
+  background: var(--color-secundario-claro);
+  color: var(--color-secundario);
+}
+
+.badge.desaprobado {
+  background: var(--color-peligro-claro);
+  color: var(--color-peligro);
+}

@@ -1,0 +1,216 @@
+<div class="perfil-page">
+
+  <!-- ═════ Portada ═════ -->
+  <section class="portada">
+    <div class="avatar" aria-hidden="true">{{ iniciales() }}</div>
+
+    <div class="portada-datos">
+      <span class="portada-etiqueta">
+        {{ esEstudiante() ? 'Portal del estudiante' : 'Mi cuenta' }}
+      </span>
+      <h1>{{ nombreCompleto() }}</h1>
+      <p class="portada-user">👤 {{ usuario()?.username }}</p>
+
+      <div class="chips">
+        <span class="chip">{{ labelRol() }}</span>
+        @if (esEstudiante() && estudiante(); as est) {
+          <span class="chip">{{ dato(est, 'estado') || 'Activo' }}</span>
+          <span class="chip">🎓 {{ gradoNombre() }}</span>
+          <span class="chip">Sección {{ seccionNombre() }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ ESTUDIANTE ═════════════ -->
+  @if (esEstudiante()) {
+
+    @if (cargando()) {
+      <section class="estado-vacio">
+        <span class="estado-icono">⏳</span>
+        <p>Cargando tu información…</p>
+      </section>
+
+    } @else if (noEncontrado()) {
+      <section class="estado-vacio">
+        <span class="estado-icono">🔎</span>
+        <h3>Aún no encontramos tu ficha de estudiante</h3>
+        <p>
+          Tu usuario (<strong>{{ usuario()?.username }}</strong>) debe coincidir con el
+          número de documento o el código del estudiante. Avisa a la dirección para que lo revise.
+        </p>
+      </section>
+
+    } @else {
+
+      <!-- Resumen -->
+      <section class="resumen-grid">
+        <article class="tarjeta t-azul">
+          <span class="icono">🎓</span>
+          <div><p>Grado</p><h3>{{ gradoNombre() }}</h3></div>
+        </article>
+        <article class="tarjeta t-verde">
+          <span class="icono"></span>
+          <div><p>Calificaciones</p><h3>{{ notas().length }}</h3></div>
+        </article>
+        <article class="tarjeta t-amarillo">
+          <span class="icono">⭐</span>
+          <div><p>Logros destacados</p><h3>{{ logrosDestacados() }}</h3></div>
+        </article>
+        <article class="tarjeta t-morado">
+          <span class="icono"></span>
+          <div><p>Asistencia</p><h3>{{ asistResumen().porcentaje }}%</h3></div>
+        </article>
+      </section>
+
+      <!-- Datos y matrícula -->
+      <section class="paneles-2">
+        <article class="panel">
+          <header class="panel-titulo">
+            <span class="panel-icono">👤</span>
+            <div><h2>Mis datos</h2><p>Información de tu ficha escolar</p></div>
+          </header>
+
+          @let est = estudiante()!;
+          <div class="fila"><span>Nombres</span><strong>{{ dato(est, 'nombres', 'nombre') || '—' }}</strong></div>
+          <div class="fila"><span>Apellidos</span><strong>{{ dato(est, 'apellidos', 'apellido') || '—' }}</strong></div>
+          <div class="fila"><span>Documento</span><strong>{{ dato(est, 'numeroDocumento') || '—' }}</strong></div>
+          <div class="fila"><span>Código</span><strong>{{ dato(est, 'codigo', 'codigoEstudiante') || '—' }}</strong></div>
+          <div class="fila"><span>Nivel</span><strong>{{ dato(est, 'nivel', 'nivelEducativo') || '—' }}</strong></div>
+        </article>
+
+        <article class="panel">
+          <header class="panel-titulo">
+            <span class="panel-icono">📋</span>
+            <div><h2>Mi matrícula vigente</h2><p>Tu aula y periodo actual</p></div>
+          </header>
+
+          @if (matriculaVigente(); as mat) {
+            <div class="fila"><span>Grado</span><strong>{{ gradoNombre() }}</strong></div>
+            <div class="fila"><span>Sección</span><strong>{{ seccionNombre() }}</strong></div>
+            <div class="fila"><span>Periodo</span><strong>{{ dato(mat, 'periodoNombre', 'periodo') || '—' }}</strong></div>
+            <div class="fila"><span>Estado</span><strong>{{ dato(mat, 'estado') || '—' }}</strong></div>
+          } @else {
+            <p class="sin-registros">No se encontró una matrícula vigente.</p>
+          }
+        </article>
+      </section>
+
+      <!-- Calificaciones -->
+      <section class="panel">
+        <header class="panel-titulo panel-titulo-filtro">
+          <span class="panel-icono">🏆</span>
+          <div><h2>Mis logros y calificaciones</h2><p>Resultados registrados por curso</p></div>
+
+          @if (cursosEstudiante().length > 1) {
+            <select class="filtro" (change)="onFiltroCurso($event)" aria-label="Filtrar por curso">
+              <option value="">Todos los cursos</option>
+              @for (curso of cursosEstudiante(); track curso) {
+                <option [value]="curso">{{ curso }}</option>
+              }
+            </select>
+          }
+        </header>
+
+        @if (notasFiltradas().length === 0) {
+          <p class="sin-registros">Todavía no hay calificaciones registradas.</p>
+        } @else {
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr><th>Curso</th><th>Competencia</th><th>Calificación</th><th>Periodo</th></tr>
+              </thead>
+              <tbody>
+                @for (nota of notasFiltradas(); track nota['id']) {
+                  <tr>
+                    <td>{{ dato(nota, 'cursoNombre') || '—' }}</td>
+                    <td>{{ dato(nota, 'competenciaNombre', 'competencia') || '—' }}</td>
+                    <td><span class="nota-chip" [class]="calClase(valorNota(nota))">{{ valorNota(nota) || '—' }}</span></td>
+                    <td>{{ dato(nota, 'periodoNombre', 'periodo', 'fecha') || '—' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </section>
+
+      <!-- Asistencia -->
+      <section class="panel">
+        <header class="panel-titulo">
+          <span class="panel-icono">📅</span>
+          <div><h2>Resumen de asistencia</h2><p>Seguimiento de tus registros</p></div>
+        </header>
+
+        @if (asistResumen(); as r) {
+          @if (r.total === 0) {
+            <p class="sin-registros">Aún no hay registros de asistencia.</p>
+          } @else {
+            <div class="asist-cabecera">
+              <span class="asist-numero">{{ r.porcentaje }}%</span>
+              <span class="texto-suave">de tus registros son asistencias</span>
+            </div>
+            <div class="barra" role="progressbar" [attr.aria-valuenow]="r.porcentaje" aria-valuemin="0" aria-valuemax="100">
+              <div class="barra-valor" [style.width.%]="r.porcentaje"></div>
+            </div>
+            <div class="asist-grid">
+              <div class="asist-item a-ok"><strong>{{ r.presentes }}</strong><span>Presentes</span></div>
+              <div class="asist-item a-tard"><strong>{{ r.tardanzas }}</strong><span>Tardanzas</span></div>
+              <div class="asist-item a-falta"><strong>{{ r.faltas }}</strong><span>Faltas</span></div>
+              <div class="asist-item a-just"><strong>{{ r.justificadas }}</strong><span>Justificadas</span></div>
+            </div>
+          }
+        }
+      </section>
+    }
+
+  <!-- ═════════════ DOCENTE ═════════════ -->
+  } @else if (esProfesor()) {
+
+    @if (cargando()) {
+      <section class="estado-vacio"><span class="estado-icono">⏳</span><p>Cargando tu información…</p></section>
+    } @else if (noEncontrado()) {
+      <section class="estado-vacio">
+        <span class="estado-icono">🔎</span>
+        <h3>No encontramos tu ficha de docente</h3>
+        <p>Tu usuario debe coincidir con tu correo o número de documento registrado.</p>
+      </section>
+    } @else {
+      <section class="resumen-grid resumen-2">
+        <article class="tarjeta t-verde">
+          <span class="icono">📝</span>
+          <div><p>Calificaciones registradas</p><h3>{{ notas().length }}</h3></div>
+        </article>
+        <article class="tarjeta t-morado">
+          <span class="icono">✅</span>
+          <div><p>Asistencias registradas</p><h3>{{ asistencias().length }}</h3></div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <header class="panel-titulo">
+          <span class="panel-icono">👩‍🏫</span>
+          <div><h2>Mis datos</h2><p>Información de tu ficha docente</p></div>
+        </header>
+
+        @let prof = profesor()!;
+        <div class="fila"><span>Nombres</span><strong>{{ dato(prof, 'nombres', 'nombre') || '—' }}</strong></div>
+        <div class="fila"><span>Apellidos</span><strong>{{ dato(prof, 'apellidos', 'apellido') || '—' }}</strong></div>
+        <div class="fila"><span>Documento</span><strong>{{ dato(prof, 'numeroDocumento') || '—' }}</strong></div>
+        <div class="fila"><span>Correo</span><strong>{{ dato(prof, 'correo') || '—' }}</strong></div>
+        <div class="fila"><span>Estado</span><strong>{{ dato(prof, 'estado') || '—' }}</strong></div>
+      </section>
+    }
+
+  <!-- ═════════════ ADMINISTRADOR ═════════════ -->
+  } @else {
+    <section class="panel">
+      <header class="panel-titulo">
+        <span class="panel-icono">🛡️</span>
+        <div><h2>Mi cuenta</h2><p>Datos de acceso al sistema</p></div>
+      </header>
+      <div class="fila"><span>Usuario</span><strong>{{ usuario()?.username }}</strong></div>
+      <div class="fila"><span>Rol</span><strong>{{ labelRol() }}</strong></div>
+    </section>
+  }
+</div>

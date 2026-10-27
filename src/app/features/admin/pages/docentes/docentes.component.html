@@ -1,0 +1,132 @@
+<div class="pagina">
+  <div class="pagina-encabezado">
+    <div>
+      <h1 class="pagina-titulo">Docentes</h1>
+      <p class="pagina-subtitulo">Gestiona los docentes del colegio y los cursos que dictan.</p>
+    </div>
+    <div class="acciones-encabezado">
+      <button class="btn-exportar" (click)="exportarDocentesCsv()">⬇️ Exportar CSV</button>
+      <button class="btn-agregar" (click)="abrirFormulario()">+ Agregar docente</button>
+    </div>
+  </div>
+
+  <nav class="tabs-nivel">
+    @for (nivel of niveles; track nivel) {
+      <button
+        class="tab-nivel"
+        [class.activo]="nivel === nivelActivo()"
+        (click)="cambiarNivel(nivel)"
+      >
+        {{ nivel }}
+      </button>
+    }
+  </nav>
+
+  @if (mensajeExito()) {
+    <div class="banner-exito">✅ {{ mensajeExito() }}</div>
+  }
+
+  @if (mostrarFormulario()) {
+    <div class="tarjeta-formulario">
+      <h2 class="formulario-titulo">
+        {{ editandoId() ? 'Editar docente' : 'Nuevo docente' }}
+      </h2>
+
+      <div class="formulario-grid">
+        <div class="campo">
+          <label>Nombres</label>
+          <input type="text" [ngModel]="nombres()" (ngModelChange)="nombres.set($event)" placeholder="Ej. Carlos" />
+        </div>
+        <div class="campo">
+          <label>Apellidos</label>
+          <input type="text" [ngModel]="apellidos()" (ngModelChange)="apellidos.set($event)" placeholder="Ej. Pérez" />
+        </div>
+        <div class="campo">
+          <label>Correo</label>
+          <input type="email" [ngModel]="correo()" (ngModelChange)="correo.set($event)" placeholder="correo@colegio.edu.pe" />
+        </div>
+        <div class="campo">
+          <label>Especialidad</label>
+          <input type="text" [ngModel]="especialidad()" (ngModelChange)="especialidad.set($event)" placeholder="Ej. Matemática" />
+        </div>
+        <div class="campo">
+          <label>Nivel</label>
+          <select [ngModel]="nivelSeleccionado()" (ngModelChange)="onCambioNivel($event)">
+            <option value="">Selecciona...</option>
+            @for (n of niveles; track n) {
+              <option [value]="n">{{ n }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      @if (nivelSeleccionado()) {
+        <div class="cursos-checklist">
+          <label class="cursos-titulo">Cursos que dicta</label>
+          <div class="cursos-grid">
+            @for (curso of cursosDisponibles(); track curso.id) {
+              <label class="curso-check">
+                <input
+                  type="checkbox"
+                  [checked]="estaMarcado(curso.id)"
+                  (change)="toggleCurso(curso.id, $any($event.target).checked)"
+                />
+                {{ curso.nombre }}
+              </label>
+            }
+          </div>
+        </div>
+      }
+
+      @if (mensajeError()) {
+        <p class="mensaje-error-form">{{ mensajeError() }}</p>
+      }
+
+      <div class="formulario-acciones">
+        <button class="btn-guardar" (click)="guardar()">
+          {{ editandoId() ? 'Guardar cambios' : 'Guardar docente' }}
+        </button>
+        <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  }
+
+  @if (docentes().length === 0) {
+    <p class="mensaje-vacio">No hay docentes registrados en el nivel {{ nivelActivo() }}.</p>
+  } @else {
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Docente</th>
+          <th>Correo</th>
+          <th>Especialidad</th>
+          <th>Cursos asignados</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (doc of docentesPaginados(); track doc.id) {
+          <tr>
+            <td>{{ doc.nombres }} {{ doc.apellidos }}</td>
+            <td>{{ doc.correo }}</td>
+            <td>{{ doc.especialidad }}</td>
+            <td>
+              @for (cursoId of doc.cursosAsignados; track cursoId) {
+                <span class="chip-curso">{{ nombreCurso(cursoId) }}</span>
+              }
+            </td>
+            <td>
+              <button class="btn-accion btn-editar" (click)="abrirEdicion(doc.id)">Editar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <app-paginador
+      [paginaActual]="paginaActual()"
+      [totalPaginas]="totalPaginas()"
+      (cambiarPagina)="cambiarPagina($event)"
+    />
+  }
+</div>
