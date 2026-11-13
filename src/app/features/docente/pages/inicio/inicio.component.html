@@ -1,0 +1,34 @@
+<div class="pagina">
+  <h1 class="pagina-titulo">Bienvenido, {{ docente()?.nombres }} {{ docente()?.apellidos }}</h1>
+  <p class="pagina-subtitulo">Especialidad: {{ docente()?.especialidad }} — Nivel: {{ docente()?.nivel }}</p>
+
+   <div class="tarjetas">
+    <div class="tarjeta">
+      <div class="tarjeta-icono icono-azul">📚</div>
+      <div class="tarjeta-texto">
+        <span class="tarjeta-etiqueta">Mis cursos</span>
+        <span class="tarjeta-valor">{{ cursos().length }}</span>
+      </div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono icono-verde">🧑‍🎓</div>
+      <div class="tarjeta-texto">
+        <span class="tarjeta-etiqueta">Total de estudiantes</span>
+        <span class="tarjeta-valor">{{ totalEstudiantes() }}</span>
+      </div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono icono-ambar">📝</div>
+      <div class="tarjeta-texto">
+        <span class="tarjeta-etiqueta">Notas registradas</span>
+        <span class="tarjeta-valor">{{ notasRegistradas() }}</span>
+      </div>
+    </div>
+    <div class="tarjeta tarjeta-destacada">
+      <div class="tarjeta-icono icono-morado">📌</div>
+      <div class="tarjeta-texto">
+        <span class="tarjeta-etiqueta">Cursos asignados</span>
+        <span class="tarjeta-valor">{{ cursos().length }}</span>
+      </div>
+    </div>
+  </div>

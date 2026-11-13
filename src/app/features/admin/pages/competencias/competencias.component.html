@@ -1,0 +1,120 @@
+
+<section class="contenedor">
+  <h1>Gestión de competencias</h1>
+  <p>Registra y administra las competencias curriculares.</p>
+
+  @if (mensaje()) {
+    <div class="mensaje exito">{{ mensaje() }}</div>
+  }
+
+  @if (error()) {
+    <div class="mensaje error">{{ error() }}</div>
+  }
+
+  <form (ngSubmit)="guardar()">
+    <h2>{{ editandoId() !== null ? 'Editar competencia' : 'Registrar competencia' }}</h2>
+
+    <div class="campos">
+      <label>
+        Código *
+        <input
+          name="codigo"
+          [(ngModel)]="formulario.codigo"
+          placeholder="Ej. MAT-PRI-C01"
+          required>
+      </label>
+
+      <label>
+        Nombre *
+        <input
+          name="nombre"
+          [(ngModel)]="formulario.nombre"
+          placeholder="Nombre de la competencia"
+          required>
+      </label>
+
+      <label>
+        Área curricular *
+        <input
+          name="areaCurricular"
+          [(ngModel)]="formulario.areaCurricular"
+          placeholder="Ej. Matemática"
+          required>
+      </label>
+
+      <label>
+        Nivel educativo
+        <select name="nivel" [(ngModel)]="formulario.nivel">
+          <option value="Inicial">Inicial</option>
+          <option value="Primaria">Primaria</option>
+          <option value="Secundaria">Secundaria</option>
+        </select>
+      </label>
+
+      <label class="ancho-completo">
+        Descripción
+        <textarea
+          name="descripcion"
+          [(ngModel)]="formulario.descripcion"
+          rows="3"
+          placeholder="Descripción de la competencia"></textarea>
+      </label>
+    </div>
+
+    <div class="acciones">
+      <button type="submit">
+        {{ editandoId() !== null ? 'Guardar cambios' : 'Registrar competencia' }}
+      </button>
+
+      @if (editandoId() !== null) {
+        <button type="button" class="secundario" (click)="limpiarFormulario()">
+          Cancelar
+        </button>
+      }
+    </div>
+  </form>
+
+  <div class="listado">
+    <h2>Competencias registradas</h2>
+
+    @if (cargando()) {
+      <p>Cargando competencias...</p>
+    } @else if (competencias().length === 0) {
+      <p>No hay competencias registradas.</p>
+    } @else {
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Área</th>
+              <th>Nivel</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (competencia of competencias(); track competencia.id) {
+              <tr>
+                <td>{{ competencia.codigo }}</td>
+                <td>{{ competencia.nombre }}</td>
+                <td>{{ competencia.areaCurricular }}</td>
+                <td>{{ competencia.nivel }}</td>
+                <td>{{ competencia.estado ? 'Activa' : 'Inactiva' }}</td>
+                <td class="acciones-tabla">
+                  <button type="button" class="secundario" (click)="editar(competencia)">
+                    Editar
+                  </button>
+                  <button type="button" class="peligro" (click)="eliminar(competencia)">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</section>

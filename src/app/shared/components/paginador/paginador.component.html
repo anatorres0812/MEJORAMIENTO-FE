@@ -1,0 +1,46 @@
+
+@if (totalPaginas > 1) {
+  <nav class="paginador" aria-label="Paginación">
+    <button
+      class="paginador-btn"
+      [disabled]="paginaActual === 1"
+      (click)="ir(paginaActual - 1)">
+      ← Anterior
+    </button>
+
+    @if (paginasVisibles()[0] > 1) {
+      <button class="paginador-num" (click)="ir(1)">1</button>
+
+      @if (paginasVisibles()[0] > 2) {
+        <span class="paginador-puntos">…</span>
+      }
+    }
+
+    @for (pagina of paginasVisibles(); track pagina) {
+      <button
+        class="paginador-num"
+        [class.activo]="pagina === paginaActual"
+        [attr.aria-current]="pagina === paginaActual ? 'page' : null"
+        (click)="ir(pagina)">
+        {{ pagina }}
+      </button>
+    }
+
+    @if (paginasVisibles()[paginasVisibles().length - 1] < totalPaginas) {
+      @if (paginasVisibles()[paginasVisibles().length - 1] < totalPaginas - 1) {
+        <span class="paginador-puntos">…</span>
+      }
+
+      <button class="paginador-num" (click)="ir(totalPaginas)">
+        {{ totalPaginas }}
+      </button>
+    }
+
+    <button
+      class="paginador-btn"
+      [disabled]="paginaActual === totalPaginas"
+      (click)="ir(paginaActual + 1)">
+      Siguiente →
+    </button>
+  </nav>
+}

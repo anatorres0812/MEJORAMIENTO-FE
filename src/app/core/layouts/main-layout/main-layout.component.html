@@ -1,0 +1,28 @@
+
+<div class="layout">
+  <app-navbar
+    [nombreUsuario]="usuario()?.nombreCompleto ?? ''"
+    [rolLabel]="usuario()?.rol ?? ''"
+    (toggleSidebar)="toggleSidebar()"
+  />
+
+  <div class="layout-cuerpo">
+    @if (sidebarAbierto()) {
+      <div
+        class="overlay"
+        (click)="sidebarAbierto.set(false)"
+      ></div>
+    }
+
+    <app-sidebar
+      [items]="menuItems()"
+      [abierto]="sidebarAbierto()"
+      (cerrarSesion)="cerrarSesion()"
+      (itemSeleccionado)="sidebarAbierto.set(false)"
+    />
+
+    <main class="layout-contenido">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

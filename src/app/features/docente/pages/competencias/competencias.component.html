@@ -1,0 +1,75 @@
+<section class="contenedor">
+  <header class="encabezado">
+    <div>
+      <h1>Competencias y SIAGIE</h1>
+      <p>
+        Consulta las competencias curriculares para registrar los logros
+        de aprendizaje de tus estudiantes.
+      </p>
+    </div>
+
+    <button type="button" (click)="cargarCompetencias()">
+      Actualizar
+    </button>
+  </header>
+
+  <section class="panel">
+    <h2>Competencias curriculares</h2>
+
+    <label for="nivel">Filtrar por nivel educativo</label>
+
+    <select
+      id="nivel"
+      [value]="nivelSeleccionado()"
+      (change)="nivelSeleccionado.set($any($event.target).value)">
+      <option value="Todos">Todos los niveles</option>
+      <option value="Inicial">Inicial</option>
+      <option value="Primaria">Primaria</option>
+      <option value="Secundaria">Secundaria</option>
+    </select>
+
+    @if (cargando()) {
+      <p>Cargando competencias...</p>
+    } @else if (error()) {
+      <p class="error">{{ error() }}</p>
+    } @else if (competenciasFiltradas().length === 0) {
+      <p>No hay competencias para mostrar.</p>
+    } @else {
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Competencia</th>
+              <th>Área curricular</th>
+              <th>Nivel</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (competencia of competenciasFiltradas(); track competencia.id) {
+              <tr>
+                <td>{{ competencia.codigo }}</td>
+                <td>{{ competencia.nombre }}</td>
+                <td>{{ competencia.areaCurricular }}</td>
+                <td>{{ competencia.nivel }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+
+  <section class="panel siagie">
+    <h2>Descarga para SIAGIE</h2>
+    <p>
+      En esta sección prepararemos el registro de logros y la descarga
+      del archivo Excel respetando tu plantilla original del SIAGIE.
+    </p>
+    <p class="nota">
+      La descarga se habilitará cuando conectemos los datos de los
+      estudiantes, el período académico y los niveles de logro.
+    </p>
+  </section>
+</section>

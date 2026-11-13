@@ -1,0 +1,131 @@
+
+<div class="pagina">
+  <div class="pagina-encabezado">
+    <div>
+      <h1 class="pagina-titulo">Asistencia</h1>
+      <p class="pagina-subtitulo">
+        Marca la asistencia de tus estudiantes por curso y fecha.
+      </p>
+    </div>
+  </div>
+
+  <div class="filtros">
+    <div class="campo-filtro">
+      <label>Grado</label>
+      <select
+        [value]="gradoSeleccionado()"
+        (change)="onCambioGrado($any($event.target).value)"
+      >
+        <option value="">Selecciona...</option>
+        @for (g of grados(); track g.id) {
+          <option [value]="g.id">{{ g.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="campo-filtro">
+      <label>Sección</label>
+      <select
+        [value]="seccionSeleccionado()"
+        [disabled]="!gradoSeleccionado()"
+        (change)="cambiarSeccion($any($event.target).value)"
+      >
+        <option value="">Selecciona...</option>
+        @for (s of secciones(); track s.id) {
+          <option [value]="s.id">{{ s.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="campo-filtro">
+      <label>Curso</label>
+      <select
+        [value]="cursoSeleccionado()"
+        (change)="cambiarCurso($any($event.target).value)"
+      >
+        <option value="">Selecciona...</option>
+        @for (c of cursosDelDocente(); track c.id) {
+          <option [value]="c.id">{{ c.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="campo-filtro">
+      <label>Fecha</label>
+      <input
+        type="date"
+        [value]="fecha()"
+        (change)="cambiarFecha($any($event.target).value)"
+      />
+    </div>
+  </div>
+
+  @if (!filtroCompleto()) {
+    <p class="mensaje-vacio">
+      Selecciona grado, sección y curso para tomar asistencia.
+    </p>
+  } @else if (estudiantes().length === 0) {
+    <p class="mensaje-vacio">
+      No se encontraron estudiantes para el grado y sección seleccionados.
+      Revisa los datos del EstudianteService.
+    </p>
+  } @else {
+    <div class="fila-acciones">
+      <div class="leyenda">
+        <span class="chip chip-A">A · Presente</span>
+        <span class="chip chip-T">T · Tardanza</span>
+        <span class="chip chip-F">F · Falta</span>
+      </div>
+
+      <button
+        class="btn-exportar"
+        type="button"
+        (click)="exportar()"
+      >
+        ⬇️ Exportar a Excel
+      </button>
+    </div>
+
+    @if (mensaje()) {
+      <p class="mensaje">{{ mensaje() }}</p>
+    }
+
+    <div class="tabla-contenedor">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Estudiante</th>
+            <th>DNI</th>
+            <th>Marcar asistencia</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (est of estudiantes(); track est.id) {
+            <tr>
+              <td>{{ est.nombres }} {{ est.apellidos }}</td>
+              <td>{{ est.dni }}</td>
+              <td>
+                <div class="botones-estado">
+                  @for (estado of estados; track estado) {
+                    <button
+                      type="button"
+                      class="btn-estado"
+                      [disabled]="guardando()"
+                      [class.activo-A]="estadoDe(est.id) === 'A' && estado === 'A'"
+                      [class.activo-T]="estadoDe(est.id) === 'T' && estado === 'T'"
+                      [class.activo-F]="estadoDe(est.id) === 'F' && estado === 'F'"
+                      (click)="marcar(est.id, estado)"
+                    >
+                      {{ estado }}
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

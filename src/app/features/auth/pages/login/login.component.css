@@ -1,0 +1,2263 @@
+/* =========================================================
+   LOGIN I.E.P. N.° 20973
+   Diseño institucional moderno + mitad azul tipo rompecabezas
+   Compatible con Angular y el HTML proporcionado
+   ========================================================= */
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #172b4d;
+}
+
+:host,
+:host * {
+  box-sizing: border-box;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================================================
+   CONTENEDOR GENERAL
+   ========================================================= */
+
+.login-page {
+  --azul: #315ee8;
+  --azul-oscuro: #183a91;
+  --azul-profundo: #132b69;
+  --celeste: #70d6f8;
+  --texto: #172b4d;
+  --texto-suave: #71809a;
+  --borde: #e4eaf4;
+  --fondo: #f3f6ff;
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+  background: #fff;
+}
+
+/* =========================================================
+   ANIMACIÓN DE ENTRADA
+   ========================================================= */
+
+.animacion-entrada {
+  animation: aparecer 0.55s cubic-bezier(0.2, 0.75, 0.3, 1) both;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   MITAD AZUL TIPO ROMPECABEZAS
+   Panel azul con piezas dibujadas y piezas que sobresalen.
+   ========================================================= */
+
+.rol-presentacion,
+.split-izquierda {
+  --azul-rompecabezas-1: #173578;
+  --azul-rompecabezas-2: #244cb5;
+  --azul-rompecabezas-3: #3168df;
+
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  color: #fff;
+
+  background:
+    radial-gradient(
+      ellipse at 76% 65%,
+      #4777e8 0%,
+      transparent 44%
+    ),
+    radial-gradient(
+      circle at 12% 12%,
+      #3156ad 0%,
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      var(--azul-rompecabezas-1) 0%,
+      var(--azul-rompecabezas-2) 54%,
+      var(--azul-rompecabezas-3) 100%
+    );
+
+  overflow: visible;
+}
+
+/* Líneas decorativas muy suaves dentro del panel azul. */
+
+/* Rompecabezas: SOLO la mitad azul tiene la cuadrícula de piezas. */
+
+.rol-presentacion::after,
+.split-izquierda::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='white' stroke-opacity='0.22' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M0,0 L 44.0,0.0 C 44.0,8.8 35.2,13.2 35.2,24.2 C 35.2,37.4 48.4,44.0 55.0,44.0 C 61.6,44.0 74.8,37.4 74.8,24.2 C 74.8,13.2 66.0,8.8 66.0,0.0 L 110.0,0.0 L 154.0,0.0 C 154.0,-8.8 145.2,-13.2 145.2,-24.2 C 145.2,-37.4 158.4,-44.0 165.0,-44.0 C 171.6,-44.0 184.8,-37.4 184.8,-24.2 C 184.8,-13.2 176.0,-8.8 176.0,0.0 L 220.0,0.0 '/%3E %3Cpath d='M0,110 L 44.0,110.0 C 44.0,101.2 35.2,96.8 35.2,85.8 C 35.2,72.6 48.4,66.0 55.0,66.0 C 61.6,66.0 74.8,72.6 74.8,85.8 C 74.8,96.8 66.0,101.2 66.0,110.0 L 110.0,110.0 L 154.0,110.0 C 154.0,118.8 145.2,123.2 145.2,134.2 C 145.2,147.4 158.4,154.0 165.0,154.0 C 171.6,154.0 184.8,147.4 184.8,134.2 C 184.8,123.2 176.0,118.8 176.0,110.0 L 220.0,110.0 '/%3E %3Cpath d='M0,220 H220'/%3E %3Cpath d='M0,0 L 0.0,44.0 C -8.8,44.0 -13.2,35.2 -24.2,35.2 C -37.4,35.2 -44.0,48.4 -44.0,55.0 C -44.0,61.6 -37.4,74.8 -24.2,74.8 C -13.2,74.8 -8.8,66.0 0.0,66.0 L 0.0,110.0 L 0.0,154.0 C 8.8,154.0 13.2,145.2 24.2,145.2 C 37.4,145.2 44.0,158.4 44.0,165.0 C 44.0,171.6 37.4,184.8 24.2,184.8 C 13.2,184.8 8.8,176.0 0.0,176.0 L 0.0,220.0 '/%3E %3Cpath d='M110,0 L 110.0,44.0 C 118.8,44.0 123.2,35.2 134.2,35.2 C 147.4,35.2 154.0,48.4 154.0,55.0 C 154.0,61.6 147.4,74.8 134.2,74.8 C 123.2,74.8 118.8,66.0 110.0,66.0 L 110.0,110.0 L 110.0,154.0 C 101.2,154.0 96.8,145.2 85.8,145.2 C 72.6,145.2 66.0,158.4 66.0,165.0 C 66.0,171.6 72.6,184.8 85.8,184.8 C 96.8,184.8 101.2,176.0 110.0,176.0 L 110.0,220.0 '/%3E %3Cpath d='M220,0 V220'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  background-position: 30px 20px;
+  pointer-events: none;
+}
+
+/* Huecos del rompecabezas: piezas que "faltan" en la mitad azul. */
+
+.rol-presentacion::before,
+.split-izquierda::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='148' height='148' viewBox='0 0 148 148'%3E%0A%3Cdefs%3E%3Cfilter id='s' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='0' dy='3' stdDeviation='3' flood-color='%230c1f5c' flood-opacity='.4'/%3E%3C/filter%3E%3CclipPath id='c'%3E%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 128.4,64.0 130.6,56.0 136.1,56.0 C 142.7,56.0 146.0,68.0 146.0,74.0 C 146.0,80.0 142.7,92.0 136.1,92.0 C 130.6,92.0 128.4,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,119.6 92.0,117.4 92.0,111.9 C 92.0,105.3 80.0,102.0 74.0,102.0 C 68.0,102.0 56.0,105.3 56.0,111.9 C 56.0,117.4 64.0,119.6 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 28.4,84.0 30.6,92.0 36.1,92.0 C 42.7,92.0 46.0,80.0 46.0,74.0 C 46.0,68.0 42.7,56.0 36.1,56.0 C 30.6,56.0 28.4,64.0 24.0,64.0 L 24.0,24.0 Z'/%3E%3C/clipPath%3E%3C/defs%3E%0A%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 128.4,64.0 130.6,56.0 136.1,56.0 C 142.7,56.0 146.0,68.0 146.0,74.0 C 146.0,80.0 142.7,92.0 136.1,92.0 C 130.6,92.0 128.4,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,119.6 92.0,117.4 92.0,111.9 C 92.0,105.3 80.0,102.0 74.0,102.0 C 68.0,102.0 56.0,105.3 56.0,111.9 C 56.0,117.4 64.0,119.6 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 28.4,84.0 30.6,92.0 36.1,92.0 C 42.7,92.0 46.0,80.0 46.0,74.0 C 46.0,68.0 42.7,56.0 36.1,56.0 C 30.6,56.0 28.4,64.0 24.0,64.0 L 24.0,24.0 Z' fill='%23f6f8ff'/%3E%0A%3Cg clip-path='url(%23c)'%3E%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 128.4,64.0 130.6,56.0 136.1,56.0 C 142.7,56.0 146.0,68.0 146.0,74.0 C 146.0,80.0 142.7,92.0 136.1,92.0 C 130.6,92.0 128.4,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,119.6 92.0,117.4 92.0,111.9 C 92.0,105.3 80.0,102.0 74.0,102.0 C 68.0,102.0 56.0,105.3 56.0,111.9 C 56.0,117.4 64.0,119.6 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 28.4,84.0 30.6,92.0 36.1,92.0 C 42.7,92.0 46.0,80.0 46.0,74.0 C 46.0,68.0 42.7,56.0 36.1,56.0 C 30.6,56.0 28.4,64.0 24.0,64.0 L 24.0,24.0 Z' fill='none' stroke='%230c1f5c' stroke-opacity='.25' stroke-width='9' filter='url(%23s)'/%3E%3C/g%3E%0A%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 128.4,64.0 130.6,56.0 136.1,56.0 C 142.7,56.0 146.0,68.0 146.0,74.0 C 146.0,80.0 142.7,92.0 136.1,92.0 C 130.6,92.0 128.4,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,119.6 92.0,117.4 92.0,111.9 C 92.0,105.3 80.0,102.0 74.0,102.0 C 68.0,102.0 56.0,105.3 56.0,111.9 C 56.0,117.4 64.0,119.6 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 28.4,84.0 30.6,92.0 36.1,92.0 C 42.7,92.0 46.0,80.0 46.0,74.0 C 46.0,68.0 42.7,56.0 36.1,56.0 C 30.6,56.0 28.4,64.0 24.0,64.0 L 24.0,24.0 Z' fill='none' stroke='%23fff' stroke-opacity='.6' stroke-width='1'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='148' height='148' viewBox='0 0 148 148'%3E%0A%3Cdefs%3E%3Cfilter id='s' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='0' dy='3' stdDeviation='3' flood-color='%230c1f5c' flood-opacity='.4'/%3E%3C/filter%3E%3CclipPath id='c'%3E%3Cpath d='M24,24 L 64.0,24.0 C 64.0,28.4 56.0,30.6 56.0,36.1 C 56.0,42.7 68.0,46.0 74.0,46.0 C 80.0,46.0 92.0,42.7 92.0,36.1 C 92.0,30.6 84.0,28.4 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 128.4,64.0 130.6,56.0 136.1,56.0 C 142.7,56.0 146.0,68.0 146.0,74.0 C 146.0,80.0 142.7,92.0 136.1,92.0 C 130.6,92.0 128.4,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L24.0,24.0 Z'/%3E%3C/clipPath%3E%3C/defs%3E%0A%3Cpath d='M24,24 L 64.0,24.0 C 64.0,28.4 56.0,30.6 56.0,36.1 C 56.0,42.7 68.0,46.0 74.0,46.0 C 80.0,46.0 92.0,42.7 92.0,36.1 C 92.0,30.6 84.0,28.4 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 128.4,64.0 130.6,56.0 136.1,56.0 C 142.7,56.0 146.0,68.0 146.0,74.0 C 146.0,80.0 142.7,92.0 136.1,92.0 C 130.6,92.0 128.4,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L24.0,24.0 Z' fill='%23f6f8ff'/%3E%0A%3Cg clip-path='url(%23c)'%3E%3Cpath d='M24,24 L 64.0,24.0 C 64.0,28.4 56.0,30.6 56.0,36.1 C 56.0,42.7 68.0,46.0 74.0,46.0 C 80.0,46.0 92.0,42.7 92.0,36.1 C 92.0,30.6 84.0,28.4 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 128.4,64.0 130.6,56.0 136.1,56.0 C 142.7,56.0 146.0,68.0 146.0,74.0 C 146.0,80.0 142.7,92.0 136.1,92.0 C 130.6,92.0 128.4,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L24.0,24.0 Z' fill='none' stroke='%230c1f5c' stroke-opacity='.25' stroke-width='9' filter='url(%23s)'/%3E%3C/g%3E%0A%3Cpath d='M24,24 L 64.0,24.0 C 64.0,28.4 56.0,30.6 56.0,36.1 C 56.0,42.7 68.0,46.0 74.0,46.0 C 80.0,46.0 92.0,42.7 92.0,36.1 C 92.0,30.6 84.0,28.4 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 128.4,64.0 130.6,56.0 136.1,56.0 C 142.7,56.0 146.0,68.0 146.0,74.0 C 146.0,80.0 142.7,92.0 136.1,92.0 C 130.6,92.0 128.4,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L24.0,24.0 Z' fill='none' stroke='%23fff' stroke-opacity='.6' stroke-width='1'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='148' height='148' viewBox='0 0 148 148'%3E%0A%3Cdefs%3E%3Cfilter id='s' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='0' dy='3' stdDeviation='3' flood-color='%230c1f5c' flood-opacity='.4'/%3E%3C/filter%3E%3CclipPath id='c'%3E%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 119.6,64.0 117.4,56.0 111.9,56.0 C 105.3,56.0 102.0,68.0 102.0,74.0 C 102.0,80.0 105.3,92.0 111.9,92.0 C 117.4,92.0 119.6,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 19.6,84.0 17.4,92.0 11.9,92.0 C 5.3,92.0 2.0,80.0 2.0,74.0 C 2.0,68.0 5.3,56.0 11.9,56.0 C 17.4,56.0 19.6,64.0 24.0,64.0 L 24.0,24.0 Z'/%3E%3C/clipPath%3E%3C/defs%3E%0A%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 119.6,64.0 117.4,56.0 111.9,56.0 C 105.3,56.0 102.0,68.0 102.0,74.0 C 102.0,80.0 105.3,92.0 111.9,92.0 C 117.4,92.0 119.6,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 19.6,84.0 17.4,92.0 11.9,92.0 C 5.3,92.0 2.0,80.0 2.0,74.0 C 2.0,68.0 5.3,56.0 11.9,56.0 C 17.4,56.0 19.6,64.0 24.0,64.0 L 24.0,24.0 Z' fill='%23f6f8ff'/%3E%0A%3Cg clip-path='url(%23c)'%3E%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 119.6,64.0 117.4,56.0 111.9,56.0 C 105.3,56.0 102.0,68.0 102.0,74.0 C 102.0,80.0 105.3,92.0 111.9,92.0 C 117.4,92.0 119.6,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 19.6,84.0 17.4,92.0 11.9,92.0 C 5.3,92.0 2.0,80.0 2.0,74.0 C 2.0,68.0 5.3,56.0 11.9,56.0 C 17.4,56.0 19.6,64.0 24.0,64.0 L 24.0,24.0 Z' fill='none' stroke='%230c1f5c' stroke-opacity='.25' stroke-width='9' filter='url(%23s)'/%3E%3C/g%3E%0A%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 119.6,64.0 117.4,56.0 111.9,56.0 C 105.3,56.0 102.0,68.0 102.0,74.0 C 102.0,80.0 105.3,92.0 111.9,92.0 C 117.4,92.0 119.6,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 19.6,84.0 17.4,92.0 11.9,92.0 C 5.3,92.0 2.0,80.0 2.0,74.0 C 2.0,68.0 5.3,56.0 11.9,56.0 C 17.4,56.0 19.6,64.0 24.0,64.0 L 24.0,24.0 Z' fill='none' stroke='%23fff' stroke-opacity='.6' stroke-width='1'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 190px 190px, 120px 120px, 130px 130px;
+  background-position:
+    calc(100% - 190px) -5%,
+    calc(100% - 14px) 90%,
+    170px 90%;
+}
+
+@media (max-width: 1280px) {
+  .rol-presentacion::before,
+  .split-izquierda::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='148' height='148' viewBox='0 0 148 148'%3E%0A%3Cdefs%3E%3Cfilter id='s' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='0' dy='3' stdDeviation='3' flood-color='%230c1f5c' flood-opacity='.4'/%3E%3C/filter%3E%3CclipPath id='c'%3E%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 119.6,64.0 117.4,56.0 111.9,56.0 C 105.3,56.0 102.0,68.0 102.0,74.0 C 102.0,80.0 105.3,92.0 111.9,92.0 C 117.4,92.0 119.6,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 19.6,84.0 17.4,92.0 11.9,92.0 C 5.3,92.0 2.0,80.0 2.0,74.0 C 2.0,68.0 5.3,56.0 11.9,56.0 C 17.4,56.0 19.6,64.0 24.0,64.0 L 24.0,24.0 Z'/%3E%3C/clipPath%3E%3C/defs%3E%0A%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 119.6,64.0 117.4,56.0 111.9,56.0 C 105.3,56.0 102.0,68.0 102.0,74.0 C 102.0,80.0 105.3,92.0 111.9,92.0 C 117.4,92.0 119.6,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 19.6,84.0 17.4,92.0 11.9,92.0 C 5.3,92.0 2.0,80.0 2.0,74.0 C 2.0,68.0 5.3,56.0 11.9,56.0 C 17.4,56.0 19.6,64.0 24.0,64.0 L 24.0,24.0 Z' fill='%23f6f8ff'/%3E%0A%3Cg clip-path='url(%23c)'%3E%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 119.6,64.0 117.4,56.0 111.9,56.0 C 105.3,56.0 102.0,68.0 102.0,74.0 C 102.0,80.0 105.3,92.0 111.9,92.0 C 117.4,92.0 119.6,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 19.6,84.0 17.4,92.0 11.9,92.0 C 5.3,92.0 2.0,80.0 2.0,74.0 C 2.0,68.0 5.3,56.0 11.9,56.0 C 17.4,56.0 19.6,64.0 24.0,64.0 L 24.0,24.0 Z' fill='none' stroke='%230c1f5c' stroke-opacity='.25' stroke-width='9' filter='url(%23s)'/%3E%3C/g%3E%0A%3Cpath d='M24,24 L 64.0,24.0 C 64.0,19.6 56.0,17.4 56.0,11.9 C 56.0,5.3 68.0,2.0 74.0,2.0 C 80.0,2.0 92.0,5.3 92.0,11.9 C 92.0,17.4 84.0,19.6 84.0,24.0 L 124.0,24.0 L 124.0,64.0 C 119.6,64.0 117.4,56.0 111.9,56.0 C 105.3,56.0 102.0,68.0 102.0,74.0 C 102.0,80.0 105.3,92.0 111.9,92.0 C 117.4,92.0 119.6,84.0 124.0,84.0 L 124.0,124.0 L 84.0,124.0 C 84.0,128.4 92.0,130.6 92.0,136.1 C 92.0,142.7 80.0,146.0 74.0,146.0 C 68.0,146.0 56.0,142.7 56.0,136.1 C 56.0,130.6 64.0,128.4 64.0,124.0 L 24.0,124.0 L 24.0,84.0 C 19.6,84.0 17.4,92.0 11.9,92.0 C 5.3,92.0 2.0,80.0 2.0,74.0 C 2.0,68.0 5.3,56.0 11.9,56.0 C 17.4,56.0 19.6,64.0 24.0,64.0 L 24.0,24.0 Z' fill='none' stroke='%23fff' stroke-opacity='.6' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    background-position: 170px 90%;
+  }
+}
+
+/* Piezas azules sueltas en 3D. Algunas cruzan al lado blanco.
+   --corte = posición donde termina el azul. */
+
+.rol-layout,
+.login-split {
+  --corte: 52%;
+}
+
+.login-split {
+  --corte: 45%;
+}
+
+.rol-layout::after,
+.login-split::after {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(var(--corte) + 160px);
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%0A%3Cdefs%3E%3ClinearGradient id='g1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236d92f6'/%3E%3Cstop offset='1' stop-color='%232c58d4'/%3E%3C/linearGradient%3E%0A%3Cfilter id='sh' x='-40%25' y='-40%25' width='190%25' height='190%25'%3E%3CfeDropShadow dx='6' dy='12' stdDeviation='7' flood-color='%2308184a' flood-opacity='.5'/%3E%3C/filter%3E%3C/defs%3E%0A%3Cg transform='rotate(-18 110 110)' filter='url(%23sh)'%3E%0A%3Cpath d='M60,60 L 100.0,60.0 C 100.0,55.6 92.0,53.4 92.0,47.9 C 92.0,41.3 104.0,38.0 110.0,38.0 C 116.0,38.0 128.0,41.3 128.0,47.9 C 128.0,53.4 120.0,55.6 120.0,60.0 L 160.0,60.0 L 160.0,100.0 C 155.6,100.0 153.4,92.0 147.9,92.0 C 141.3,92.0 138.0,104.0 138.0,110.0 C 138.0,116.0 141.3,128.0 147.9,128.0 C 153.4,128.0 155.6,120.0 160.0,120.0 L 160.0,160.0 L 120.0,160.0 C 120.0,164.4 128.0,166.6 128.0,172.1 C 128.0,178.7 116.0,182.0 110.0,182.0 C 104.0,182.0 92.0,178.7 92.0,172.1 C 92.0,166.6 100.0,164.4 100.0,160.0 L 60.0,160.0 L 60.0,120.0 C 64.4,120.0 66.6,128.0 72.1,128.0 C 78.7,128.0 82.0,116.0 82.0,110.0 C 82.0,104.0 78.7,92.0 72.1,92.0 C 66.6,92.0 64.4,100.0 60.0,100.0 L 60.0,60.0 Z' fill='%231b3b99' transform='translate(5,7)'/%3E%0A%3Cpath d='M60,60 L 100.0,60.0 C 100.0,55.6 92.0,53.4 92.0,47.9 C 92.0,41.3 104.0,38.0 110.0,38.0 C 116.0,38.0 128.0,41.3 128.0,47.9 C 128.0,53.4 120.0,55.6 120.0,60.0 L 160.0,60.0 L 160.0,100.0 C 155.6,100.0 153.4,92.0 147.9,92.0 C 141.3,92.0 138.0,104.0 138.0,110.0 C 138.0,116.0 141.3,128.0 147.9,128.0 C 153.4,128.0 155.6,120.0 160.0,120.0 L 160.0,160.0 L 120.0,160.0 C 120.0,164.4 128.0,166.6 128.0,172.1 C 128.0,178.7 116.0,182.0 110.0,182.0 C 104.0,182.0 92.0,178.7 92.0,172.1 C 92.0,166.6 100.0,164.4 100.0,160.0 L 60.0,160.0 L 60.0,120.0 C 64.4,120.0 66.6,128.0 72.1,128.0 C 78.7,128.0 82.0,116.0 82.0,110.0 C 82.0,104.0 78.7,92.0 72.1,92.0 C 66.6,92.0 64.4,100.0 60.0,100.0 L 60.0,60.0 Z' fill='%232a4fc0' transform='translate(2.5,3.5)'/%3E%0A%3Cpath d='M60,60 L 100.0,60.0 C 100.0,55.6 92.0,53.4 92.0,47.9 C 92.0,41.3 104.0,38.0 110.0,38.0 C 116.0,38.0 128.0,41.3 128.0,47.9 C 128.0,53.4 120.0,55.6 120.0,60.0 L 160.0,60.0 L 160.0,100.0 C 155.6,100.0 153.4,92.0 147.9,92.0 C 141.3,92.0 138.0,104.0 138.0,110.0 C 138.0,116.0 141.3,128.0 147.9,128.0 C 153.4,128.0 155.6,120.0 160.0,120.0 L 160.0,160.0 L 120.0,160.0 C 120.0,164.4 128.0,166.6 128.0,172.1 C 128.0,178.7 116.0,182.0 110.0,182.0 C 104.0,182.0 92.0,178.7 92.0,172.1 C 92.0,166.6 100.0,164.4 100.0,160.0 L 60.0,160.0 L 60.0,120.0 C 64.4,120.0 66.6,128.0 72.1,128.0 C 78.7,128.0 82.0,116.0 82.0,110.0 C 82.0,104.0 78.7,92.0 72.1,92.0 C 66.6,92.0 64.4,100.0 60.0,100.0 L 60.0,60.0 Z' fill='url(%23g1)' stroke='%23a9c1ff' stroke-opacity='.55' stroke-width='1.2'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%0A%3Cdefs%3E%3ClinearGradient id='g2' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236d92f6'/%3E%3Cstop offset='1' stop-color='%232c58d4'/%3E%3C/linearGradient%3E%0A%3Cfilter id='sh' x='-40%25' y='-40%25' width='190%25' height='190%25'%3E%3CfeDropShadow dx='6' dy='12' stdDeviation='7' flood-color='%2308184a' flood-opacity='.5'/%3E%3C/filter%3E%3C/defs%3E%0A%3Cg transform='rotate(24 110 110)' filter='url(%23sh)'%3E%0A%3Cpath d='M60,60 L 100.0,60.0 C 100.0,64.4 92.0,66.6 92.0,72.1 C 92.0,78.7 104.0,82.0 110.0,82.0 C 116.0,82.0 128.0,78.7 128.0,72.1 C 128.0,66.6 120.0,64.4 120.0,60.0 L 160.0,60.0 L 160.0,100.0 C 164.4,100.0 166.6,92.0 172.1,92.0 C 178.7,92.0 182.0,104.0 182.0,110.0 C 182.0,116.0 178.7,128.0 172.1,128.0 C 166.6,128.0 164.4,120.0 160.0,120.0 L 160.0,160.0 L 120.0,160.0 C 120.0,155.6 128.0,153.4 128.0,147.9 C 128.0,141.3 116.0,138.0 110.0,138.0 C 104.0,138.0 92.0,141.3 92.0,147.9 C 92.0,153.4 100.0,155.6 100.0,160.0 L 60.0,160.0 L 60.0,120.0 C 55.6,120.0 53.4,128.0 47.9,128.0 C 41.3,128.0 38.0,116.0 38.0,110.0 C 38.0,104.0 41.3,92.0 47.9,92.0 C 53.4,92.0 55.6,100.0 60.0,100.0 L 60.0,60.0 Z' fill='%231b3b99' transform='translate(5,7)'/%3E%0A%3Cpath d='M60,60 L 100.0,60.0 C 100.0,64.4 92.0,66.6 92.0,72.1 C 92.0,78.7 104.0,82.0 110.0,82.0 C 116.0,82.0 128.0,78.7 128.0,72.1 C 128.0,66.6 120.0,64.4 120.0,60.0 L 160.0,60.0 L 160.0,100.0 C 164.4,100.0 166.6,92.0 172.1,92.0 C 178.7,92.0 182.0,104.0 182.0,110.0 C 182.0,116.0 178.7,128.0 172.1,128.0 C 166.6,128.0 164.4,120.0 160.0,120.0 L 160.0,160.0 L 120.0,160.0 C 120.0,155.6 128.0,153.4 128.0,147.9 C 128.0,141.3 116.0,138.0 110.0,138.0 C 104.0,138.0 92.0,141.3 92.0,147.9 C 92.0,153.4 100.0,155.6 100.0,160.0 L 60.0,160.0 L 60.0,120.0 C 55.6,120.0 53.4,128.0 47.9,128.0 C 41.3,128.0 38.0,116.0 38.0,110.0 C 38.0,104.0 41.3,92.0 47.9,92.0 C 53.4,92.0 55.6,100.0 60.0,100.0 L 60.0,60.0 Z' fill='%232a4fc0' transform='translate(2.5,3.5)'/%3E%0A%3Cpath d='M60,60 L 100.0,60.0 C 100.0,64.4 92.0,66.6 92.0,72.1 C 92.0,78.7 104.0,82.0 110.0,82.0 C 116.0,82.0 128.0,78.7 128.0,72.1 C 128.0,66.6 120.0,64.4 120.0,60.0 L 160.0,60.0 L 160.0,100.0 C 164.4,100.0 166.6,92.0 172.1,92.0 C 178.7,92.0 182.0,104.0 182.0,110.0 C 182.0,116.0 178.7,128.0 172.1,128.0 C 166.6,128.0 164.4,120.0 160.0,120.0 L 160.0,160.0 L 120.0,160.0 C 120.0,155.6 128.0,153.4 128.0,147.9 C 128.0,141.3 116.0,138.0 110.0,138.0 C 104.0,138.0 92.0,141.3 92.0,147.9 C 92.0,153.4 100.0,155.6 100.0,160.0 L 60.0,160.0 L 60.0,120.0 C 55.6,120.0 53.4,128.0 47.9,128.0 C 41.3,128.0 38.0,116.0 38.0,110.0 C 38.0,104.0 41.3,92.0 47.9,92.0 C 53.4,92.0 55.6,100.0 60.0,100.0 L 60.0,60.0 Z' fill='url(%23g2)' stroke='%23a9c1ff' stroke-opacity='.55' stroke-width='1.2'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%0A%3Cdefs%3E%3ClinearGradient id='g3' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236d92f6'/%3E%3Cstop offset='1' stop-color='%232c58d4'/%3E%3C/linearGradient%3E%0A%3Cfilter id='sh' x='-40%25' y='-40%25' width='190%25' height='190%25'%3E%3CfeDropShadow dx='6' dy='12' stdDeviation='7' flood-color='%2308184a' flood-opacity='.5'/%3E%3C/filter%3E%3C/defs%3E%0A%3Cg transform='rotate(-32 110 110)' filter='url(%23sh)'%3E%0A%3Cpath d='M60,60 L 100.0,60.0 C 100.0,55.6 92.0,53.4 92.0,47.9 C 92.0,41.3 104.0,38.0 110.0,38.0 C 116.0,38.0 128.0,41.3 128.0,47.9 C 128.0,53.4 120.0,55.6 120.0,60.0 L 160.0,60.0 L 160.0,100.0 C 164.4,100.0 166.6,92.0 172.1,92.0 C 178.7,92.0 182.0,104.0 182.0,110.0 C 182.0,116.0 178.7,128.0 172.1,128.0 C 166.6,128.0 164.4,120.0 160.0,120.0 L 160.0,160.0 L 120.0,160.0 C 120.0,155.6 128.0,153.4 128.0,147.9 C 128.0,141.3 116.0,138.0 110.0,138.0 C 104.0,138.0 92.0,141.3 92.0,147.9 C 92.0,153.4 100.0,155.6 100.0,160.0 L 60.0,160.0 L 60.0,120.0 C 55.6,120.0 53.4,128.0 47.9,128.0 C 41.3,128.0 38.0,116.0 38.0,110.0 C 38.0,104.0 41.3,92.0 47.9,92.0 C 53.4,92.0 55.6,100.0 60.0,100.0 L 60.0,60.0 Z' fill='%231b3b99' transform='translate(5,7)'/%3E%0A%3Cpath d='M60,60 L 100.0,60.0 C 100.0,55.6 92.0,53.4 92.0,47.9 C 92.0,41.3 104.0,38.0 110.0,38.0 C 116.0,38.0 128.0,41.3 128.0,47.9 C 128.0,53.4 120.0,55.6 120.0,60.0 L 160.0,60.0 L 160.0,100.0 C 164.4,100.0 166.6,92.0 172.1,92.0 C 178.7,92.0 182.0,104.0 182.0,110.0 C 182.0,116.0 178.7,128.0 172.1,128.0 C 166.6,128.0 164.4,120.0 160.0,120.0 L 160.0,160.0 L 120.0,160.0 C 120.0,155.6 128.0,153.4 128.0,147.9 C 128.0,141.3 116.0,138.0 110.0,138.0 C 104.0,138.0 92.0,141.3 92.0,147.9 C 92.0,153.4 100.0,155.6 100.0,160.0 L 60.0,160.0 L 60.0,120.0 C 55.6,120.0 53.4,128.0 47.9,128.0 C 41.3,128.0 38.0,116.0 38.0,110.0 C 38.0,104.0 41.3,92.0 47.9,92.0 C 53.4,92.0 55.6,100.0 60.0,100.0 L 60.0,60.0 Z' fill='%232a4fc0' transform='translate(2.5,3.5)'/%3E%0A%3Cpath d='M60,60 L 100.0,60.0 C 100.0,55.6 92.0,53.4 92.0,47.9 C 92.0,41.3 104.0,38.0 110.0,38.0 C 116.0,38.0 128.0,41.3 128.0,47.9 C 128.0,53.4 120.0,55.6 120.0,60.0 L 160.0,60.0 L 160.0,100.0 C 164.4,100.0 166.6,92.0 172.1,92.0 C 178.7,92.0 182.0,104.0 182.0,110.0 C 182.0,116.0 178.7,128.0 172.1,128.0 C 166.6,128.0 164.4,120.0 160.0,120.0 L 160.0,160.0 L 120.0,160.0 C 120.0,155.6 128.0,153.4 128.0,147.9 C 128.0,141.3 116.0,138.0 110.0,138.0 C 104.0,138.0 92.0,141.3 92.0,147.9 C 92.0,153.4 100.0,155.6 100.0,160.0 L 60.0,160.0 L 60.0,120.0 C 55.6,120.0 53.4,128.0 47.9,128.0 C 41.3,128.0 38.0,116.0 38.0,110.0 C 38.0,104.0 41.3,92.0 47.9,92.0 C 53.4,92.0 55.6,100.0 60.0,100.0 L 60.0,60.0 Z' fill='url(%23g3)' stroke='%23a9c1ff' stroke-opacity='.55' stroke-width='1.2'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 200px 200px, 180px 180px, 170px 170px;
+  background-position:
+    right 89px top 5%,
+    right 99px top 57%,
+    right 219px top 79%;
+}
+
+/* Piezas que sobresalen: el borde del azul tiene lengüetas hacia el blanco
+   y huecos donde encajan. Todo es parte del mismo panel azul (máscara). */
+
+@media (min-width: 701px) {
+  .rol-presentacion,
+  .split-izquierda {
+    margin-right: -44px;
+    border-right: 44px solid transparent;
+    -webkit-mask-image: linear-gradient(#000, #000), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='94' height='220' viewBox='0 0 94 220'%3E%3Cpath d='M0,0 H50 L 50.0,44.0 C 58.8,44.0 63.2,35.2 74.2,35.2 C 87.4,35.2 94.0,48.4 94.0,55.0 C 94.0,61.6 87.4,74.8 74.2,74.8 C 63.2,74.8 58.8,66.0 50.0,66.0 L 50.0,110.0 L 50.0,154.0 C 41.2,154.0 36.8,145.2 25.8,145.2 C 12.6,145.2 6.0,158.4 6.0,165.0 C 6.0,171.6 12.6,184.8 25.8,184.8 C 36.8,184.8 41.2,176.0 50.0,176.0 L 50.0,220.0  H0 Z' fill='black'/%3E%3C/svg%3E");
+    mask-image: linear-gradient(#000, #000), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='94' height='220' viewBox='0 0 94 220'%3E%3Cpath d='M0,0 H50 L 50.0,44.0 C 58.8,44.0 63.2,35.2 74.2,35.2 C 87.4,35.2 94.0,48.4 94.0,55.0 C 94.0,61.6 87.4,74.8 74.2,74.8 C 63.2,74.8 58.8,66.0 50.0,66.0 L 50.0,110.0 L 50.0,154.0 C 41.2,154.0 36.8,145.2 25.8,145.2 C 12.6,145.2 6.0,158.4 6.0,165.0 C 6.0,171.6 12.6,184.8 25.8,184.8 C 36.8,184.8 41.2,176.0 50.0,176.0 L 50.0,220.0  H0 Z' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-size: calc(100% - 94px) 100%, 94px 220px;
+    mask-size: calc(100% - 94px) 100%, 94px 220px;
+    -webkit-mask-position: left top, right 0 top 20px;
+    mask-position: left top, right 0 top 20px;
+    -webkit-mask-repeat: no-repeat, repeat-y;
+    mask-repeat: no-repeat, repeat-y;
+  }
+
+  .rol-presentacion::after,
+  .split-izquierda::after {
+    background-position: right 0 top 20px;
+  }
+
+  .rol-contenido,
+  .split-derecha {
+    border-left: 44px solid transparent;
+  }
+}
+
+/* El contenido siempre aparece por delante de los adornos. */
+
+.rol-presentacion > *,
+.split-izquierda > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Panel blanco. */
+
+.rol-contenido,
+.split-derecha {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  background: #fff;
+}
+
+.rol-contenido > *,
+.split-derecha > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   PASO 1: SELECCIÓN DE ROL
+   ========================================================= */
+
+.rol-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.92fr);
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  background: #fff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.rol-presentacion {
+  min-height: 100vh;
+  padding: 36px clamp(28px, 4vw, 64px) 25px;
+  overflow: visible;
+}
+
+.rol-contenido {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 45px clamp(30px, 5vw, 76px);
+}
+
+/* =========================================================
+   MARCA INSTITUCIONAL
+   ========================================================= */
+
+.marca-institucion {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.marca-logo {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  color: #244bb4;
+  background: #fff;
+  box-shadow: 0 7px 18px #10295b35;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: -0.7px;
+}
+
+.marca-superior {
+  display: block;
+  margin-bottom: 5px;
+  color: #c9ddff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.marca-institucion h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 750;
+  letter-spacing: -0.3px;
+}
+
+/* =========================================================
+   TEXTO DE PRESENTACIÓN
+   ========================================================= */
+
+.presentacion-contenido {
+  position: relative;
+  z-index: 2;
+  margin: 35px 0 0;
+}
+
+.presentacion-contenido h2,
+.panel-mensaje h2 {
+  margin: 23px 0 14px;
+  font-size: clamp(34px, 3.4vw, 50px);
+  font-weight: 850;
+  line-height: 1.13;
+  letter-spacing: -1.9px;
+}
+
+.presentacion-contenido h2 span {
+  color: #9be7ff;
+}
+
+.presentacion-contenido > p,
+.panel-mensaje > p {
+  max-width: 365px;
+  margin: 0;
+  color: #dbe7ff;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.etiqueta-bienvenida {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 13px;
+  border: 1px solid #ffffff27;
+  border-radius: 30px;
+  color: #eef5ff;
+  background: #ffffff0d;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.punto-animado {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #8ff0cf;
+  box-shadow: 0 0 0 4px #8ff0cf25;
+  animation: latido-circulo 1.2s ease-in-out infinite;
+}
+
+@keyframes latido-circulo {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 3px #8ff0cf35, 0 0 5px #8ff0cf55;
+  }
+
+  50% {
+    transform: scale(1.35);
+    box-shadow: 0 0 0 7px #8ff0cf20, 0 0 13px #8ff0cfb0;
+  }
+}
+
+/* =========================================================
+   ILUSTRACIÓN EDUCATIVA
+   ========================================================= */
+
+.ilustracion-educativa {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 420px;
+  height: 235px;
+  margin: 5px auto 0;
+}
+
+.ilustracion-educativa::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 18px;
+  left: 50%;
+  width: 230px;
+  height: 105px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #0c245b25;
+  filter: blur(22px);
+}
+
+.burbuja {
+  position: absolute;
+  border: 1px solid #ffffff25;
+  border-radius: 50%;
+  background: #ffffff10;
+}
+
+.burbuja-uno {
+  top: 45px;
+  left: 17%;
+  width: 48px;
+  height: 48px;
+}
+
+.burbuja-dos {
+  right: 13%;
+  bottom: 44px;
+  width: 28px;
+  height: 28px;
+}
+
+.elemento-flotante {
+  position: absolute;
+  z-index: 5;
+  color: #fff2a7;
+  animation: flotar 3.6s ease-in-out infinite;
+}
+
+.estrella {
+  font-size: 28px;
+  text-shadow: 0 0 18px #fff6a2;
+}
+
+.estrella-uno {
+  top: 18px;
+  left: 27%;
+}
+
+.estrella-dos {
+  top: 67px;
+  right: 23%;
+  font-size: 36px;
+  animation-delay: -1.2s;
+}
+
+.estrella-tres {
+  top: 105px;
+  left: 12%;
+  font-size: 19px;
+  animation-delay: -2s;
+}
+
+@keyframes flotar {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+/* =========================================================
+   LIBROS DE LA ILUSTRACIÓN
+   ========================================================= */
+
+.libro {
+  position: absolute;
+  left: 50%;
+  border-radius: 9px 9px 13px 13px;
+  box-shadow: 0 12px 20px #0c245b26;
+  transform-origin: center bottom;
+}
+
+.libro-atras {
+  bottom: 29px;
+  width: 180px;
+  height: 94px;
+  transform: translateX(-50%) rotate(-8deg);
+  border: 4px solid #ffdf9a;
+  background: #f5bb58;
+}
+
+.pagina {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: #fffaf0;
+}
+
+.pagina-izquierda {
+  left: 0;
+  border-right: 1px solid #e6dfd1;
+  border-radius: 5px 0 0 8px;
+}
+
+.pagina-derecha {
+  right: 0;
+  border-radius: 0 5px 8px 0;
+}
+
+.libro-frente {
+  bottom: 22px;
+  width: 202px;
+  height: 103px;
+  overflow: hidden;
+  transform: translateX(-50%) rotate(4deg);
+  border: 4px solid #eaf0ff;
+  background: #fff;
+}
+
+.libro-lomo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: #dce6ff;
+}
+
+.linea-libro {
+  position: absolute;
+  width: 30%;
+  height: 3px;
+  border-radius: 4px;
+  background: #cbd7f3;
+}
+
+.linea-uno {
+  top: 29px;
+  left: 10%;
+}
+
+.linea-dos {
+  top: 41px;
+  left: 10%;
+  width: 26%;
+}
+
+.linea-tres {
+  top: 53px;
+  left: 10%;
+  width: 32%;
+}
+
+/* =========================================================
+   BIRRETE
+   ========================================================= */
+
+.birrete {
+  position: absolute;
+  z-index: 4;
+  top: 14px;
+  left: 50%;
+  width: 96px;
+  height: 65px;
+  transform: translateX(-50%) rotate(-7deg);
+  animation: birrete-flota 4s ease-in-out infinite;
+}
+
+@keyframes birrete-flota {
+  0%,
+  100% {
+    transform: translate(-50%, 0) rotate(-7deg);
+  }
+
+  50% {
+    transform: translate(-50%, -9px) rotate(1deg);
+  }
+}
+
+.birrete-tapa {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 96px;
+  height: 35px;
+  transform: rotate(-8deg);
+  border: 3px solid #6687ef;
+  border-radius: 5px;
+  background: #263e91;
+  clip-path: polygon(50% 0, 100% 45%, 50% 100%, 0 45%);
+}
+
+.birrete-base {
+  position: absolute;
+  top: 27px;
+  left: 19px;
+  width: 58px;
+  height: 24px;
+  border-radius: 3px 3px 13px 13px;
+  background: #405dc3;
+}
+
+.birrete-borla {
+  position: absolute;
+  top: 18px;
+  right: 1px;
+  width: 3px;
+  height: 29px;
+  transform: rotate(-9deg);
+  border-radius: 3px;
+  background: #ffcf66;
+}
+
+.birrete-borla::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffcf66;
+}
+
+/* =========================================================
+   LÁPIZ
+   ========================================================= */
+
+.lapiz {
+  position: absolute;
+  z-index: 5;
+  top: 92px;
+  right: 18%;
+  width: 20px;
+  height: 100px;
+  transform: rotate(27deg);
+  animation: lapiz-flota 4.3s ease-in-out infinite;
+}
+
+@keyframes lapiz-flota {
+  50% {
+    transform: translateY(-7px) rotate(33deg);
+  }
+}
+
+.lapiz-cuerpo {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  width: 20px;
+  border-right: 3px solid #e89b36;
+  border-left: 3px solid #ffe19b;
+  border-radius: 3px;
+  background: #ffb94f;
+}
+
+.lapiz-punta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-right: 10px solid transparent;
+  border-bottom: 15px solid #ffe3b3;
+  border-left: 10px solid transparent;
+}
+
+.lapiz-borrador {
+  position: absolute;
+  bottom: 5px;
+  width: 20px;
+  height: 12px;
+  border-radius: 3px 3px 5px 5px;
+  background: #ff8c9c;
+}
+
+/* =========================================================
+   INSIGNIA DE LOGRO
+   ========================================================= */
+
+.insignia-logro {
+  position: absolute;
+  z-index: 6;
+  top: 14px;
+  right: 8%;
+  width: 88px;
+  padding: 10px 7px;
+  transform: rotate(5deg);
+  border-radius: 15px;
+  color: #173578;
+  background: #fff;
+  box-shadow: 0 9px 24px #0c245b25;
+  text-align: center;
+  animation: flotar 4.5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+
+.insignia-logro > span {
+  display: block;
+  color: #ffb83f;
+  font-size: 27px;
+  line-height: 1.1;
+}
+
+.insignia-logro small {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   PIE DE PÁGINA
+   ========================================================= */
+
+.presentacion-pie {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 10px;
+  color: #dce8ff;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pie-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #164b65;
+  background: #8ce9c6;
+  font-weight: 900;
+}
+
+.marca-footer {
+  position: relative;
+  z-index: 3;
+  margin-top: 24px;
+  color: #c8d8ff;
+  font-size: 9px;
+  line-height: 1.7;
+}
+
+.marca-footer.texto-centrado {
+  display: block;
+  align-self: center;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+/* =========================================================
+   CONTENIDO DE SELECCIÓN DE ROL
+   ========================================================= */
+
+.rol-header {
+  margin-bottom: 29px;
+}
+
+.seccion-etiqueta {
+  display: block;
+  margin-bottom: 10px;
+  color: #4266d5;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.7px;
+}
+
+.rol-header h2 {
+  margin: 0 0 10px;
+  color: #172b4d;
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 850;
+  letter-spacing: -1.1px;
+}
+
+.rol-header p {
+  margin: 0;
+  color: #7b879e;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.rol-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.rol-opcion-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  min-height: 94px;
+  padding: 17px;
+  overflow: hidden;
+  border: 1px solid #e6ebf5;
+  border-radius: 17px;
+  color: inherit;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.rol-opcion-card::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  bottom: 15px;
+  left: 0;
+  width: 4px;
+  transform: scaleY(0);
+  transform-origin: center;
+  border-radius: 0 5px 5px 0;
+  background: #4266e5;
+  transition: transform 0.25s ease;
+}
+
+.rol-opcion-card:hover,
+.rol-opcion-card:focus-visible {
+  outline: none;
+  transform: translateY(-3px);
+  border-color: #b9caff;
+  background: #f8faff;
+  box-shadow: 0 12px 28px #244cb511;
+}
+
+.rol-opcion-card:hover::before,
+.rol-opcion-card:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.rol-icono {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 53px;
+  height: 53px;
+  border-radius: 15px;
+  font-size: 25px;
+  transition: transform 0.25s ease;
+}
+
+.rol-opcion-card:hover .rol-icono {
+  transform: rotate(-5deg) scale(1.08);
+}
+
+.icono-estudiante {
+  background: #eaf0ff;
+}
+
+.icono-docente {
+  background: #e2f9f0;
+}
+
+.icono-admin {
+  background: #fff2dd;
+}
+
+.rol-texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rol-titulo {
+  display: block;
+  color: #1c2e50;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.rol-desc {
+  display: block;
+  color: #79869d;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.rol-flecha {
+  color: #93a0b8;
+  font-size: 21px;
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.rol-opcion-card:hover .rol-flecha {
+  transform: translateX(4px);
+  color: #315ee8;
+}
+
+.aviso-seguridad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 25px;
+  color: #8a96aa;
+  font-size: 10px;
+}
+
+.candado-icono {
+  font-size: 12px;
+}
+
+/* =========================================================
+   FORMULARIOS DE ACCESO
+   ========================================================= */
+
+.login-split {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  max-height: none;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: none;
+}
+
+.split-izquierda {
+  min-height: 100vh;
+  padding: 32px clamp(25px, 3vw, 48px) 23px;
+  overflow: visible;
+}
+
+.split-derecha {
+  min-height: 100vh;
+  padding: 30px clamp(28px, 4vw, 65px);
+  overflow-y: auto;
+}
+
+/* =========================================================
+   MARCA CLICABLE
+   ========================================================= */
+
+.marca-clic {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  color: #fff;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.marca-clic strong,
+.marca-clic small {
+  display: block;
+}
+
+.marca-clic strong {
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.marca-clic small {
+  color: #d4e2ff;
+  font-size: 10px;
+}
+
+.marca-logo-claro {
+  width: 43px;
+  height: 43px;
+  border-radius: 13px;
+  font-size: 13px;
+}
+
+/* =========================================================
+   MENSAJE DE LOS PANELES DE ACCESO
+   ========================================================= */
+
+.panel-mensaje {
+  position: relative;
+  z-index: 2;
+  margin: 28px 0;
+}
+
+.panel-mensaje h2 {
+  margin: 20px 0 13px;
+  font-size: clamp(32px, 3vw, 43px);
+}
+
+.etiqueta-clara {
+  font-size: 10px;
+}
+
+.ilustracion-login {
+  height: 200px;
+  margin-top: 20px;
+}
+
+/* =========================================================
+   FRASE INSPIRADORA
+   ========================================================= */
+
+.frase-inspiradora {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  color: #dce8ff;
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.frase-inspiradora > span {
+  display: block;
+  width: 100%;
+  color: #9be7ff;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+}
+
+.frase-inspiradora p {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  color: #dce8ff;
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* =========================================================
+   BOTÓN VOLVER
+   ========================================================= */
+
+.btn-volver-rol {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 0;
+  margin-bottom: 15px;
+  border: 0;
+  color: #5870a5;
+  background: transparent;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.btn-volver-rol span {
+  font-size: 17px;
+}
+
+.btn-volver-rol:hover {
+  color: #315ee8;
+}
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
+.formulario-contenido {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.formulario-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 49px;
+  height: 49px;
+  margin-bottom: 19px;
+  border-radius: 15px;
+  background: #edf2ff;
+  font-size: 23px;
+  animation: flotar 4s ease-in-out infinite;
+}
+
+.bienvenida-titulo {
+  margin: 0 0 8px;
+  color: #172b4d;
+  font-size: clamp(23px, 2.4vw, 29px);
+  font-weight: 850;
+  letter-spacing: -0.8px;
+  line-height: 1.25;
+}
+
+.bienvenida-subtitulo {
+  margin: 0;
+  color: #7b879e;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.separador-formulario {
+  height: 1px;
+  margin: 21px 0;
+  background: #edf0f6;
+}
+
+/* =========================================================
+   ETIQUETAS Y GRUPOS DE CAMPOS
+   ========================================================= */
+
+.campo-grupo {
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+.label-principal,
+.campo-icono label {
+  display: block;
+  margin-bottom: 9px;
+  color: #293c5e;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.campo-icono {
+  margin-bottom: 17px;
+}
+
+/* =========================================================
+   NIVELES ACADÉMICOS
+   ========================================================= */
+
+.niveles-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 76px);
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 14px auto;
+}
+
+.nivel-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 54px;
+  min-width: 0;
+  min-height: 54px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  color: #334155;
+  background: #fff;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.nivel-card:hover {
+  transform: translateY(-2px);
+  border-color: #315ee8;
+  color: #fff;
+  background: #315ee8;
+  box-shadow: 0 6px 14px #315ee838;
+}
+
+.nivel-card.activo {
+  border-color: #315ee8;
+  color: #fff;
+  background: linear-gradient(145deg, #315ee8, #4978f0);
+  box-shadow: 0 5px 12px #315ee82e;
+}
+
+.nivel-card.activo:hover {
+  border-color: #234bc7;
+  background: #234bc7;
+}
+
+.nivel-card-titulo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 4px;
+  color: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.nivel-card:hover .nivel-card-titulo,
+.nivel-card.activo .nivel-card-titulo {
+  color: #fff;
+}
+
+.nivel-card input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.nivel-check {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 900;
+  pointer-events: none;
+}
+
+.nivel-emblema {
+  display: none !important;
+}
+
+.nivel-card:focus-within {
+  outline: 2px solid #7190ff;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   CAMPOS DE USUARIO Y CONTRASEÑA
+   ========================================================= */
+
+.input-con-icono {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid #e0e6f0;
+  border-radius: 11px;
+  background: #fbfcff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.input-con-icono:focus-within {
+  border-color: #6a88ef;
+  background: #fff;
+  box-shadow: 0 0 0 4px #4266e512;
+}
+
+.icono-campo {
+  flex-shrink: 0;
+  margin-right: 10px;
+  font-size: 15px;
+}
+
+.input-con-icono input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 0;
+  border: 0;
+  outline: none;
+  color: #203657;
+  background: transparent;
+  font-size: 12px;
+}
+
+.input-con-icono input::placeholder {
+  color: #a5afc0;
+}
+
+.input-con-icono input.input-invalido {
+  color: #ad3030;
+}
+
+.input-con-icono:has(input.input-invalido) {
+  border-color: #e99a9a;
+  background: #fffafa;
+}
+
+.icono-ojo {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  min-height: 34px;
+  padding: 4px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.icono-ojo:hover {
+  background: #eef2fc;
+}
+
+.texto-validacion {
+  display: block;
+  margin-top: 7px;
+  color: #bd3434;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   MENSAJES DE ERROR
+   ========================================================= */
+
+.mensaje-error-login {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 0 0 15px;
+  padding: 12px;
+  border: 1px solid #ffd8d8;
+  border-radius: 10px;
+  color: #ad3030;
+  background: #fff3f3;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   BOTÓN DE INGRESO
+   ========================================================= */
+
+.btn-ingresar-split {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  min-height: 42px;
+  margin: 0 auto;
+  padding: 0 34px 0 18px;
+  border: 0;
+  border-radius: 9px;
+  color: #fff;
+  background: linear-gradient(105deg, #315ee8, #4978f0);
+  box-shadow: 0 8px 18px #315ee82c;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
+}
+
+.btn-ingresar-split:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px #315ee83b;
+  filter: saturate(1.1);
+}
+
+.btn-ingresar-split:active {
+  transform: translateY(0);
+}
+
+.flecha-boton {
+  position: absolute;
+  right: 12px;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+
+.btn-ingresar-split:hover .flecha-boton {
+  transform: translateX(4px);
+}
+
+.nota-privacidad {
+  margin: 18px 0 0;
+  color: #8793a8;
+  font-size: 9px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.split-derecha .formulario-icono.admin-icono {
+  display: none;
+}
+
+/* =========================================================
+   ILUSTRACIÓN DEL ADMINISTRADOR
+   ========================================================= */
+
+.admin-ilustracion {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  height: 245px;
+  margin: 28px auto 0;
+}
+
+.admin-circulo {
+  position: absolute;
+  border: 1px solid #ffffff20;
+  border-radius: 50%;
+}
+
+.admin-circulo-uno {
+  top: 8px;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  transform: translateX(-50%);
+}
+
+.admin-circulo-dos {
+  top: 38px;
+  left: 50%;
+  width: 160px;
+  height: 160px;
+  transform: translateX(-50%);
+}
+
+.admin-ventana {
+  position: absolute;
+  top: 38px;
+  left: 50%;
+  width: 210px;
+  overflow: hidden;
+  transform: translateX(-50%) rotate(-3deg);
+  border: 4px solid #fff;
+  border-radius: 15px;
+  background: #f7f9ff;
+  box-shadow: 0 20px 40px #10295b35;
+  animation: flotar 4s ease-in-out infinite;
+}
+
+.admin-ventana-barra {
+  display: flex;
+  gap: 5px;
+  padding: 10px;
+  background: #e5ebfa;
+}
+
+.admin-ventana-barra i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #7c96e7;
+}
+
+.admin-ventana-cuerpo {
+  padding: 16px;
+}
+
+.admin-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: #e1e9ff;
+  font-size: 19px;
+}
+
+.admin-linea {
+  height: 6px;
+  margin-bottom: 7px;
+  border-radius: 5px;
+  background: #dbe3f4;
+}
+
+.admin-linea-larga {
+  width: 80%;
+}
+
+.admin-linea-corta {
+  width: 52%;
+}
+
+.admin-barras {
+  display: flex;
+  align-items: flex-end;
+  gap: 9px;
+  height: 52px;
+  padding-top: 9px;
+}
+
+.admin-barras span {
+  flex: 1;
+  border-radius: 5px 5px 0 0;
+  background: #6485ef;
+}
+
+.admin-barras span:nth-child(1) {
+  height: 40%;
+}
+
+.admin-barras span:nth-child(2) {
+  height: 75%;
+  background: #65d7c1;
+}
+
+.admin-barras span:nth-child(3) {
+  height: 56%;
+  background: #ffbf67;
+}
+
+.admin-barras span:nth-child(4) {
+  height: 95%;
+}
+
+.admin-estrella {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  color: #ffe18c;
+  font-size: 35px;
+  animation: flotar 3s ease-in-out infinite;
+}
+
+.admin-icono {
+  background: #fff3df;
+}
+
+/* =========================================================
+   TABLETAS Y PANTALLAS MEDIANAS
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .rol-layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1fr);
+  }
+
+  .rol-presentacion {
+    padding: 30px 27px 22px;
+  }
+
+  .rol-contenido {
+    padding: 34px 26px;
+  }
+
+  .login-split {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  }
+
+  .split-izquierda {
+    padding: 27px 23px 20px;
+  }
+
+  .split-derecha {
+    padding: 26px 27px;
+  }
+
+  .ilustracion-educativa {
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
+
+  .btn-ingresar-split {
+    width: 75%;
+  }
+}
+
+/* =========================================================
+   CELULARES
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .login-page {
+    display: block;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .rol-layout,
+  .login-split {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .rol-presentacion {
+    min-height: auto;
+    padding: 25px 24px 18px;
+    overflow: visible;
+  }
+
+  .rol-layout::after,
+  .login-split::after {
+    display: none;
+  }
+
+  .rol-presentacion::before,
+  .split-izquierda::before {
+    display: none;
+  }
+
+  .rol-presentacion .presentacion-contenido,
+  .split-izquierda .panel-mensaje {
+    margin-top: 34px !important;
+    margin-bottom: 34px !important;
+  }
+
+  /* Móvil: las piezas salen hacia abajo. */
+
+  .rol-presentacion,
+  .split-izquierda {
+    margin-bottom: -44px;
+    border-bottom: 44px solid transparent;
+    -webkit-mask-image: linear-gradient(#000, #000), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='94' viewBox='0 0 220 94'%3E%3Cpath d='M0,0 V50 L 44.0,50.0 C 44.0,58.8 35.2,63.2 35.2,74.2 C 35.2,87.4 48.4,94.0 55.0,94.0 C 61.6,94.0 74.8,87.4 74.8,74.2 C 74.8,63.2 66.0,58.8 66.0,50.0 L 110.0,50.0 L 154.0,50.0 C 154.0,41.2 145.2,36.8 145.2,25.8 C 145.2,12.6 158.4,6.0 165.0,6.0 C 171.6,6.0 184.8,12.6 184.8,25.8 C 184.8,36.8 176.0,41.2 176.0,50.0 L 220.0,50.0  V0 Z' fill='black'/%3E%3C/svg%3E");
+    mask-image: linear-gradient(#000, #000), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='94' viewBox='0 0 220 94'%3E%3Cpath d='M0,0 V50 L 44.0,50.0 C 44.0,58.8 35.2,63.2 35.2,74.2 C 35.2,87.4 48.4,94.0 55.0,94.0 C 61.6,94.0 74.8,87.4 74.8,74.2 C 74.8,63.2 66.0,58.8 66.0,50.0 L 110.0,50.0 L 154.0,50.0 C 154.0,41.2 145.2,36.8 145.2,25.8 C 145.2,12.6 158.4,6.0 165.0,6.0 C 171.6,6.0 184.8,12.6 184.8,25.8 C 184.8,36.8 176.0,41.2 176.0,50.0 L 220.0,50.0  V0 Z' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-size: 100% calc(100% - 94px), 220px 94px;
+    mask-size: 100% calc(100% - 94px), 220px 94px;
+    -webkit-mask-position: left top, left 20px bottom 0;
+    mask-position: left top, left 20px bottom 0;
+    -webkit-mask-repeat: no-repeat, repeat-x;
+    mask-repeat: no-repeat, repeat-x;
+  }
+
+  .rol-contenido,
+  .split-derecha {
+    border-top: 44px solid transparent;
+  }
+
+  .rol-presentacion::after,
+  .split-izquierda::after {
+    background-size: 170px 170px;
+    background-position: left 0 bottom 0;
+  }
+
+  .marca-logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .marca-institucion h1 {
+    font-size: 15px;
+  }
+
+  .presentacion-contenido {
+    margin-top: 27px;
+  }
+
+  .presentacion-contenido h2 {
+    margin-top: 18px;
+    font-size: 35px;
+  }
+
+  .presentacion-contenido > p {
+    max-width: 100%;
+    font-size: 12px;
+  }
+
+  .ilustracion-educativa {
+    height: 195px;
+    max-width: 330px;
+    margin-top: 6px;
+    transform: none;
+  }
+
+  .presentacion-pie {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .marca-footer {
+    margin-top: 15px;
+  }
+
+  .rol-contenido {
+    min-height: auto;
+    padding: 36px 22px 30px;
+  }
+
+  .rol-header {
+    margin-bottom: 21px;
+  }
+
+  .rol-header h2 {
+    font-size: 25px;
+  }
+
+  .rol-opcion-card {
+    min-height: 82px;
+    padding: 13px;
+    gap: 12px;
+  }
+
+  .rol-icono {
+    width: 46px;
+    height: 46px;
+    font-size: 22px;
+  }
+
+  .rol-desc {
+    font-size: 10px;
+  }
+
+  .aviso-seguridad {
+    margin-top: 19px;
+  }
+
+  .split-izquierda {
+    min-height: auto;
+    padding: 23px 22px 17px;
+    overflow: visible;
+  }
+
+  .panel-mensaje {
+    margin: 24px 0 12px;
+  }
+
+  .panel-mensaje h2 {
+    margin: 17px 0 10px;
+    font-size: 33px;
+  }
+
+  .panel-mensaje > p {
+    font-size: 12px;
+  }
+
+  .ilustracion-login {
+    height: 170px;
+    margin-top: 0;
+  }
+
+  .frase-inspiradora {
+    width: 100%;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .frase-inspiradora > span,
+  .frase-inspiradora p {
+    width: 100%;
+    text-align: center;
+  }
+
+  .split-derecha {
+    min-height: auto;
+    padding: 30px 22px 32px;
+    overflow: visible;
+  }
+
+  .btn-volver-rol {
+    margin-bottom: 17px;
+  }
+
+  .formulario-icono {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 15px;
+  }
+
+  .bienvenida-titulo {
+    font-size: 24px;
+  }
+
+  .niveles-cards {
+    grid-template-columns: repeat(3, 76px);
+    gap: 7px;
+  }
+
+  .nivel-card {
+    width: 76px;
+    height: 54px;
+    min-height: 54px;
+  }
+
+  .nivel-card-titulo {
+    font-size: 10px;
+  }
+
+  .btn-ingresar-split {
+    width: 75%;
+  }
+
+  .admin-ilustracion {
+    height: 215px;
+    margin-top: 15px;
+  }
+}
+
+/* =========================================================
+   CELULARES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 370px) {
+  .rol-presentacion,
+  .split-izquierda {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .rol-contenido,
+  .split-derecha {
+    padding-right: 17px;
+    padding-left: 17px;
+  }
+
+  .presentacion-contenido h2 {
+    font-size: 31px;
+  }
+
+  .niveles-cards {
+    grid-template-columns: repeat(3, minmax(0, 70px));
+    gap: 5px;
+  }
+
+  .nivel-card {
+    width: 70px;
+    height: 52px;
+    min-height: 52px;
+  }
+
+  .nivel-card-titulo {
+    font-size: 9px;
+  }
+
+  .btn-ingresar-split {
+    width: 85%;
+  }
+}
+
+/* =========================================================
+   PANTALLAS BAJAS
+   ========================================================= */
+
+@media (min-width: 701px) and (max-height: 760px) {
+  .login-page {
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .rol-layout,
+  .login-split {
+    min-height: 760px;
+  }
+
+  .rol-presentacion,
+  .rol-contenido,
+  .split-izquierda,
+  .split-derecha {
+    min-height: 760px;
+  }
+}
+
+/* =========================================================
+   TEXTO DE LA MITAD AZUL (siempre legible)
+   Colores forzados para que ningún estilo global los oscurezca.
+   ========================================================= */
+
+.rol-presentacion .marca-institucion h1,
+.split-izquierda .marca-clic strong,
+.rol-presentacion .presentacion-contenido h2,
+.split-izquierda .panel-mensaje h2 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 18px #0a1d5a66;
+}
+
+.rol-presentacion .presentacion-contenido h2 span,
+.split-izquierda .panel-mensaje h2 span {
+  color: #9be7ff !important;
+}
+
+.rol-presentacion .marca-superior {
+  color: #cfe0ff !important;
+  letter-spacing: 2.6px;
+}
+
+.rol-presentacion .presentacion-contenido > p,
+.split-izquierda .panel-mensaje > p {
+  color: #e6efff !important;
+  max-width: 400px;
+  font-size: 14px;
+  line-height: 1.8;
+  text-shadow: 0 1px 12px #0a1d5a66;
+}
+
+.rol-presentacion .presentacion-contenido h2,
+.split-izquierda .panel-mensaje h2 {
+  font-size: clamp(36px, 3.6vw, 54px);
+  line-height: 1.08;
+}
+
+.rol-presentacion .marca-footer,
+.rol-presentacion .presentacion-pie,
+.split-izquierda .marca-footer {
+  color: #d6e4ff !important;
+}
+
+/* =========================================================
+   SIN ILUSTRACIÓN (lápiz, libros, birrete, estrellas, insignia)
+   Se ocultan; el texto queda centrado en la mitad azul.
+   ========================================================= */
+
+.ilustracion-educativa,
+.ilustracion-login,
+.admin-ilustracion {
+  display: none !important;
+}
+
+.rol-presentacion .presentacion-contenido,
+.split-izquierda .panel-mensaje {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* =========================================================
+   POSICIÓN DEL ENCABEZADO (logo RLA + nombre del colegio)
+   Para bajarlo más o menos, cambia el valor de padding-top.
+   ========================================================= */
+
+.rol-presentacion {
+  padding-top: clamp(56px, 9vh, 92px);
+}
+
+.split-izquierda {
+  padding-top: clamp(52px, 8.5vh, 88px);
+}
+
+@media (max-width: 700px) {
+  .rol-presentacion,
+  .split-izquierda {
+    padding-top: 46px;
+    padding-bottom: 58px;
+  }
+}
+
+/* =========================================================
+   ACCESIBILIDAD
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .animacion-entrada,
+  .elemento-flotante,
+  .birrete,
+  .lapiz,
+  .insignia-logro,
+  .admin-ventana,
+  .admin-estrella,
+  .formulario-icono,
+  .punto-animado {
+    animation: none !important;
+  }
+
+  :host *,
+  :host *::before,
+  :host *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   TIPOGRAFÍA DE LA MITAD AZUL
+   Pegar AL FINAL del CSS, después de "unificacion-final.css".
+   ========================================================= */
+
+/* Bloque central un poco más ancho para que quepan los títulos grandes */
+.login-page .rol-presentacion .panel-mensaje,
+.login-page .split-izquierda .panel-mensaje {
+  max-width: 540px;
+}
+
+/* ---------- 1) ETIQUETA SUPERIOR (chip) ---------- */
+.login-page .chip-rol {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  border: 1px solid #ffffff33;
+  border-radius: 30px;
+  color: #eaf2ff;
+  background: #ffffff16;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- 2) TÍTULO: tres líneas, tres estilos de letra ---------- */
+.login-page .rol-presentacion .panel-mensaje h2,
+.login-page .split-izquierda .panel-mensaje h2 {
+  min-height: 0;
+  margin: 0;
+  font-size: clamp(38px, 3.8vw, 58px);
+  line-height: 1;
+}
+
+.login-page .panel-mensaje h2 span {
+  display: block;
+}
+
+/* Línea 1: pequeña, en mayúsculas y con letras espaciadas */
+.login-page .panel-mensaje h2 .t-suave {
+  margin-bottom: 10px;
+  color: #bcd3ff !important;
+  font-size: 0.36em;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+
+/* Línea 2: muy grande y gruesa, blanca */
+.login-page .panel-mensaje h2 .t-grande {
+  color: #ffffff !important;
+  font-size: 1.12em;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+/* Línea 3: elegante, cursiva con serifa y degradado celeste */
+.login-page .panel-mensaje h2 .t-acento {
+  margin-top: 2px;
+  padding-bottom: 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.02em;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: transparent !important;
+  background: linear-gradient(95deg, #7fe0ff 0%, #c9f2ff 55%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 4px 14px #0a1d5a66);
+}
+
+/* Barrita decorativa debajo del título */
+.login-page .panel-mensaje h2::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 4px;
+  margin-top: 16px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #9be7ff, #ffffff00);
+}
+
+/* ---------- 3) TEXTO DE APOYO ---------- */
+.login-page .rol-presentacion .panel-mensaje > p,
+.login-page .split-izquierda .panel-mensaje > p {
+  min-height: 3.6em;
+  max-width: 440px;
+  margin: 18px 0 0;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.login-page .panel-mensaje > p strong {
+  color: #9be7ff;
+  font-weight: 750;
+}
+
+/* ---------- 4) FRASE INSPIRADORA ---------- */
+.login-page .frase-inspiradora {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  max-width: 440px;
+  min-height: 150px;
+  margin-top: 26px;
+  padding: 36px 26px 22px 30px;
+}
+
+.login-page .frase-inspiradora::before {
+  top: 4px;
+  left: 16px;
+  font-size: 78px;
+  opacity: 0.9;
+}
+
+.login-page .frase-inspiradora p {
+  padding: 0;
+  color: #f1f6ff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+/* Parte destacada de la frase */
+.login-page .frase-inspiradora p em {
+  color: #9be7ff;
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* Autor / firma de la frase */
+.login-page .frase-autor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  color: #bcd3ff;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 10.5px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.login-page .frase-autor::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: #9be7ff;
+}
+
+/* ---------- 5) CELULARES ---------- */
+@media (max-width: 700px) {
+  .login-page .rol-presentacion .panel-mensaje h2,
+  .login-page .split-izquierda .panel-mensaje h2 {
+    font-size: 40px;
+  }
+
+  .login-page .frase-inspiradora p {
+    font-size: 16px;
+  }
+
+  .login-page .frase-inspiradora {
+    min-height: 0;
+  }
+}
+
+/* =========================================================
+   CENTRADO DE LA MITAD BLANCA (rol, estudiante, docente, admin)
+   Pegar AL FINAL de todo el CSS (después de los otros bloques).
+   Usa !important a propósito para que ningún estilo anterior lo pise.
+   ========================================================= */
+
+/* La pantalla completa ocupa siempre el 100% de la altura */
+.login-page .rol-layout,
+.login-page .login-split {
+  align-items: stretch !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+}
+
+/* Mitad blanca: columna centrada vertical y horizontalmente */
+.login-page .rol-contenido,
+.login-page .split-derecha {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  height: auto !important;
+  padding: 72px clamp(28px, 4vw, 64px) !important;
+  overflow: visible !important;
+}
+
+/* El formulario (estudiante, docente y admin) queda justo al medio */
+.login-page .split-derecha > .formulario-contenido {
+  width: 100% !important;
+  max-width: 440px !important;
+  margin: auto !important;
+}
+
+/* Paso de elegir rol: las tarjetas también al medio */
+.login-page .rol-contenido > .rol-header,
+.login-page .rol-contenido > .rol-opciones,
+.login-page .rol-contenido > .aviso-seguridad {
+  width: 100% !important;
+  max-width: 440px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* "← Cambiar de rol" no ocupa espacio: va fijo arriba a la izquierda */
+.login-page .split-derecha > .btn-volver-rol {
+  position: absolute !important;
+  top: 26px !important;
+  left: clamp(28px, 4vw, 64px) !important;
+  margin: 0 !important;
+}
+
+/* Celulares: el formulario va seguido, sin centrar en altura */
+@media (max-width: 700px) {
+  .login-page .rol-contenido,
+  .login-page .split-derecha {
+    justify-content: flex-start !important;
+    min-height: auto !important;
+    padding: 36px 22px 30px !important;
+  }
+
+  .login-page .split-derecha > .formulario-contenido {
+    margin: 0 auto !important;
+  }
+
+  .login-page .split-derecha > .btn-volver-rol {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    align-self: flex-start !important;
+    margin-bottom: 14px !important;
+  }
+}

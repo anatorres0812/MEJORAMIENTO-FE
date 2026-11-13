@@ -1,0 +1,90 @@
+import { Injectable, inject } from '@angular/core';
+import { Nivel } from '../models/nivel.model';
+import { Estudiante } from '../models/estudiante.model';
+import { ESTUDIANTES } from '../mock-data/estudiantes.mock';
+import { ActividadService } from './actividad.service';
+import { cargarDesdeStorage, guardarEnStorage } from '../../shared/utils/storage.util';
+
+const CLAVE_STORAGE = 'rla_estudiantes';
+
+@Injectable({ providedIn: 'root' })
+export class EstudianteService {
+  private actividadService = inject(ActividadService);
+  private estudiantes: Estudiante[] = cargarDesdeStorage(CLAVE_STORAGE, ESTUDIANTES);
+
+  private guardar(): void {
+    guardarEnStorage(CLAVE_STORAGE, this.estudiantes);
+  }
+
+  getTodos(): Estudiante[] {
+    return this.estudiantes;
+  }
+
+  getPorId(estudianteId: string): Estudiante | undefined {
+    return this.estudiantes.find(e => e.id === estudianteId);
+  }
+
+  getPorNivelGradoSeccion(nivel: Nivel, gradoId: string, seccionId: string): Estudiante[] {
+    return this.estudiantes.filter(
+      e => e.nivel === nivel && e.gradoId === gradoId && e.seccionId === seccionId
+    );
+  }
+
+
+crear(datos: Omit<Estudiante, 'id'>): Estudiante {
+  // Obtener los códigos numéricos que ya existen.
+  const codigos = this.estudiantes
+    .map(e => Number(e.codigoEstudiante))
+    .filter(codigo => Number.isSafeInteger(codigo) && codigo > 0);
+
+  // Empezar en 1001 si todavía no existen códigos numéricos.
+  const siguienteCodigo = codigos.length > 0
+    ? Math.max(...codigos) + 1
+    : 1001;
+
+  const nuevoEstudiante: Estudiante = {
+    ...datos,
+    id: String(siguienteCodigo),
+    codigoEstudiante: String(siguienteCodigo),
+  };
+
+  this.estudiantes.push(nuevoEstudiante);
+  this.guardar();
+
+  this.actividadService.registrar(
+    `Se registró al estudiante ${nuevoEstudiante.nombres} ${nuevoEstudiante.apellidos}.`,
+    nuevoEstudiante.nivel
+  );
+
+  return nuevoEstudiante;
+}
+
+
+  actualizar(estudianteId: string, datos: Omit<Estudiante, 'id'>): Estudiante {
+    const estudiante = this.getPorId(estudianteId);
+    if (!estudiante) {
+      throw new Error('No se encontró el estudiante a actualizar.');
+    }
+    Object.assign(estudiante, datos);
+    this.guardar();
+    this.actividadService.registrar(
+      `Se actualizaron los datos de ${estudiante.nombres} ${estudiante.apellidos}.`,
+      estudiante.nivel
+    );
+    return estudiante;
+  }
+
+  cambiarEstado(estudianteId: string): Estudiante {
+    const estudiante = this.getPorId(estudianteId);
+    if (!estudiante) {
+      throw new Error('No se encontró el estudiante.');
+    }
+    estudiante.estado = estudiante.estado === 'Activo' ? 'Inactivo' : 'Activo';
+    this.guardar();
+    this.actividadService.registrar(
+      `${estudiante.nombres} ${estudiante.apellidos} fue marcado como ${estudiante.estado}.`,
+      estudiante.nivel
+    );
+    return estudiante;
+  }
+}

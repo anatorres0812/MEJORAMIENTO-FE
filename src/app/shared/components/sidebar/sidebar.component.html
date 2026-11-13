@@ -1,0 +1,30 @@
+<aside class="sidebar" [class.abierto]="abierto">
+ <div class="sidebar-marca">
+    <div class="sidebar-logo">RLA</div>
+    <div class="sidebar-marca-texto">
+      <span class="sidebar-nombre">Registro de Logros de Aprendizaje</span>
+      <span class="sidebar-subnombre">I.E.P. N.° 20973</span>
+    </div>
+  </div> 
+
+  <nav class="sidebar-menu">
+    @for (item of items; track item.label) {
+      @if (item.ruta) {
+        <a class="sidebar-item" [routerLink]="item.ruta" routerLinkActive="activo" (click)="onSeleccionarItem()">
+          <span class="sidebar-icono">{{ item.icono }}</span>
+          <span>{{ item.label }}</span>
+        </a>
+      } @else {
+        <span class="sidebar-item deshabilitado" title="Próximamente">
+          <span class="sidebar-icono">{{ item.icono }}</span>
+          <span>{{ item.label }}</span>
+        </span>
+      }
+    }
+  </nav>
+
+  <button class="sidebar-salir" (click)="onCerrarSesion()">
+    <span class="sidebar-icono">🚪</span>
+    <span>Cerrar sesión</span>
+  </button>
+</aside>

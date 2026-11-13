@@ -1,0 +1,220 @@
+<div class="perfil-page">
+
+  <section class="portada">
+    <div class="avatar" aria-hidden="true">
+      {{ iniciales() }}
+    </div>
+
+    <div class="portada-datos">
+      <span class="portada-etiqueta">
+        {{ esEstudiante() ? 'Portal del estudiante' : 'Mi cuenta' }}
+      </span>
+
+      <h1>{{ nombreCompleto() }}</h1>
+
+      <p class="portada-user">
+        ✉️ {{ usuario()?.email || 'Sin correo registrado' }}
+      </p>
+
+      <div class="chips">
+        <span class="chip">{{ labelRol() }}</span>
+
+        @if (esEstudiante()) {
+          <span class="chip">🎓 {{ gradoNombre() }}</span>
+          <span class="chip">Sección {{ seccionNombre() }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  @if (esEstudiante()) {
+    <section class="paneles-2">
+
+      <article class="panel">
+        <div class="panel-titulo">
+          <span class="panel-icono">👤</span>
+          <h2>Mis datos personales</h2>
+        </div>
+
+        <div class="fila">
+          <strong>Código:</strong>
+          <span>{{ dato(estudiante(), 'codigo') || 'Sin código registrado' }}</span>
+        </div>
+
+        <div class="fila">
+          <strong>Documento:</strong>
+          <span>{{ dato(estudiante(), 'documento') || 'No registrado' }}</span>
+        </div>
+
+        <div class="fila">
+          <strong>Nombres:</strong>
+          <span>{{ nombreCompleto() }}</span>
+        </div>
+
+        <div class="fila">
+          <strong>Fecha de nacimiento:</strong>
+          <span>{{ dato(estudiante(), 'fechaNacimiento') || 'No registrada' }}</span>
+        </div>
+
+        <div class="fila">
+          <strong>Género:</strong>
+          <span>{{ dato(estudiante(), 'genero') || 'No especificado' }}</span>
+        </div>
+
+        <div class="fila">
+          <strong>Nivel:</strong>
+          <span>{{ dato(estudiante(), 'nivel') || gradoNombre() || 'No registrado' }}</span>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-titulo">
+          <span class="panel-icono">📋</span>
+          <h2>Mi matrícula vigente</h2>
+        </div>
+
+        @if (matricula()) {
+          <div class="fila">
+            <strong>Estado:</strong>
+            <span>{{ dato(matricula(), 'estado') || 'Vigente' }}</span>
+          </div>
+
+          <div class="fila">
+            <strong>Grado:</strong>
+            <span>{{ gradoNombre() }}</span>
+          </div>
+
+          <div class="fila">
+            <strong>Sección:</strong>
+            <span>{{ seccionNombre() }}</span>
+          </div>
+        } @else {
+          <div class="estado-vacio">
+            <div class="estado-icono">📋</div>
+            <h3>Sin matrícula vigente</h3>
+            <p>Aún no tienes una matrícula vigente registrada.</p>
+          </div>
+        }
+      </article>
+
+    </section>
+
+    <section class="panel">
+      <div class="panel-titulo-filtro">
+        <div class="panel-titulo">
+          <span class="panel-icono">📝</span>
+          <h2>Mis calificaciones</h2>
+        </div>
+
+        <select
+          class="filtro"
+          [value]="filtroCurso()"
+          (change)="cambiarFiltroCurso($any($event.target).value)"
+        >
+          <option value="">Todos los cursos</option>
+          @for (curso of cursos(); track $index) {
+            <option [value]="curso">{{ curso }}</option>
+          }
+        </select>
+      </div>
+
+      @if (notasFiltradas().length > 0) {
+        <div class="tabla-contenedor">
+          <table>
+            <thead>
+              <tr>
+                <th>Curso</th>
+                <th>Evaluación</th>
+                <th>Calificación</th>
+                <th>Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (nota of notasFiltradas(); track $index) {
+                <tr>
+                  <td>{{ nota.curso || 'Sin curso' }}</td>
+                  <td>{{ nota.evaluacion || 'Sin evaluación' }}</td>
+                  <td>
+                    <span class="nota-chip" [ngClass]="calClase(nota.calificacion)">
+                      {{ nota.calificacion ?? 'Pendiente' }}
+                    </span>
+                  </td>
+                  <td>{{ nota.fecha || 'No registrada' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="estado-vacio">
+          <div class="estado-icono">📝</div>
+          <h3>Sin calificaciones</h3>
+          <p>Tus calificaciones aparecerán aquí cuando estén disponibles.</p>
+        </div>
+      }
+    </section>
+
+    <section class="panel">
+      <div class="panel-titulo">
+        <span class="panel-icono">✅</span>
+        <h2>Resumen de asistencias</h2>
+      </div>
+
+      @if (asistencias().length > 0) {
+        <div class="asist-grid">
+          <div class="asist-item a-ok">
+            <span>Presentes</span>
+            <strong>{{ totalAsistencias('presente') }}</strong>
+          </div>
+          <div class="asist-item a-tard">
+            <span>Tardanzas</span>
+            <strong>{{ totalAsistencias('tardanza') }}</strong>
+          </div>
+          <div class="asist-item a-falta">
+            <span>Faltas</span>
+            <strong>{{ totalAsistencias('falta') }}</strong>
+          </div>
+          <div class="asist-item a-just">
+            <span>Justificadas</span>
+            <strong>{{ totalAsistencias('justificada') }}</strong>
+          </div>
+        </div>
+      } @else {
+        <div class="estado-vacio">
+          <div class="estado-icono">📅</div>
+          <h3>Sin registros de asistencia</h3>
+          <p>Tu historial de asistencia aparecerá aquí cuando esté disponible.</p>
+        </div>
+      }
+    </section>
+
+  } @else {
+    <section class="panel">
+      <div class="panel-titulo">
+        <span class="panel-icono">👤</span>
+        <h2>Información de mi cuenta</h2>
+      </div>
+
+      <div class="fila">
+        <strong>Nombre:</strong>
+        <span>{{ nombreCompleto() }}</span>
+      </div>
+
+      <div class="fila">
+        <strong>Usuario:</strong>
+        <span>{{ usuario()?.username || 'No registrado' }}</span>
+      </div>
+
+      <div class="fila">
+        <strong>Correo:</strong>
+        <span>{{ usuario()?.email || 'Sin correo registrado' }}</span>
+      </div>
+
+      <div class="fila">
+        <strong>Rol:</strong>
+        <span>{{ labelRol() }}</span>
+      </div>
+    </section>
+  }
+
+</div>

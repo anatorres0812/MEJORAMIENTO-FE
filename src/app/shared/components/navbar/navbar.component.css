@@ -1,0 +1,301 @@
+
+:host {
+  display: block;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.navbar,
+.navbar * {
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  min-height: 76px;
+  padding: 12px 28px;
+  position: relative;
+  z-index: 10;
+
+  background: var(--bg-topbar);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 3px 12px var(--shadow);
+
+  transition: background-color .3s, color .3s, border-color .3s;
+}
+
+.navbar-izquierda,
+.navbar-derecha {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.navbar-izquierda {
+  flex: 0 0 auto;
+}
+
+.navbar-derecha {
+  justify-content: flex-end;
+  flex: 0 1 auto;
+}
+
+.navbar-centro {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.navbar-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.menu-icon {
+  font-size: 21px;
+}
+
+.navbar-inicio {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 15px 7px 7px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-card);
+  color: var(--accent);
+  font-weight: 750;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navbar-inicio:hover {
+  background: var(--bg-card-hover);
+}
+
+.navbar-casa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--accent-light);
+}
+
+.navbar-casa svg {
+  width: 20px;
+  height: 20px;
+}
+
+.navbar-derecha .navbar-tema {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.navbar-tema:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent);
+}
+
+.navbar-tema svg {
+  width: 21px;
+  height: 21px;
+}
+
+.navbar-separador {
+  width: 1px;
+  height: 42px;
+  background: var(--border);
+}
+
+.navbar-usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 270px;
+  min-width: 0;
+  padding: 8px 13px 8px 8px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--bg-card);
+}
+
+.navbar-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.navbar-datos {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.navbar-nombre {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar-rol {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+.navbar-estado {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: #22a06b;
+}
+
+.navbar-rol-texto {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar button:focus-visible,
+.navbar a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    min-height: 68px;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .navbar-izquierda,
+  .navbar-derecha {
+    gap: 7px;
+  }
+
+  .navbar-toggle {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+  }
+
+  .navbar-inicio {
+    gap: 6px;
+    padding: 5px;
+    font-size: 12px;
+  }
+
+  .navbar-casa {
+    width: 30px;
+    height: 30px;
+  }
+
+  .navbar-derecha .navbar-tema {
+    width: 38px;
+    height: 38px;
+  }
+
+  .navbar-usuario {
+    width: 190px;
+    padding: 5px 7px;
+    gap: 7px;
+  }
+
+  .navbar-avatar {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+    font-size: 14px;
+  }
+
+  .navbar-nombre {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar {
+    gap: 5px;
+    padding: 8px 6px;
+  }
+
+  .navbar-inicio-texto {
+    font-size: 11px;
+  }
+
+  .navbar-separador {
+    display: none;
+  }
+
+  .navbar-usuario {
+    width: 125px;
+    padding: 4px;
+    gap: 5px;
+  }
+
+  .navbar-avatar {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+    font-size: 12px;
+  }
+
+  .navbar-rol {
+    font-size: 8px;
+  }
+
+  .navbar-derecha .navbar-tema {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar {
+    transition: none;
+  }
+}

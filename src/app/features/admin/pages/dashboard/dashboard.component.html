@@ -1,0 +1,131 @@
+<div class="pagina">
+  <div class="pagina-encabezado">
+    <div>
+      <h1 class="pagina-titulo">Dashboard Académico</h1>
+      <p class="pagina-subtitulo">Resumen general del estado educativo del nivel seleccionado.</p>
+    </div>
+
+    <nav class="tabs-nivel">
+      @for (nivel of niveles; track nivel) {
+        <button
+          class="tab-nivel"
+          [class.activo]="nivel === nivelActivo()"
+          (click)="cambiarNivel(nivel)"
+        >
+          {{ nivel }}
+        </button>
+      }
+    </nav>
+  </div>
+
+    <div class="fila-reset">
+    <button class="btn-reset" (click)="abrirConfirmacionReset()">🔄 Restablecer datos de demo</button>
+  </div>
+
+  @if (mostrarConfirmacionReset) {
+    <div class="modal-overlay">
+      <div class="modal-confirmacion">
+        <h3>¿Restablecer todos los datos?</h3>
+        <p>
+          Esto borrará todos los estudiantes, docentes, notas, asistencia, grados, secciones y cursos
+          que hayas creado o modificado, y regresará el sistema a los datos de demostración originales.
+          Esta acción no se puede deshacer.
+        </p>
+        <div class="modal-acciones">
+          <button class="btn-confirmar-reset" (click)="confirmarReset()">Sí, restablecer</button>
+          <button class="btn-cancelar-reset" (click)="cancelarReset()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="tarjetas">
+    <div class="tarjeta">
+      <div class="tarjeta-icono icono-azul">🧑‍🎓</div>
+      <div class="tarjeta-texto">
+        <span class="tarjeta-etiqueta">Total estudiantes</span>
+        <span class="tarjeta-valor">{{ totalEstudiantes() }}</span>
+      </div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono icono-verde">🧑‍🏫</div>
+      <div class="tarjeta-texto">
+        <span class="tarjeta-etiqueta">Docentes</span>
+        <span class="tarjeta-valor">{{ totalDocentes() }}</span>
+      </div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono icono-morado">🎖️</div>
+      <div class="tarjeta-texto">
+        <span class="tarjeta-etiqueta">Grados</span>
+        <span class="tarjeta-valor">{{ totalGrados() }}</span>
+      </div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono icono-azul">🗂️</div>
+      <div class="tarjeta-texto">
+        <span class="tarjeta-etiqueta">Secciones</span>
+        <span class="tarjeta-valor">{{ totalSecciones() }}</span>
+      </div>
+    </div>
+    <div class="tarjeta tarjeta-destacada">
+      <div class="tarjeta-icono icono-ambar">📝</div>
+      <div class="tarjeta-texto">
+        <span class="tarjeta-etiqueta">Notas registradas</span>
+        <span class="tarjeta-valor">{{ notasRegistradas() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="paneles-inferiores">
+    <div class="panel">
+      <h2 class="panel-titulo">Rendimiento por curso — {{ nivelActivo() }}</h2>
+
+      @if (rendimientoPorCurso().length === 0) {
+        <p class="mensaje-vacio">Todavía no hay notas registradas en este nivel.</p>
+      } @else {
+        <svg
+          [attr.viewBox]="'0 0 ' + (rendimientoPorCurso().length * 90) + ' 220'"
+          class="grafico-svg"
+        >
+          @for (item of rendimientoPorCurso(); track item.nombre; let i = $index) {
+            <text [attr.x]="i * 90 + 45" y="18" text-anchor="middle" class="grafico-porcentaje">
+              {{ item.porcentaje }}%
+            </text>
+            <rect
+              [attr.x]="i * 90 + 15"
+              [attr.y]="190 - (item.porcentaje * 1.5)"
+              width="60"
+              [attr.height]="item.porcentaje * 1.5"
+              rx="6"
+              [attr.fill]="coloresBarra[i % coloresBarra.length]"
+            />
+            <text [attr.x]="i * 90 + 45" y="210" text-anchor="middle" class="grafico-etiqueta">
+              {{ item.nombre }}
+            </text>
+          }
+        </svg>
+      }
+    </div>
+
+    <div class="panel">
+      <h2 class="panel-titulo">Actividad reciente</h2>
+
+      @if (actividadReciente().length === 0) {
+        <p class="mensaje-vacio">No hay actividad registrada todavía.</p>
+      } @else {
+        <ul class="lista-actividad">
+          @for (item of actividadReciente(); track item.fecha + item.texto) {
+            <li class="item-actividad">
+              <span class="punto-actividad"></span>
+              <div>
+                <p class="texto-actividad">{{ item.texto }}</p>
+                <span class="fecha-actividad">{{ item.fecha }}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+</div>

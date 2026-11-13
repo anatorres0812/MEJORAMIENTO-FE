@@ -1,0 +1,184 @@
+.reporte-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.reporte-acciones {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.btn-volver {
+  background: none;
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto-suave);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.btn-volver:hover { background: var(--color-fondo); }
+
+.btn-imprimir {
+  background: var(--color-primario);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+}
+.btn-imprimir:hover { background: var(--color-primario-oscuro); }
+
+.reporte {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-card);
+  padding: 32px;
+}
+
+.reporte-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 3px solid var(--color-secundario);
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.reporte-escudo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-secundario);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.reporte-institucion { flex: 1; }
+.reporte-institucion h1 { font-size: 18px; color: var(--color-texto); margin-bottom: 2px; }
+.reporte-institucion p { font-size: 13px; color: var(--color-texto-suave); }
+
+.reporte-fecha {
+  text-align: right;
+  font-size: 12px;
+  color: var(--color-texto-suave);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.reporte-fecha strong { font-size: 13px; color: var(--color-texto); }
+
+.reporte-titulo {
+  text-align: center;
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: var(--color-texto);
+  margin-bottom: 20px;
+}
+
+.reporte-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  background: var(--color-fondo);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+.reporte-datos div { display: flex; flex-direction: column; gap: 2px; }
+.reporte-datos span { font-size: 11px; color: var(--color-texto-suave); text-transform: uppercase; }
+.reporte-datos strong { font-size: 14px; color: var(--color-texto); }
+
+.reporte-vacio { text-align: center; color: var(--color-texto-suave); padding: 24px 0; }
+
+.reporte-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+.reporte-tabla th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--color-secundario-claro);
+  color: var(--color-secundario);
+  font-size: 12px;
+}
+.reporte-tabla td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--color-borde);
+  color: var(--color-texto);
+}
+.celda-nota { font-weight: 700; }
+.sin-nota { color: var(--color-texto-suave); font-style: italic; }
+
+.estado-chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--color-secundario-claro);
+  color: var(--color-secundario);
+}
+.estado-chip.desaprobado {
+  background: var(--color-peligro-claro);
+  color: var(--color-peligro);
+}
+
+.reporte-resumen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.resumen-item {
+  text-align: center;
+  padding: 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+}
+.resumen-item span { display: block; font-size: 11px; color: var(--color-texto-suave); margin-bottom: 4px; }
+.resumen-item strong { font-size: 20px; color: var(--color-texto); }
+.resumen-item.destacado { background: var(--color-secundario-claro); border-color: var(--color-secundario); }
+.resumen-item.destacado strong { color: var(--color-secundario); }
+
+.reporte-firmas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin: 40px 0 12px;
+}
+.firma { text-align: center; }
+.firma .linea {
+  display: block;
+  border-top: 1px solid var(--color-texto-suave);
+  margin-bottom: 6px;
+  height: 30px;
+}
+.firma p { font-size: 12px; color: var(--color-texto-suave); }
+
+.reporte-nota-pie {
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-texto-suave);
+}
+
+@media (max-width: 600px) {
+  .reporte { padding: 20px; }
+  .reporte-resumen, .reporte-firmas { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .reporte-wrapper { max-width: 100%; }
+  .reporte { box-shadow: none; border: none; }
+}

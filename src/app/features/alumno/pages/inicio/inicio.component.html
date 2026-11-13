@@ -1,0 +1,107 @@
+
+<div class="pagina">
+  <header class="bienvenida">
+    <div>
+      <span class="sobre-titulo">PORTAL DEL ESTUDIANTE</span>
+      <h1 class="pagina-titulo">
+        ¡Bienvenido, {{ estudiante()?.nombres || 'Estudiante' }}!
+      </h1>
+      <p class="pagina-subtitulo">
+        Aquí puedes consultar tu información y progreso académico.
+      </p>
+    </div>
+    <div class="bienvenida-icono">🎓</div>
+  </header>
+
+  <section class="perfil">
+    <div class="perfil-avatar">
+      {{ estudiante()?.nombres?.charAt(0) || 'E' }}{{ estudiante()?.apellidos?.charAt(0) || '' }}
+    </div>
+    <div class="perfil-info">
+      <span class="perfil-etiqueta">MI PERFIL</span>
+      <h2>{{ estudiante()?.nombres || 'Estudiante' }} {{ estudiante()?.apellidos || '' }}</h2>
+      <span class="perfil-rol">Alumno</span>
+    </div>
+    <div class="perfil-separador"></div>
+    <div class="perfil-dato">
+      <span>Nivel educativo</span>
+      <strong>{{ estudiante()?.nivel || 'Pendiente de asignación' }}</strong>
+    </div>
+    <div class="perfil-dato">
+      <span>Año académico</span>
+      <strong>{{ anioAcademico }}</strong>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="seccion-titulo">
+      <div>
+        <span class="sobre-titulo">VISTA GENERAL</span>
+        <h2>Mi resumen académico</h2>
+      </div>
+      <span class="periodo">{{ anioAcademico }}</span>
+    </div>
+
+    <div class="tarjetas">
+      <article class="tarjeta">
+        <div class="tarjeta-cabecera">
+          <div class="icono azul">🎓</div>
+          <span class="mini-etiqueta">ESTUDIOS</span>
+        </div>
+        <span class="tarjeta-etiqueta">Nivel</span>
+        <strong class="tarjeta-valor">{{ estudiante()?.nivel || 'Pendiente' }}</strong>
+        <span class="tarjeta-pie">Nivel educativo asignado</span>
+      </article>
+
+      <article class="tarjeta">
+        <div class="tarjeta-cabecera">
+          <div class="icono violeta">📚</div>
+          <span class="mini-etiqueta">FORMACIÓN</span>
+        </div>
+        <span class="tarjeta-etiqueta">Grado</span>
+        <strong class="tarjeta-valor">{{ grado()?.nombre || 'Pendiente' }}</strong>
+        <span class="tarjeta-pie">Grado académico</span>
+      </article>
+
+      <article class="tarjeta">
+        <div class="tarjeta-cabecera">
+          <div class="icono verde">🏷️</div>
+          <span class="mini-etiqueta">SECCIÓN</span>
+        </div>
+        <span class="tarjeta-etiqueta">Mi sección</span>
+        <strong class="tarjeta-valor">{{ seccion()?.nombre || 'Pendiente' }}</strong>
+        <span class="tarjeta-pie">Sección asignada</span>
+      </article>
+
+      <article class="tarjeta">
+        <div class="tarjeta-cabecera">
+          <div class="icono naranja">📅</div>
+          <span class="mini-etiqueta">PERIODO</span>
+        </div>
+        <span class="tarjeta-etiqueta">Año académico</span>
+        <strong class="tarjeta-valor">{{ anioAcademico }}</strong>
+        <span class="tarjeta-pie">Periodo académico actual</span>
+      </article>
+
+      <article class="tarjeta">
+        <div class="tarjeta-cabecera">
+          <div class="icono celeste">📝</div>
+          <span class="mini-etiqueta">CALIFICACIONES</span>
+        </div>
+        <span class="tarjeta-etiqueta">Cantidad de notas</span>
+        <strong class="tarjeta-valor">{{ notas().length }}</strong>
+        <span class="tarjeta-pie">Notas registradas</span>
+      </article>
+
+      <article class="tarjeta promedio">
+        <div class="tarjeta-cabecera">
+          <div class="icono estrella">⭐</div>
+          <span class="mini-etiqueta">RENDIMIENTO</span>
+        </div>
+        <span class="tarjeta-etiqueta">Promedio general</span>
+        <strong class="tarjeta-valor">{{ promedio() }}</strong>
+        <span class="tarjeta-pie">Tu resultado académico</span>
+      </article>
+    </div>
+  </section>
+</div>

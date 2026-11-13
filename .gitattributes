@@ -1,0 +1,11 @@
+# Forzar finales de linea LF (Unix) en archivos que se ejecutan o se
+# parsean dentro de contenedores Linux. Evita el error
+# "/docker-entrypoint.d/40-env.sh: not found" causado por CRLF en el shebang.
+
+*.sh         text eol=lf
+Dockerfile   text eol=lf
+Dockerfile.* text eol=lf
+*.conf       text eol=lf
+*.dockerfile text eol=lf
+env.sh       text eol=lf
+nginx.conf   text eol=lf

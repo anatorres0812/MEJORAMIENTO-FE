@@ -1,0 +1,136 @@
+
+<div class="grados-page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">GESTIÓN ACADÉMICA</p>
+      <h1>Grados escolares</h1>
+      <p class="subtitulo">
+        Registra y administra los grados de Inicial, Primaria y Secundaria.
+      </p>
+    </div>
+    <div class="total">
+      <span>Total de grados</span>
+      <strong>{{ totalGrados }}</strong>
+    </div>
+  </header>
+
+  <div class="mensaje exito" *ngIf="mensaje">{{ mensaje }}</div>
+  <div class="mensaje error" *ngIf="error">{{ error }}</div>
+
+  <section class="panel">
+    <h2>{{ gradoEditando ? 'Editar grado' : 'Registrar grado' }}</h2>
+
+    <form (ngSubmit)="guardar()">
+      <div class="form-grid">
+        <div class="campo">
+          <label for="nombre">Nombre del grado</label>
+          <input
+            id="nombre"
+            name="nombre"
+            type="text"
+            [(ngModel)]="nombre"
+            placeholder="Ej. 1.º grado o 3 años"
+            maxlength="60"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label for="nivel">Nivel educativo</label>
+          <select id="nivel" name="nivel" [(ngModel)]="nivel" required>
+            <option *ngFor="let item of niveles" [ngValue]="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="acciones-form">
+        <button type="submit" class="btn-principal">
+          {{ gradoEditando ? 'Guardar cambios' : 'Registrar grado' }}
+        </button>
+
+        <button
+          *ngIf="gradoEditando"
+          type="button"
+          class="btn-secundario"
+          (click)="cancelarEdicion()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="lista-header">
+      <div>
+        <h2>Grados registrados</h2>
+        <p>Consulta y administra los grados por nivel educativo.</p>
+      </div>
+
+      <div class="filtro">
+        <label for="filtroNivel">Filtrar por nivel</label>
+        <select
+          id="filtroNivel"
+          name="filtroNivel"
+          [(ngModel)]="nivelSeleccionado"
+        >
+          <option value="Todos">Todos los niveles</option>
+          <option *ngFor="let item of niveles" [ngValue]="item">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Nivel educativo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let grado of grados">
+            <td>{{ grado.id }}</td>
+            <td class="nombre-grado">{{ grado.nombre }}</td>
+            <td>
+              <span class="nivel-etiqueta" [ngClass]="grado.nivel.toLowerCase()">
+                {{ grado.nivel }}
+              </span>
+            </td>
+            <td>
+              <div class="acciones-tabla">
+                <button
+                  type="button"
+                  class="btn-editar"
+                  (click)="editar(grado)"
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  class="btn-eliminar"
+                  (click)="eliminar(grado)"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr *ngIf="grados.length === 0">
+            <td colspan="4" class="vacio">
+              No hay grados registrados para este filtro.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

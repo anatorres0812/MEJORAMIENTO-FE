@@ -1,0 +1,273 @@
+
+/* =========================================
+   SIDEBAR: PALETA AZUL PERMANENTE
+   ========================================= */
+
+.sidebar {
+  --sidebar-azul-oscuro: #173578;
+  --sidebar-azul-medio: #244cb5;
+  --sidebar-azul: #315ee8;
+  --sidebar-azul-claro: #3168df;
+  --sidebar-celeste: #9be7ff;
+
+  width: 240px;
+  flex-shrink: 0;
+  height: 100%;
+  padding: 20px 0;
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    160deg,
+    #173578 0%,
+    #244cb5 55%,
+    #3168df 100%
+  );
+
+  color: #ffffff;
+  border-right: 1px solid rgba(16, 26, 48, 0.35);
+
+  display: flex;
+  flex-direction: column;
+
+  /* Mantiene el esquema de controles consistente */
+  color-scheme: dark;
+}
+
+/* =========================================
+   MARCA Y LOGOTIPO
+   ========================================= */
+
+.sidebar-marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 20px 20px;
+  margin-bottom: 16px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.sidebar-logo {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #315ee8, #4978f0);
+  color: #ffffff;
+
+  border: 1px solid rgba(155, 231, 255, 0.4);
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  box-shadow: 0 4px 12px rgba(12, 31, 87, 0.25);
+}
+
+.sidebar-marca-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sidebar-nombre {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.sidebar-subnombre {
+  margin-top: 3px;
+  color: #c8d8ff;
+  font-size: 11px;
+}
+
+/* =========================================
+   MENÚ DE NAVEGACIÓN
+   ========================================= */
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  padding: 0 12px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Barra de desplazamiento */
+.sidebar-menu {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+
+.sidebar-menu::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  background: transparent;
+  color: #d4e0ff;
+  text-decoration: none;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+/* Efecto hover */
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(155, 231, 255, 0.2);
+}
+
+/* Opción activa */
+.sidebar-item.activo {
+  background: linear-gradient(135deg, #315ee8, #4978f0);
+  color: #ffffff;
+  border-color: rgba(155, 231, 255, 0.35);
+  font-weight: 700;
+
+  box-shadow: 0 5px 13px rgba(10, 29, 85, 0.2);
+}
+
+.sidebar-item.activo:hover {
+  background: linear-gradient(135deg, #234bc7, #315ee8);
+}
+
+/* Opciones que aún no están disponibles */
+.sidebar-item.deshabilitado {
+  color: #b5c5e8;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sidebar-item.deshabilitado:hover {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Iconos */
+.sidebar-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  flex-shrink: 0;
+
+  font-size: 16px;
+  text-align: center;
+}
+
+/* =========================================
+   BOTÓN CERRAR SESIÓN
+   ========================================= */
+
+.sidebar-salir {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 12px 12px 0;
+  padding: 10px 12px;
+
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  background: transparent;
+  color: #ffd0d0;
+
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.sidebar-salir:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 208, 208, 0.2);
+  color: #ffffff;
+}
+
+.sidebar-salir:focus-visible,
+.sidebar-item:focus-visible {
+  outline: 2px solid #9be7ff;
+  outline-offset: 2px;
+}
+
+/* =========================================
+   ADAPTACIÓN A MÓVILES
+   ========================================= */
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+
+    top: 60px;
+    bottom: 0;
+    left: 0;
+
+    height: auto;
+
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+
+    z-index: 50;
+
+    box-shadow: 5px 0 20px rgba(7, 27, 83, 0.3);
+  }
+
+  .sidebar.abierto {
+    transform: translateX(0);
+  }
+}
+
+/* Respeta la preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar-item,
+  .sidebar-salir {
+    transition: none;
+  }
+}

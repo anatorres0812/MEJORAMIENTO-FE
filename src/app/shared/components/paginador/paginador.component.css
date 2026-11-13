@@ -1,0 +1,51 @@
+
+.paginador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.paginador-btn,
+.paginador-num {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.paginador-btn {
+  padding: 7px 12px;
+}
+
+.paginador-num {
+  width: 32px;
+  height: 32px;
+}
+
+.paginador-btn:hover:not(:disabled),
+.paginador-num:hover {
+  background: var(--bg-card-hover);
+}
+
+.paginador-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.paginador-num.activo {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.paginador-puntos {
+  color: var(--text-muted);
+  padding: 0 4px;
+}
